@@ -12,7 +12,7 @@ build_core:
 
 # Build all modules
 build:
-	./mvnw clean install
+	./mvnw clean install -Dmaven.test.failure.ignore=true
 	
 # Run a simple example use of Jaguar Core
 run:	
@@ -26,7 +26,7 @@ build_maven:
 	
 # Verify example
 verify_example:
-	./mvnw clean verify -pl br.usp.each.saeg.jaguar.example -am
+	./mvnw clean verify -pl br.usp.each.saeg.jaguar.example -am -Dmaven.test.failure.ignore=true
 
 # Build the whole project from a docker image
 docker:
