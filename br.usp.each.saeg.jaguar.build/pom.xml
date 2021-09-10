@@ -51,6 +51,8 @@
 		<module>../br.usp.each.saeg.jaguar.plugin</module>
  		<module>../br.usp.each.saeg.jaguar.feature</module> 
  		<module>../br.usp.each.saeg.jaguar.updatesite</module>
+ 		<module>../br.usp.each.saeg.jaguar.maven.plugin</module>
+ 		<module>../br.usp.each.saeg.jaguar.example</module>
 	</modules>
 
 	<dependencies>

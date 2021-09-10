@@ -10,7 +10,7 @@
     <artifactId>br.usp.each.saeg.jaguar.example</artifactId>
     <packaging>jar</packaging>
 
-    <name>br.usp.each.saeg.jaguar.example</name>
+    <name>Example</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -24,4 +24,48 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+    <build>
+		<plugins>	
+    		<plugin>
+				<groupId>br.usp.each.saeg.jaguar.maven.plugin</groupId>
+				<artifactId>jaguar-maven-plugin</artifactId>
+				<version>0.0.1-SNAPSHOT</version>			
+				<executions>
+					<execution>
+						<id>Jaguar-DataFlow</id>
+						<goals>
+							<goal>jaguarVerify
+							</goal>
+						</goals>	
+						<configuration>		
+							<logLevel>ERROR</logLevel>				
+							<type>DataFlow</type>
+							<format>XML</format>
+						</configuration>					
+					</execution>	
+					<execution>
+						<id>Jaguar-ControlFlow</id>
+						<goals>
+							<goal>jaguarVerify
+							</goal>
+						</goals>	
+						<configuration>			
+							<logLevel>ERROR</logLevel>			
+							<type>ControlFlow</type>	
+							<format>XML</format>
+						</configuration>					
+					</execution>				
+				</executions>
+			</plugin>	
+			<plugin>
+			  <groupId>org.apache.maven.plugins</groupId>
+			  <artifactId>maven-compiler-plugin</artifactId>
+			  <version>3.6.1</version>
+			  <configuration>
+			    <source>1.6</source>
+			    <target>1.6</target>
+			  </configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

@@ -15,8 +15,18 @@ build:
 	./mvnw clean install
 	
 # Run a simple example use of Jaguar Core
-run:
+run:	
 	./br.usp.each.saeg.jaguar.example/run.sh
+	
+# Build and install Jaguar Maven Plugin
+build_maven:	
+	./mvnw clean install -pl br.usp.each.saeg.jaguar.maven.plugin -am
+	./mvnw org.apache.maven.plugins:maven-install-plugin:3.0.0-M1:install-file \
+	 -Dfile=./br.usp.each.saeg.jaguar.maven.plugin/target/jaguar-maven-plugin-0.0.1-SNAPSHOT.jar
+	
+# Verify example
+verify_example:
+	./mvnw clean verify -pl br.usp.each.saeg.jaguar.example -am
 
 # Build the whole project from a docker image
 docker:
