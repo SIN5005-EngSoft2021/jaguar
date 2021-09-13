@@ -30,6 +30,11 @@ public class JaguarRunnerOptions {
     				+ "when this parameter is not set control-flow information is collected")
 	private Boolean dataFlow = false;
     
+    @Option(name = "--outputExtension", aliases = {"-oe"},
+    		usage = "the extension of the output file\n" +
+					" it can be XML or HTML")
+    private String outputExtension = "XML";
+    
     @Option(name = "--outputType", aliases = {"-ot"}, 
     		usage = "the output type\n F = Flat, H = Hierarchical")
 	private String outputType = "F";
@@ -99,7 +104,11 @@ public class JaguarRunnerOptions {
 	public String getOutputFileName() {
 		return outputFileName;
 	}
-
+	
+	public String getOutputExtension() {
+		return outputExtension;
+	}
+	
 	public String getOutputType() {
 		return outputType;
 	}
@@ -122,6 +131,7 @@ public class JaguarRunnerOptions {
 				+ "testPath = " + testPath.getPath() + "\n"
 				+ "testListFile = " + testListFile.getPath() + "\n"
 				+ "output = " + outputFileName + "\n"
+				+ "outputExtension = " + outputExtension + "\n"
 				+ "outputType = " + outputType + "\n"
 				+ "logLevel = " + logLevel + "\n"
 				+ "dataflow = " + dataFlow ;

@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.usp.each.saeg.jaguar.core.output.html.HtmlWriter;
 import org.apache.commons.lang3.StringUtils;
 import org.jacoco.core.analysis.AbstractAnalyzer;
 import org.jacoco.core.analysis.ControlFlowAnalyzer;
@@ -42,7 +43,7 @@ import br.usp.each.saeg.jaguar.core.output.xml.hierarchical.HierarchicalXmlWrite
  */
 public class Jaguar {
 
-	private final static Logger logger = LoggerFactory.getLogger("JaguarLogger");
+	private static final Logger logger = LoggerFactory.getLogger("JaguarLogger");
 
 	private static final String XML_NAME = "jaguar_output";
 	private int nTests = 0;
@@ -282,6 +283,14 @@ public class Jaguar {
 		ArrayList<AbstractTestRequirement> testRequirements = generateRank(heuristic);
 		HierarchicalXmlWriter xmlWriter = new HierarchicalXmlWriter(testRequirements, heuristic, totalTimeSpent);
 		xmlWriter.generateXML(projectDir, fileName);
+	}
+	
+	public void generateHtml(Heuristic heuristic, File projectDir, String outputFile) throws Exception {
+		ArrayList<AbstractTestRequirement> testRequirements = generateRank(heuristic);
+		
+		HtmlWriter htmlWriter = new HtmlWriter(testRequirements, heuristic, totalTimeSpent);
+		
+		htmlWriter.generateHtml(projectDir, outputFile);
 	}
 
 	/**

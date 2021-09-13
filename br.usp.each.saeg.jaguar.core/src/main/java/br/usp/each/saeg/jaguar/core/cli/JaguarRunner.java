@@ -30,10 +30,11 @@ public class JaguarRunner {
 	private final File testDir;
 	private final Boolean isDataFlow;
 	private final String outputFile;
+	private final String outputExtension;
 	private final String outputType;
 	
 	public JaguarRunner(Heuristic heuristic, File projectDir, File sourceDir,
-			File testDir, Boolean isDataFlow, String outputFile, String outputType) {
+			File testDir, Boolean isDataFlow, String outputFile, String outputExtension, String outputType) {
 		super();
 		this.heuristic = heuristic;
 		this.projectDir = projectDir;
@@ -41,6 +42,7 @@ public class JaguarRunner {
 		this.testDir = testDir;
 		this.isDataFlow = isDataFlow;
 		this.outputFile = outputFile;
+		this.outputExtension = outputExtension;
 		this.outputType = outputType;
 	}
 
@@ -55,13 +57,22 @@ public class JaguarRunner {
 		junit.run(classes);
 
 		client.close();
-		if (outputType.equals("H")) {
+		
+		generateOutputExtension(jaguar);
+	}
+	
+	private void generateOutputExtension(Jaguar jaguar) throws Exception{
+		if(outputExtension.equals("HTML")){
+			jaguar.generateHtml(heuristic, projectDir, outputFile);
+		}
+		/*XML generation options*/
+		else if (outputType.equals("H")) {
 			jaguar.generateHierarchicalXML(heuristic, projectDir, outputFile);
 		} else {
 			jaguar.generateFlatXML(heuristic, projectDir, outputFile);
 		}
 	}
-
+	
 	public static void main(String[] args){
 		final JaguarRunnerOptions options = new JaguarRunnerOptions();
 		final CmdLineParser parser = new CmdLineParser(options);
@@ -82,8 +93,11 @@ public class JaguarRunner {
         
 		try {
 			logger.info(options.toString());
-			new JaguarRunner(options.getHeuristic(), options.getProjectPath(), options.getSourcePath(), options.getTestPath(),
-					         options.getDataFlow(), options.getOutputFileName(), options.getOutputType()).run();
+			new JaguarRunner(options.getHeuristic(), options.getProjectPath(),
+					options.getSourcePath(), options.getTestPath(),
+					options.getDataFlow(), options.getOutputFileName(),
+					options.getOutputExtension(), options.getOutputType()
+			).run();
 		} catch (Exception e) {
 			logger.error("Exception :" + e.toString());
 			logger.error("Exception Message : " + e.getMessage());
