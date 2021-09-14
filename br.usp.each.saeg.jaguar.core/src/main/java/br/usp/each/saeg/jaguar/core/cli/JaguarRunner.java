@@ -79,32 +79,32 @@ public class JaguarRunner {
 		
         try {
         	logger.info("Command:" + Arrays.toString(args));
-            parser.parseArgument(args);
+            	parser.parseArgument(args);
         } catch (final CmdLineException e) {
-            System.err.println(e.getLocalizedMessage());
-            parser.printUsage(System.err);
-            System.exit(1);
+		System.err.println(e.getLocalizedMessage());
+		parser.printUsage(System.err);
+		System.exit(1);
         }
 
         if (options.isHelp()){
-			parser.printUsage(System.err);
-			System.exit(0);	
+		parser.printUsage(System.err);
+		System.exit(0);	
         }
         
-		try {
-			logger.info(options.toString());
-			new JaguarRunner(options.getHeuristic(), options.getProjectPath(),
-					options.getSourcePath(), options.getTestPath(),
-					options.getDataFlow(), options.getOutputFileName(),
-					options.getOutputExtension(), options.getOutputType()
-			).run();
-		} catch (Exception e) {
-			logger.error("Exception :" + e.toString());
-			logger.error("Exception Message : " + e.getMessage());
-			logger.error("Stacktrace :");
-			e.printStackTrace(System.err);
-			System.exit(1);
-		}
+	try {
+		logger.info(options.toString());
+		new JaguarRunner(options.getHeuristic(), options.getProjectPath(),
+				options.getSourcePath(), options.getTestPath(),
+				options.getDataFlow(), options.getOutputFileName(),
+				options.getOutputExtension(), options.getOutputType()
+				).run();
+	} catch (Exception e) {
+		logger.error("Exception :" + e.toString());
+		logger.error("Exception Message : " + e.getMessage());
+		logger.error("Stacktrace :");
+		e.printStackTrace(System.err);
+		System.exit(1);
+	}
 		
 		logger.info("Jaguar has finished!");
 		System.exit(0);
