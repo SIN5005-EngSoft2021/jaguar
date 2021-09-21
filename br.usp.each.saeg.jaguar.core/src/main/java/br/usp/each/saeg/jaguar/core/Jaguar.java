@@ -46,8 +46,8 @@ public class Jaguar {
 	private static final Logger logger = LoggerFactory.getLogger("JaguarLogger");
 
 	private static final String XML_NAME = "jaguar_output";
-	private int nTests = 0;
-	private int nTestsFailed = 0;
+	private static int nTests = 0;
+	private static int nTestsFailed = 0;
 	private Map<String, File> classFilesCache;
 
 	private JaguarSFL sfl = new JaguarSFL();
@@ -302,19 +302,19 @@ public class Jaguar {
 		totalTimeSpent = System.currentTimeMillis() - startTime;
 	}
 
-	public int getnTests() {
+	public static int getnTests() {
 		return nTests;
 	}
 
-	public int getnTestsFailed() {
+	public static int getnTestsFailed() {
 		return nTestsFailed;
 	}
 
-	public int increaseNTests() {
+	public static int increaseNTests() {
 		return ++nTests;
 	}
 
-	public int increaseNTestsFailed() {
+	public static int increaseNTestsFailed() {
 		return ++nTestsFailed;
 	}
 

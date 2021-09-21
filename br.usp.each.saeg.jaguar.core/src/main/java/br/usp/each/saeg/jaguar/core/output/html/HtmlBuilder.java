@@ -1,6 +1,7 @@
 package br.usp.each.saeg.jaguar.core.output.html;
 
 import br.usp.each.saeg.jaguar.codeforest.model.Requirement;
+import br.usp.each.saeg.jaguar.core.Jaguar;
 import br.usp.each.saeg.jaguar.core.heuristic.Heuristic;
 import br.usp.each.saeg.jaguar.core.model.core.requirement.AbstractTestRequirement;
 import br.usp.each.saeg.jaguar.core.model.core.requirement.LineTestRequirement;
@@ -57,7 +58,6 @@ public class HtmlBuilder {
 	}
 	
 	public String build() throws IOException, URISyntaxException {
-		
 		File htmlTemplateFile = new File("br.usp.each.saeg.jaguar.core/src/main/resources/html-output/index.html");
 		String htmlString = FileUtils.readFileToString(htmlTemplateFile);
 		
@@ -91,22 +91,8 @@ public class HtmlBuilder {
 			requirementHtmlList.append("<div class=\"java-class\" id = \"java-class-").append(className).append("\">");
 			requirementHtmlList.append("<h3>").append(className).append("</h3>");
 			Collection<AbstractTestRequirement> requirementsForThisClass = requirementsGroupByClass.get(className);
-			
-			for (int requirementIndex = 0; requirementIndex < requirementsForThisClass.size(); requirementIndex++) {
-				
-				AbstractTestRequirement abstractTestRequirement = abstractTestRequirementList.get(requirementIndex);
-				
-				requirementHtmlList.append("<div class=\"requirement\" id = \"requirement-id-").append(requirementIndex).append("\">");
-				
-				
-				requirementHtmlList.append("<p>").append(
-						abstractTestRequirement.toString()
-				).append("</p>");
-				
-				
-				requirementHtmlList.append("</div>");
-			}
-			
+			requirementHtmlList.append("<p>").append(Jaguar.getnTests()).append(" #### ").append(Jaguar.getnTestsFailed()).append("</p>");
+			requirementHtmlList.append(buildHTMLTable(abstractTestRequirementList));
 			requirementHtmlList.append("<div class=\"java-class-code\" id = \"java-class-code").append(className).append("\">");
 			
 			String codeFromClass = getCodeFromAbsolutePath(
@@ -176,12 +162,41 @@ public class HtmlBuilder {
 		
 		return codeFromClassTransformedForHtml.toString();
 	}
-	
-	
+
 	public String getSuspiciousnessCssColor(double suspiciousness){
-		
 		return "red";
 		
 	}
-	
+
+	public String buildHTMLTable(List<AbstractTestRequirement> requirementsForThisClass) {
+		StringBuilder tableLines = new StringBuilder();
+		for (AbstractTestRequirement currentRequirement : requirementsForThisClass) {
+			tableLines.append(buildTableRowForLineTestRequirement(currentRequirement));
+		}
+
+		return "<table style=\"border:1px solid black;\">" +
+					buildTableHeader() +
+					tableLines +
+				"</table>";
+	}
+
+	public String buildTableHeader() {
+		return "<tr>" +
+				"<th>" + "Element" + "</th>" +
+				"<th>" + "CEF" + "</th>" +
+				"<th>" + "CEP" + "</th>" +
+				"<th>" + "CNF" + "</th>" +
+				"<th>" + "CNP" + "</th>" +
+				"</tr>";
+	}
+
+	public String buildTableRowForLineTestRequirement(AbstractTestRequirement atr) {
+		return 	"<tr>" +
+				"<td style=\"border:1px solid black;\">" + atr.getMethodLine() + "</td>" +
+				"<td style=\"border:1px solid black;\">" + atr.getCef() + "</td>" +
+				"<td style=\"border:1px solid black;\">" + atr.getCep() + "</td>" +
+				"<td style=\"border:1px solid black;\">" + atr.getCnf() + "</td>" +
+				"<td style=\"border:1px solid black;\">" + atr.getCnp() + "</td>" +
+				"</tr>";
+	}
 }
