@@ -85,13 +85,12 @@ public class HtmlBuilder {
 		}
 		
 		StringBuilder requirementHtmlList = new StringBuilder();
-		
+		requirementHtmlList.append(buildExecutionInfo());
+
 		for (String className : requirementsGroupByClass.keySet()){
-			
 			requirementHtmlList.append("<div class=\"java-class\" id = \"java-class-").append(className).append("\">");
 			requirementHtmlList.append("<h3>").append(className).append("</h3>");
 			Collection<AbstractTestRequirement> requirementsForThisClass = requirementsGroupByClass.get(className);
-			requirementHtmlList.append("<p>").append(Jaguar.getnTests()).append(" #### ").append(Jaguar.getnTestsFailed()).append("</p>");
 			requirementHtmlList.append(buildHTMLTable(abstractTestRequirementList));
 			requirementHtmlList.append("<div class=\"java-class-code\" id = \"java-class-code").append(className).append("\">");
 			
@@ -198,5 +197,15 @@ public class HtmlBuilder {
 				"<td style=\"border:1px solid black;\">" + atr.getCnf() + "</td>" +
 				"<td style=\"border:1px solid black;\">" + atr.getCnp() + "</td>" +
 				"</tr>";
+	}
+
+	public StringBuilder buildExecutionInfo() {
+		StringBuilder strExecutionInfo = new StringBuilder();
+		return strExecutionInfo.append("<p>Executed Tests: ")
+				.append(Jaguar.getnTests())
+				.append("</p>")
+				.append("<p>Failed Tests: ")
+				.append(Jaguar.getnTestsFailed())
+				.append("</p>");
 	}
 }
