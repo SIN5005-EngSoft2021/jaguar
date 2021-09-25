@@ -28,7 +28,7 @@ pre, .hljs {
 .hljs-comment {
   /* var(--highlight-comment) */
   color: #656e77;
-  font-weight: italic;
+  font-style: italic;
 }
 
 .hljs-keyword,
