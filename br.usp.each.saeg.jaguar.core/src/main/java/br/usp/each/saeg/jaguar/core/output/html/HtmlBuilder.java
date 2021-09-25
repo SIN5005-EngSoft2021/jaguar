@@ -225,7 +225,7 @@ public class HtmlBuilder {
 	}
 
 	public String buildTableHeader() {
-		String[] rowData = new String[]{"Element", "Class", "Location", "CEF", "CEP", "CNF",
+		String[] rowData = new String[]{"Class", "Function", "Location", "CEF", "CEP", "CNF",
 									"CNP", "Suspiciouness"};
 		return wrapData(rowData, "th");
 	}
