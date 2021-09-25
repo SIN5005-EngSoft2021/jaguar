@@ -15,7 +15,7 @@ import java.util.List;
 public class HtmlWriter {
 	
 	private static final Logger logger = LoggerFactory.getLogger("JaguarLogger");
-	private static final String FOLDER_NAME = ".jaguar";
+	private static final String FOLDER_NAME = "Reports";
 	
 	private final List<AbstractTestRequirement> testRequirements;
 	private final Heuristic currentHeuristic;

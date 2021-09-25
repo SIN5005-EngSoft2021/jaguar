@@ -16,7 +16,7 @@ import br.usp.each.saeg.jaguar.codeforest.model.Requirement.Type;
 public class HierarchicalXmlWriter {
 
 	private static Logger logger = LoggerFactory.getLogger("JaguarLogger");
-	private static final String FOLDER_NAME = ".jaguar";
+	private static final String FOLDER_NAME = "Reports";
 
 	private ArrayList<AbstractTestRequirement> testRequirements;
 	private Heuristic currentHeuristic;
