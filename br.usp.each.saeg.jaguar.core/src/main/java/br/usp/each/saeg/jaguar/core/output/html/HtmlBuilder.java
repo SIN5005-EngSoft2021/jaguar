@@ -57,7 +57,7 @@ public class HtmlBuilder {
 		this.projectBeingTestedDir = projectBeingTestedDir;
 	}
 	
-	public String build() throws IOException, URISyntaxException {
+	public String build() throws IOException {
 		File htmlTemplateFile = new File("br.usp.each.saeg.jaguar.core/src/main/resources/html-output/index.html");
 		String htmlString = FileUtils.readFileToString(htmlTemplateFile);
 		
@@ -104,7 +104,7 @@ public class HtmlBuilder {
 			
 			String codeFromClassTransformedForHtml = transformJavaCodeToDisplayInHtml(codeFromClass, requirementsForThisClass);
 			
-			requirementHtmlList.append("<pre> <code>")
+			requirementHtmlList.append("<pre><code class=\"language-java\">")
 					.append(codeFromClassTransformedForHtml)
 					.append("</code> </pre>");
 			
@@ -128,6 +128,8 @@ public class HtmlBuilder {
 		StringBuilder codeFromClassTransformedForHtml = new StringBuilder();
 		
 		List<String> rowsInJavaCode = Arrays.asList(javaCode.split("\\n"));
+
+		codeFromClassTransformedForHtml.append("<ol class=\"linenumbers\">");
 		
 		for(int rowIndex = 0; rowIndex < rowsInJavaCode.size(); rowIndex++){
 			
@@ -143,7 +145,7 @@ public class HtmlBuilder {
 					return false;
 				}
 			}).findFirst();
-			
+
 			if(optionalAbstractTestRequirementForThisLine.isPresent()){
 				
 				AbstractTestRequirement requirement = optionalAbstractTestRequirementForThisLine.get();
@@ -153,11 +155,12 @@ public class HtmlBuilder {
 						+ "</span>"
 						;
 			}
-			
-			codeFromClassTransformedForHtml.append(codeLine + "<br/>");
-			
+
+			codeFromClassTransformedForHtml.append("<li>")
+					.append(codeLine).append(System.lineSeparator())
+					.append("</li>");
 		}
-		
+
 		
 		return codeFromClassTransformedForHtml.toString();
 	}
