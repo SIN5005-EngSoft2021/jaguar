@@ -88,11 +88,15 @@ public class HtmlBuilder {
 		requirementHtmlList.append(buildExecutionInfo());
 
 		for (String className : requirementsGroupByClass.keySet()){
-			requirementHtmlList.append("<div class=\"java-class\" id = \"java-class-").append(className).append("\">");
+			requirementHtmlList.append("<div class=\"java-class\" id = \"java-class-")
+					.append(className).append("\">");
+
 			requirementHtmlList.append("<h3>").append(className).append("</h3>");
-			Collection<AbstractTestRequirement> requirementsForThisClass = requirementsGroupByClass.get(className);
-			requirementHtmlList.append(buildHTMLTable(abstractTestRequirementList));
-			requirementHtmlList.append("<div class=\"java-class-code\" id = \"java-class-code").append(className).append("\">");
+
+			requirementHtmlList.append("<div style=\"overflow-x:auto;\">")
+					.append(buildHTMLTable(abstractTestRequirementList))
+					.append("<div class=\"java-class-code\" id = \"java-class-code")
+					.append(className).append("\">");
 			
 			String codeFromClass = getCodeFromAbsolutePath(
 					projectBeingTestedDir.getAbsolutePath()
@@ -101,7 +105,8 @@ public class HtmlBuilder {
 							+ System.getProperty("file.separator") + "java"
 							+ System.getProperty("file.separator") + className + ".java"
 			);
-			
+
+			Collection<AbstractTestRequirement> requirementsForThisClass = requirementsGroupByClass.get(className);
 			String codeFromClassTransformedForHtml = transformJavaCodeToDisplayInHtml(codeFromClass, requirementsForThisClass);
 			
 			requirementHtmlList.append("<pre><code class=\"language-java\">")
@@ -176,30 +181,61 @@ public class HtmlBuilder {
 			tableLines.append(buildTableRowForLineTestRequirement(currentRequirement));
 		}
 
-		return "<table style=\"border:1px solid black;\">" +
-					buildTableHeader() +
-					tableLines +
-				"</table>";
+		return wrapData(new String[] {buildTableHeader(), tableLines.toString()}, "table");
+	}
+
+	public String wrapData(String[] data, String tag) {
+		StringBuilder wrappedData = new StringBuilder();
+		boolean enclosed = false;
+		String open = "<p>";
+		String close = "</p>";
+		String begin = null;
+		String end = null;
+
+		if (tag.equals("th")){
+			open = "<th>";
+			close = "</th>";
+			enclosed = true;
+			begin = "<tr>";
+			end = "</tr>";
+		} else if ( tag.equals("td")) {
+			open = "<td>";
+			close = "</td>";
+			enclosed = true;
+			begin = "<tr>";
+			end = "</tr>";
+		} else if ( tag.equals("table")) {
+			enclosed = true;
+			begin = "<table>";
+			end = "</table>";
+			open = "<tr>";
+			close = "</tr>";
+		}
+
+		for( String line: data) {
+			if (line == null) line ="";
+			wrappedData.append(open).append(line).append(close);
+		}
+
+		if (enclosed)
+			return begin + wrappedData + end;
+
+		return wrappedData.toString();
 	}
 
 	public String buildTableHeader() {
-		return "<tr>" +
-				"<th>" + "Element" + "</th>" +
-				"<th>" + "CEF" + "</th>" +
-				"<th>" + "CEP" + "</th>" +
-				"<th>" + "CNF" + "</th>" +
-				"<th>" + "CNP" + "</th>" +
-				"</tr>";
+		String[] rowData = new String[]{"Element", "Class", "Line", "CEF", "CEP", "CNF",
+									"CNP", "Suspiciouness"};
+		return wrapData(rowData, "th");
 	}
 
 	public String buildTableRowForLineTestRequirement(AbstractTestRequirement atr) {
-		return 	"<tr>" +
-				"<td style=\"border:1px solid black;\">" + atr.getMethodLine() + "</td>" +
-				"<td style=\"border:1px solid black;\">" + atr.getCef() + "</td>" +
-				"<td style=\"border:1px solid black;\">" + atr.getCep() + "</td>" +
-				"<td style=\"border:1px solid black;\">" + atr.getCnf() + "</td>" +
-				"<td style=\"border:1px solid black;\">" + atr.getCnp() + "</td>" +
-				"</tr>";
+		String[] rowData = new String[]{atr.getClassName(), atr.getMethodSignature(),
+				String.valueOf(atr.getMethodLine()), String.valueOf(atr.getCef()),
+				String.valueOf(atr.getCep()), String.valueOf(atr.getCnf()),
+				String.valueOf(atr.getCnp()), String.valueOf(atr.getSuspiciousness())};
+
+		return wrapData(rowData, "td");
 	}
 
 	public StringBuilder buildExecutionInfo() {

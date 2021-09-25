@@ -1,0 +1,42 @@
+body{
+    color: black;
+    font-size: 16px;
+    width: 100%;
+}
+
+.wrapper {
+    width: 80%;
+}
+
+.executionConfigs{
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.testRequirements {
+    width: 100%;
+}
+
+.red{
+    background-color:rgba(227, 27, 27, 0.5);
+}
+
+table, th, td {
+    padding: 2px;
+    text-align: left;
+    border: 1px solid black;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+tr:hover {
+    background-color: azure;
+}
+
+pre {
+    top: 30px;
+    overflow:auto;
+    font-size: 14px;
+}
+
+

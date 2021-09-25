@@ -3,35 +3,27 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>$pageTitle$</title>
+    <title>JAGUAR REPORT</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <style>
-        .executionConfigs{
-            margin-bottom: 20px;
-        }
-        
-        .red{
-            background-color:rgba(227, 27, 27, 0.5);
-        }
-    </style>
+    <link rel="stylesheet" href="../../br.usp.each.saeg.jaguar.core/src/main/resources/html-output/style.css">
     <link rel="stylesheet" href="../../br.usp.each.saeg.jaguar.core/src/main/resources/html-output/stackoverflow-light.css">
     <!--<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>-->
 
 </head>
 <body>
+    <div class = "wrapper">
+        <h1>Jaguar report</h1>
 
-    <h1>Jaguar report</h1>
+        <div class="executionConfigs">
+            <div><span>Heuristic: </span><span >$heuristic$</span></div>
+            <div><span>Requirement type: </span><span >$requirementType$</span></div>
+        </div>
 
-    <div class="executionConfigs">
-        <div><span>Heuristic: </span><span >$heuristic$</span></div>
-        <div><span>Requirement type: </span><span >$requirementType$</span></div>
+        <div class="testRequirements">
+            $testRequirementsList$
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+        <script>hljs.highlightAll(); </script>
     </div>
-
-    <div class="testRequirements">
-        $testRequirementsList$
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
-    <script>hljs.highlightAll(); </script>
-    
 </body>
 </html>
