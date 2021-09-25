@@ -4,6 +4,7 @@ import br.usp.each.saeg.jaguar.codeforest.model.Requirement;
 import br.usp.each.saeg.jaguar.core.Jaguar;
 import br.usp.each.saeg.jaguar.core.heuristic.Heuristic;
 import br.usp.each.saeg.jaguar.core.model.core.requirement.AbstractTestRequirement;
+import br.usp.each.saeg.jaguar.core.model.core.requirement.DuaTestRequirement;
 import br.usp.each.saeg.jaguar.core.model.core.requirement.LineTestRequirement;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
@@ -224,14 +225,23 @@ public class HtmlBuilder {
 	}
 
 	public String buildTableHeader() {
-		String[] rowData = new String[]{"Element", "Class", "Line", "CEF", "CEP", "CNF",
+		String[] rowData = new String[]{"Element", "Class", "Location", "CEF", "CEP", "CNF",
 									"CNP", "Suspiciouness"};
 		return wrapData(rowData, "th");
 	}
 
 	public String buildTableRowForLineTestRequirement(AbstractTestRequirement atr) {
+		Integer location = null;
+		if (atr instanceof DuaTestRequirement) {
+			DuaTestRequirement duaRequirement = (DuaTestRequirement) atr;
+			location = duaRequirement.getDef();
+		} else if (atr instanceof LineTestRequirement){
+			LineTestRequirement lineRequirement = (LineTestRequirement) atr;
+			location = lineRequirement.getLineNumber();
+		}
+
 		String[] rowData = new String[]{atr.getClassName(), atr.getMethodSignature(),
-				String.valueOf(atr.getMethodLine()), String.valueOf(atr.getCef()),
+				location.toString(), String.valueOf(atr.getCef()),
 				String.valueOf(atr.getCep()), String.valueOf(atr.getCnf()),
 				String.valueOf(atr.getCnp()), String.valueOf(atr.getSuspiciousness())};
 
