@@ -240,11 +240,17 @@ public class HtmlBuilder {
 
 	public StringBuilder buildExecutionInfo() {
 		StringBuilder strExecutionInfo = new StringBuilder();
+		int total = Jaguar.getnTests();
+		int failed = Jaguar.getnTestsFailed();
+		int success = total - failed;
+
 		return strExecutionInfo.append("<p>Executed Tests: ")
-				.append(Jaguar.getnTests())
-				.append("</p>")
-				.append("<p>Failed Tests: ")
-				.append(Jaguar.getnTestsFailed())
-				.append("</p>");
+				.append(total).append("</p>")
+				.append("<p> Successful Tests: <span class = 'test-success'>")
+				.append(success)
+				.append("</span></p><p>Failed Tests:")
+				.append("<span class = 'test-fail'>")
+				.append(failed)
+				.append("</span></p>");
 	}
 }

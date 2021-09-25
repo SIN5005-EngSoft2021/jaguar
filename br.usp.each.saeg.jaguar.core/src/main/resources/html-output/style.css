@@ -43,3 +43,10 @@ th {
     text-transform: uppercase;
 }
 
+.test-success {
+    color: green;
+}
+
+.test-fail {
+    color: red;
+}
