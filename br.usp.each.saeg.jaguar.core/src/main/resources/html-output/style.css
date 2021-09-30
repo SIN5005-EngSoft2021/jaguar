@@ -92,3 +92,8 @@ ul.breadcrumbs li a {
 ul.breadcrumbs li a:hover {
     text-decoration: underline;
 }
+
+footer {
+    border-top: 1px solid grey;
+    text-align: right;
+}
