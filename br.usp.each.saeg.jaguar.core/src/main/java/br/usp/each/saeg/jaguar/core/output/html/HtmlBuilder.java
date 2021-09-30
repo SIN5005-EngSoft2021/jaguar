@@ -96,7 +96,7 @@ public class HtmlBuilder {
 			requirementHtmlList.append("<div class=\"java-class\" id = \"java-class-")
 					.append(className).append("\">");
 
-			requirementHtmlList.append("<h3>").append(className).append("</h3>");
+			requirementHtmlList.append("<h2>").append(className).append("</h2>");
 
 			requirementHtmlList.append("<div style=\"overflow-x:auto;\">")
 					.append(buildHTMLTable(abstractTestRequirementList))
