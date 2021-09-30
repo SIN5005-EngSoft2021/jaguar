@@ -1,5 +1,6 @@
 body{
     color: black;
+    font-family: Garamond, serif;
     font-size: 16px;
     width: 100%;
 }
@@ -68,4 +69,26 @@ meter::-webkit-meter-optimum-value {
 meter::-moz-meter-bar { 
     background: lightcoral;
     border-radius: 25px 0 0 25px;
+}
+
+ul.breadcrumbs {
+    padding: 3px 20px;
+    border: 1px solid black;
+    font-size: 14px;
+}
+
+ul.breadcrumbs li {
+    display: inline;
+}
+
+ul.breadcrumbs li+li:before {
+    padding: 5px 2px;
+    color: black;
+    content: "> ";
+}
+ul.breadcrumbs li a {
+    text-decoration: none;
+}
+ul.breadcrumbs li a:hover {
+    text-decoration: underline;
 }
