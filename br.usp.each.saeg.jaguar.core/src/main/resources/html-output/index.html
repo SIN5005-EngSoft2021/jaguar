@@ -11,17 +11,26 @@
 
 </head>
 <body>
-    <div class = "wrapper">
-        <h1>Jaguar report</h1>
+    <div class="wrapper">
+        <header>
+            <nav class="breadcrumbs"></nav>
+            <h1>Jaguar Report</h1>
+        </header>
 
-        <div class="executionConfigs">
-            <div><span>Heuristic: </span><span >$heuristic$</span></div>
-            <div><span>Requirement type: </span><span >$requirementType$</span></div>
-        </div>
+        <article>
+            <section class="executionConfigs">
+                <p><em>Heuristic: </em>$heuristic$</p>
+                <p><em>Requirement type: </em>$requirementType$</p>
+            </section>
 
-        <div class="testRequirements">
-            $testRequirementsList$
-        </div>
+            <section class="testRequirements">
+                $testRequirementsList$
+            </section>
+        </article>
+
+
+        <footer></footer>
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
         <script>hljs.highlightAll(); </script>
     </div>
