@@ -50,3 +50,22 @@ th {
 .test-fail {
     color: red;
 }
+
+meter {
+    background: none;
+    background-color: lightgreen;
+    border: 1px solid black;
+    display: inline;
+    margin-left: 10px;
+    color: black;
+    border-radius: 25px;
+}
+
+meter::-webkit-meter-optimum-value {
+    background: lightcoral;
+    border-radius: 25px 0 0 25px;
+}
+meter::-moz-meter-bar { 
+    background: lightcoral;
+    border-radius: 25px 0 0 25px;
+}

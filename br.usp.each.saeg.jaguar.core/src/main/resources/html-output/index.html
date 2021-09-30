@@ -7,7 +7,6 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel="stylesheet" href="../../br.usp.each.saeg.jaguar.core/src/main/resources/html-output/style.css">
     <link rel="stylesheet" href="../../br.usp.each.saeg.jaguar.core/src/main/resources/html-output/stackoverflow-light.css">
-    <!--<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>-->
 
 </head>
 <body>
@@ -20,7 +19,15 @@
         <article>
             <section class="executionConfigs">
                 <p><em>Heuristic: </em>$heuristic$</p>
-                <p><em>Requirement type: </em>$requirementType$</p>
+                <p><em>Requirement Type: </em>$requirementType$</p>
+                <p>
+                    <label for="testsBar">
+                        <em>Failed Tests: </em>
+                    </label>
+                    <meter id="testsBar" value=$numFailTests min="0" max=$numberOfTests>
+                    </meter>
+                    $numFailTests failed out of $numberOfTests
+                </p>
             </section>
 
             <section class="testRequirements">

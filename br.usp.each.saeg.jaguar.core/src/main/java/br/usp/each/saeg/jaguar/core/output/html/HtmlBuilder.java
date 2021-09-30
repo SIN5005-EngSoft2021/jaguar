@@ -69,7 +69,12 @@ public class HtmlBuilder {
 						)
 				)
 		);
-		
+
+		int[] testsData = getGeneralTestsNumbers();
+		htmlString = htmlString.replace("$numberOfTests", String.valueOf(testsData[0]));
+		htmlString = htmlString.replace("$numFailTests", String.valueOf(testsData[1]));
+
+
 		htmlString = htmlString.replace("$requirementType$", requirementType.toString());
 		
 		htmlString = htmlString.replace("$testRequirementsList$", requirementListHtml());
@@ -86,7 +91,6 @@ public class HtmlBuilder {
 		}
 		
 		StringBuilder requirementHtmlList = new StringBuilder();
-		requirementHtmlList.append(buildExecutionInfo());
 
 		for (String className : requirementsGroupByClass.keySet()){
 			requirementHtmlList.append("<div class=\"java-class\" id = \"java-class-")
@@ -248,19 +252,10 @@ public class HtmlBuilder {
 		return wrapData(rowData, "td");
 	}
 
-	public StringBuilder buildExecutionInfo() {
-		StringBuilder strExecutionInfo = new StringBuilder();
-		int total = Jaguar.getnTests();
-		int failed = Jaguar.getnTestsFailed();
-		int success = total - failed;
-
-		return strExecutionInfo.append("<p>Executed Tests: ")
-				.append(total).append("</p>")
-				.append("<p> Successful Tests: <span class = 'test-success'>")
-				.append(success)
-				.append("</span></p><p>Failed Tests:")
-				.append("<span class = 'test-fail'>")
-				.append(failed)
-				.append("</span></p>");
+	public int[] getGeneralTestsNumbers() {
+		int[] temp = new int[]{0,0};
+		if(Jaguar.getnTests() > 0) temp[0] = Jaguar.getnTests();
+		if(Jaguar.getnTestsFailed() > 0) temp[1] = Jaguar.getnTestsFailed();
+		return temp;
 	}
 }
