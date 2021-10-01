@@ -15,53 +15,52 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.*;
 
 public class HtmlBuilder {
-	
+
 	private static Logger logger = LoggerFactory.getLogger("JaguarLogger");
-	
+
 	private String project;
-	
+
 	private Heuristic heuristic;
-	
+
 	private Requirement.Type requirementType;
-	
+
 	private Long timeSpent;
-	
+
 	private List<AbstractTestRequirement> abstractTestRequirementList = new ArrayList<>();
-	
+
 	private File projectBeingTestedDir;
-	
+
 	public void project(String project){
 		this.project = project;
 	}
-	
+
 	public void heuristic(Heuristic heuristic){
 		this.heuristic =  heuristic;
 	}
-	
+
 	public void timeSpent(Long timeSpent){
 		this.timeSpent = timeSpent;
 	}
-	
+
 	public void requirementType(Requirement.Type requirementType){
 		this.requirementType = requirementType;
 	}
-	
+
 	public void abstractTestRequirementList(List<AbstractTestRequirement> abstractTestRequirementList){
 		this.abstractTestRequirementList = abstractTestRequirementList;
 	}
-	
+
 	public void projectBeingTestedDir(File projectBeingTestedDir) {
 		this.projectBeingTestedDir = projectBeingTestedDir;
 	}
-	
+
 	public String build() throws IOException {
 		File htmlTemplateFile = new File("br.usp.each.saeg.jaguar.core/src/main/resources/html-output/index.html");
 		String htmlString = FileUtils.readFileToString(htmlTemplateFile);
-		
+
 		htmlString = htmlString.replace("$heuristic$",
 				StringUtils.upperCase(
 						StringUtils.removeEndIgnoreCase(
@@ -71,38 +70,36 @@ public class HtmlBuilder {
 		);
 
 		int[] testsData = getGeneralTestsNumbers();
-		htmlString = htmlString.replace("$numberOfTests", String.valueOf(testsData[0]));
-		htmlString = htmlString.replace("$numFailTests", String.valueOf(testsData[1]));
+		htmlString = htmlString.replace("$numberOfTests$", String.valueOf(testsData[0]));
+		htmlString = htmlString.replace("$numFailTests$", String.valueOf(testsData[1]));
 
 
 		htmlString = htmlString.replace("$requirementType$", requirementType.toString());
-		
+
 		htmlString = htmlString.replace("$testRequirementsList$", requirementListHtml());
-		
+
 		return htmlString;
 	}
-	
+
 	public String requirementListHtml() throws IOException {
-		
+
 		MultiValuedMap<String, AbstractTestRequirement> requirementsGroupByClass = new ArrayListValuedHashMap<>();
-		
+
 		for (AbstractTestRequirement requirement : abstractTestRequirementList){
 			requirementsGroupByClass.put(requirement.getClassName(), requirement);
 		}
-		
+
 		StringBuilder requirementHtmlList = new StringBuilder();
 
 		for (String className : requirementsGroupByClass.keySet()){
 			requirementHtmlList.append("<div class=\"java-class\" id = \"java-class-")
 					.append(className).append("\">");
 
-			requirementHtmlList.append("<h2>").append(className).append("</h2>");
-
 			requirementHtmlList.append("<div style=\"overflow-x:auto;\">")
 					.append(buildHTMLTable(abstractTestRequirementList))
 					.append("<div class=\"java-class-code\" id = \"java-class-code")
 					.append(className).append("\">");
-			
+
 			String codeFromClass = getCodeFromAbsolutePath(
 					projectBeingTestedDir.getAbsolutePath()
 							+ System.getProperty("file.separator") + "src"
@@ -113,40 +110,40 @@ public class HtmlBuilder {
 
 			Collection<AbstractTestRequirement> requirementsForThisClass = requirementsGroupByClass.get(className);
 			String codeFromClassTransformedForHtml = transformJavaCodeToDisplayInHtml(codeFromClass, requirementsForThisClass);
-			
+
 			requirementHtmlList.append("<pre><code class=\"language-java\">")
 					.append(codeFromClassTransformedForHtml)
 					.append("</code> </pre>");
-			
+
 			requirementHtmlList.append("</div>");
-			
-			
+
+
 			requirementHtmlList.append("</div>");
 		}
-		
-		
+
+
 		return requirementHtmlList.toString();
 	}
-	
+
 	private String getCodeFromAbsolutePath(String absolutePath) throws IOException {
 		File clazz = new File(absolutePath);
 		return FileUtils.readFileToString(clazz );
 	}
-	
+
 	private String transformJavaCodeToDisplayInHtml(String javaCode, Collection<AbstractTestRequirement> requirementsForThisClass){
-		
+
 		StringBuilder codeFromClassTransformedForHtml = new StringBuilder();
-		
+
 		List<String> rowsInJavaCode = Arrays.asList(javaCode.split("\\n"));
 
 		codeFromClassTransformedForHtml.append("<ol class=\"linenumbers\">");
-		
+
 		for(int rowIndex = 0; rowIndex < rowsInJavaCode.size(); rowIndex++){
-			
+
 			final int rowIndexfinal = rowIndex;
-			
+
 			String codeLine = rowsInJavaCode.get(rowIndex);
-			
+
 			Optional<AbstractTestRequirement> optionalAbstractTestRequirementForThisLine = requirementsForThisClass.stream().filter(abstractTestRequirement -> {
 				if(abstractTestRequirement instanceof LineTestRequirement){
 					LineTestRequirement lineTestRequirement = (LineTestRequirement) abstractTestRequirement;
@@ -157,13 +154,13 @@ public class HtmlBuilder {
 			}).findFirst();
 
 			if(optionalAbstractTestRequirementForThisLine.isPresent()){
-				
+
 				AbstractTestRequirement requirement = optionalAbstractTestRequirementForThisLine.get();
-				
+
 				codeLine = "<span class=\""+getSuspiciousnessCssColor(requirement.getSuspiciousness())+"\">"
 						+ codeLine
 						+ "</span>"
-						;
+				;
 			}
 
 			codeFromClassTransformedForHtml.append("<li>")
@@ -171,13 +168,13 @@ public class HtmlBuilder {
 					.append("</li>");
 		}
 
-		
+
 		return codeFromClassTransformedForHtml.toString();
 	}
 
 	public String getSuspiciousnessCssColor(double suspiciousness){
 		return "red";
-		
+
 	}
 
 	public String buildHTMLTable(List<AbstractTestRequirement> requirementsForThisClass) {
@@ -230,7 +227,7 @@ public class HtmlBuilder {
 
 	public String buildTableHeader() {
 		String[] rowData = new String[]{"Class", "Method", "Location", "CEF", "CEP", "CNF",
-									"CNP", "Suspiciouness"};
+				"CNP", "Suspiciouness"};
 		return wrapData(rowData, "th");
 	}
 
