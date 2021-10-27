@@ -10,47 +10,167 @@
 
 </head>
 <body>
-    <div class="wrapper">
-        <header>
-            <nav>
-                <ul class="breadcrumbs">
-                    <li> <a href="#">prototype #1</a></li>
-                    <li> <a href="#">prototype #2</a></li>
-                    <li>prototype #3</li>
-                </ul>
-            </nav>
-            <h1>Jaguar Report</h1>
-        </header>
+<div class="wrapper">
+    <header>
+        <nav>
+            <ul class="breadcrumbs">
+                <li> <a href="#">prototype #1</a></li>
+                <li> <a href="#">prototype #2</a></li>
+                <li>prototype #3</li>
+            </ul>
+        </nav>
+        <h1>Jaguar Report</h1>
+    </header>
 
-        <main>
-            <section class="executionConfigs">
-                <p><em>Heuristic: </em>$heuristic$</p>
-                <p><em>Requirement Type: </em>$requirementType$</p>
-                <p><em>Executed Tests: </em>$numberOfTests$</p>
-                <p>
-                    <label for="testsBar">
-                        <em>Failed Tests: </em>
-                    </label>
+    <main>
+        <section class="executionConfigs">
+            <p><em>Heuristic: </em>TARANTULA</p>
+            <p><em>Requirement Type: </em>LINE</p>
+            <p><em>Executed Tests: </em>7</p>
+            <p>
+                <label for="testsBar">
+                    <em>Failed Tests: </em>
+                </label>
 
-                    <meter id="testsBar" value=$numFailTests$ min="0" max=$numberOfTests$>
-                    </meter>
-                    $numFailTests$ failed out of $numberOfTests$
-                </p>
-            </section>
+                <meter id="testsBar" value=4 min="0" max=7>
+                </meter>
+                4 failed out of 7
+            </p>
+        </section>
 
-            <section class="testRequirements">
-                <h2>Breakdown by $element$</h2>
-                $testRequirementsList$
-            </section>
-        </main>
+        <section class="testRequirements">
+            <h2>Breakdown by $element$</h2>
+            <div class="java-class" id = "java-class-br/usp/each/saeg/jaguar/example/Max"><div style="overflow-x:auto;"><table><tr><tr><th>Class</th><th>Method</th><th>Location</th><th>CEF</th><th>CEP</th><th>CNF</th><th>CNP</th><th>Suspiciouness</th></tr></tr><tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>35</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>32</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>33</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>29</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>printArray(int[])</td><td>90</td><td>1</td><td>0</td><td>3</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>printArray(int[])</td><td>88</td><td>1</td><td>0</td><td>3</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>printArray(int[])</td><td>89</td><td>1</td><td>0</td><td>3</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>printArray(int[])</td><td>86</td><td>1</td><td>0</td><td>3</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>22</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>printArray(int[])</td><td>87</td><td>1</td><td>0</td><td>3</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>23</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>20</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>21</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>16</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>sort(int[], int, int)</td><td>81</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>17</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>sort(int[], int, int)</td><td>79</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>sort(int[], int, int)</td><td>76</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>12</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>13</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>sort(int[], int, int)</td><td>75</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>sort(int[], int, int)</td><td>72</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>MergeSort()</td><td>4</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>sort(int[], int, int)</td><td>69</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>63</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>60</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>61</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>59</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>57</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>52</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>53</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>51</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>49</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>45</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>42</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>43</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>38</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>37</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/Max</td><td>max(int[])</td><td>16</td><td>1</td><td>3</td><td>3</td><td>0</td><td>0.2</td></tr><tr><td>br/usp/each/saeg/jaguar/example/Max</td><td>max(int[])</td><td>14</td><td>1</td><td>3</td><td>3</td><td>0</td><td>0.2</td></tr><tr><td>br/usp/each/saeg/jaguar/example/Max</td><td>max(int[])</td><td>13</td><td>1</td><td>3</td><td>3</td><td>0</td><td>0.2</td></tr><tr><td>br/usp/each/saeg/jaguar/example/Max</td><td>max(int[])</td><td>12</td><td>1</td><td>3</td><td>3</td><td>0</td><td>0.2</td></tr><tr><td>br/usp/each/saeg/jaguar/example/Max</td><td>max(int[])</td><td>20</td><td>1</td><td>3</td><td>3</td><td>0</td><td>0.2</td></tr><tr><td>br/usp/each/saeg/jaguar/example/Max</td><td>max(int[])</td><td>18</td><td>1</td><td>3</td><td>3</td><td>0</td><td>0.2</td></tr><tr><td>br/usp/each/saeg/jaguar/example/Max</td><td>max(int[])</td><td>17</td><td>0</td><td>3</td><td>4</td><td>0</td><td>0.0</td></tr></tr></table><div class="java-class-code" id = "java-class-codebr/usp/each/saeg/jaguar/example/Max"><pre><code class="language-java"><ol class="linenumbers"><li>package br.usp.each.saeg.jaguar.example;
+</li><li>
+</li><li>/**
+</li><li> * A very simple code used as motivational example
+</li><li> *
+</li><li> */
+</li><li>public class Max
+</li><li>{
+</li><li>
+</li><li>    public static int max(int[] array)
+</li><li>    {
+</li><li>        int i = 0;
+</li><li><span class="red">        int max = array[++i]; //array[i++];</span>
+</li><li><span class="red">        while(i < array.length)</span>
+</li><li><span class="red">        {</span>
+</li><li>            if(array[i] > max)
+</li><li><span class="red">                max = array[i];</span>
+</li><li><span class="red">            i++;</span>
+</li><li><span class="red">        }</span>
+</li><li>        return max;
+</li><li><span class="red">    }</span>
+</li><li>
+</li><li>    public static void main(String[] args) {
+</li><li>		System.out.println("Hello from Jaguar Example");
+</li><li>	}
+</li><li>}
+</li></ol></code> </pre></div></div><div class="java-class" id = "java-class-br/usp/each/saeg/jaguar/example/MergeSort"><div style="overflow-x:auto;"><table><tr><tr><th>Class</th><th>Method</th><th>Location</th><th>CEF</th><th>CEP</th><th>CNF</th><th>CNP</th><th>Suspiciouness</th></tr></tr><tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>35</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>32</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>33</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>29</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>printArray(int[])</td><td>90</td><td>1</td><td>0</td><td>3</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>printArray(int[])</td><td>88</td><td>1</td><td>0</td><td>3</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>printArray(int[])</td><td>89</td><td>1</td><td>0</td><td>3</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>printArray(int[])</td><td>86</td><td>1</td><td>0</td><td>3</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>22</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>printArray(int[])</td><td>87</td><td>1</td><td>0</td><td>3</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>23</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>20</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>21</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>16</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>sort(int[], int, int)</td><td>81</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>17</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>sort(int[], int, int)</td><td>79</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>sort(int[], int, int)</td><td>76</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>12</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>13</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>sort(int[], int, int)</td><td>75</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>sort(int[], int, int)</td><td>72</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>MergeSort()</td><td>4</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>sort(int[], int, int)</td><td>69</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>63</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>60</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>61</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>59</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>57</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>52</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>53</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>51</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>49</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>45</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>42</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>43</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>38</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/MergeSort</td><td>merge(int[], int, int, int)</td><td>37</td><td>2</td><td>0</td><td>2</td><td>3</td><td>1.0</td></tr><tr><td>br/usp/each/saeg/jaguar/example/Max</td><td>max(int[])</td><td>16</td><td>1</td><td>3</td><td>3</td><td>0</td><td>0.2</td></tr><tr><td>br/usp/each/saeg/jaguar/example/Max</td><td>max(int[])</td><td>14</td><td>1</td><td>3</td><td>3</td><td>0</td><td>0.2</td></tr><tr><td>br/usp/each/saeg/jaguar/example/Max</td><td>max(int[])</td><td>13</td><td>1</td><td>3</td><td>3</td><td>0</td><td>0.2</td></tr><tr><td>br/usp/each/saeg/jaguar/example/Max</td><td>max(int[])</td><td>12</td><td>1</td><td>3</td><td>3</td><td>0</td><td>0.2</td></tr><tr><td>br/usp/each/saeg/jaguar/example/Max</td><td>max(int[])</td><td>20</td><td>1</td><td>3</td><td>3</td><td>0</td><td>0.2</td></tr><tr><td>br/usp/each/saeg/jaguar/example/Max</td><td>max(int[])</td><td>18</td><td>1</td><td>3</td><td>3</td><td>0</td><td>0.2</td></tr><tr><td>br/usp/each/saeg/jaguar/example/Max</td><td>max(int[])</td><td>17</td><td>0</td><td>3</td><td>4</td><td>0</td><td>0.0</td></tr></tr></table><div class="java-class-code" id = "java-class-codebr/usp/each/saeg/jaguar/example/MergeSort"><pre><code class="language-java"><ol class="linenumbers"><li>package br.usp.each.saeg.jaguar.example;
+</li><li>
+</li><li>/* Java program for Merge Sort */
+</li><li>class MergeSort
+</li><li><span class="red">{</span>
+</li><li>    // Merges two subarrays of arr[].
+</li><li>    // First subarray is arr[l..m]
+</li><li>    // Second subarray is arr[m+1..r]
+</li><li>    void merge(int arr[], int l, int m, int r)
+</li><li>    {
+</li><li>        // Find sizes of two subarrays to be merged
+</li><li>        int n1 = m - l + 1;
+</li><li><span class="red">        int n2 = r - m;</span>
+</li><li><span class="red"></span>
+</li><li>        /* Create temp arrays */
+</li><li>        int L[] = new int [n1];
+</li><li><span class="red">        int R[] = new int [n2];</span>
+</li><li><span class="red"></span>
+</li><li>        /*Copy data to temp arrays*/
+</li><li>        for (int i=0; i<n1; ++i)
+</li><li><span class="red">            L[i] = arr[l + i];</span>
+</li><li><span class="red">        for (int j=0; j<n2; ++j)</span>
+</li><li><span class="red">            R[j] = arr[m + 1+ j];</span>
+</li><li><span class="red"></span>
+</li><li>
+</li><li>        /* Merge the temp arrays */
+</li><li>
+</li><li>        // Initial indexes of first and second subarrays
+</li><li>        int i = 0, j = 0;
+</li><li><span class="red"></span>
+</li><li>        // Initial index of merged subarray array
+</li><li>        int k = l;
+</li><li><span class="red">        while (i < n1 && j < n2)</span>
+</li><li><span class="red">        {</span>
+</li><li>            if (L[i] <= R[j])
+</li><li><span class="red">            {</span>
+</li><li>                arr[k] = L[i];
+</li><li><span class="red">                i++;</span>
+</li><li><span class="red">            }</span>
+</li><li>            else
+</li><li>            {
+</li><li>                arr[k] = R[j];
+</li><li><span class="red">                j++;</span>
+</li><li><span class="red">            }</span>
+</li><li>            k++;
+</li><li><span class="red">        }</span>
+</li><li>
+</li><li>        /* Copy remaining elements of L[] if any */
+</li><li>        while (i < n1)
+</li><li><span class="red">        {</span>
+</li><li>            arr[k] = L[i];
+</li><li><span class="red">            i++;</span>
+</li><li><span class="red">            k++;</span>
+</li><li><span class="red">        }</span>
+</li><li>
+</li><li>        /* Copy remaining elements of R[] if any */
+</li><li>        while (j < n2)
+</li><li><span class="red">        {</span>
+</li><li>            arr[k] = R[j];
+</li><li><span class="red">            j++;</span>
+</li><li><span class="red">            k++;</span>
+</li><li><span class="red">        }</span>
+</li><li>    }
+</li><li><span class="red"></span>
+</li><li>    // Main function that sorts arr[l..r] using
+</li><li>    // merge()
+</li><li>    void sort(int arr[], int l, int r)
+</li><li>    {
+</li><li>        if (l < r)
+</li><li><span class="red">        {</span>
+</li><li>            // Find the middle point
+</li><li>            int m = (l+r)/2;
+</li><li><span class="red"></span>
+</li><li>            // Sort first and second halves
+</li><li>            sort(arr, l, m);
+</li><li><span class="red">            sort(arr , m+1, r);</span>
+</li><li><span class="red"></span>
+</li><li>            // Merge the sorted halves
+</li><li>            merge(arr, l, m, r);
+</li><li><span class="red">        }</span>
+</li><li>    }
+</li><li><span class="red"></span>
+</li><li>    /* A utility function to print array of size n */
+</li><li>    static StringBuilder printArray(int arr[])
+</li><li>    {
+</li><li>        int n = arr.length;
+</li><li><span class="red">        StringBuilder output = new StringBuilder();</span>
+</li><li><span class="red">        for (int i=0; i<n; ++i)</span>
+</li><li><span class="red">            output.append(arr[i]).append(" ");</span>
+</li><li><span class="red">        return output;</span>
+</li><li><span class="red">    }</span>
+</li><li>
+</li><li>}
+</li><li>/* This code is contributed by Rajat Mishra */
+</li></ol></code> </pre></div></div>
+            </div></section>
+    </main>
 
 
-        <footer>
-            <p class="credits">Report generated by $programVersion$ at $timeReport$</p>
-        </footer>
+    <footer>
+        <p class="credits">Report generated by $programVersion$ at $timeReport$</p>
+    </footer>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
-        <script>hljs.highlightAll(); </script>
-    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+    <script>hljs.highlightAll(); </script>
+</div>
 </body>
 </html>
