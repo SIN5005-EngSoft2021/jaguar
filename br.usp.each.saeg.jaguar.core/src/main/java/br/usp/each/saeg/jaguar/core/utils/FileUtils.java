@@ -21,6 +21,8 @@ import java.util.List;
  * 
  */
 public class FileUtils {
+	
+	private static final String COMMAND_TO_MAKE_FILE_HIDDEN_ON_WINDOWS = "C:\\\\WINDOWS\\\\System32\\\\ATTRIB.EXE +H " /* plus file name */;
 
 	/**
 	 * Create classes out of each line of the given text file.
@@ -198,5 +200,35 @@ public class FileUtils {
 			classesDir = filesReturned[0];
 		}
 		return classesDir;
+	}
+	
+	public static File createOrGetFolder(String basePath, String folderName){
+		
+		File folder = new File(basePath + System.getProperty("file.separator") + folderName);
+		
+		if(!folder.exists()){
+			folder.mkdirs();
+		}
+		
+		return folder;
+	}
+	
+	public static File createOrGetHiddenFolder(String basePath, String folderName) throws IOException {
+		
+		if(OperationalSystemUtils.isLinux() && !folderName.startsWith(".")){
+			folderName = "." + folderName;
+		}
+		
+		File folder = new File(basePath + System.getProperty("file.separator") + folderName);
+		
+		if(!folder.exists()){
+			folder.mkdirs();
+		}
+		
+		if(OperationalSystemUtils.isWindows()){
+			Runtime.getRuntime().exec(COMMAND_TO_MAKE_FILE_HIDDEN_ON_WINDOWS + folder.getAbsolutePath());
+		}
+		
+		return folder;
 	}
 }

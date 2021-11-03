@@ -6,12 +6,10 @@ import br.usp.each.saeg.jaguar.core.heuristic.Heuristic;
 import br.usp.each.saeg.jaguar.core.model.core.requirement.AbstractTestRequirement;
 import br.usp.each.saeg.jaguar.core.model.core.requirement.DuaTestRequirement;
 import br.usp.each.saeg.jaguar.core.model.core.requirement.LineTestRequirement;
+import br.usp.each.saeg.jaguar.core.utils.ModelMapUtils;
 import org.apache.commons.collections4.MultiValuedMap;
-import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,49 +18,51 @@ import java.util.*;
 import static br.usp.each.saeg.jaguar.core.output.html.HtmlDomTree.*;
 
 public class HtmlBuilder {
-
-	private static Logger logger = LoggerFactory.getLogger("JaguarLogger");
-
-	private String project;
-
+	
+	private static final String TEST_REQUIREMENT_HTML_TEMPLATE_PATH = "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/html/test-requirement-model.html";
+	
 	private Heuristic heuristic;
-
+	
 	private Requirement.Type requirementType;
-
+	
 	private Long timeSpent;
-
+	
 	private List<AbstractTestRequirement> abstractTestRequirementList = new ArrayList<>();
-
+	
 	private File projectBeingTestedDir;
-
-	public void project(String project){
-		this.project = project;
-	}
-
-	public void heuristic(Heuristic heuristic){
-		this.heuristic =  heuristic;
-	}
-
-	public void timeSpent(Long timeSpent){
-		this.timeSpent = timeSpent;
-	}
-
-	public void requirementType(Requirement.Type requirementType){
+	
+	public HtmlBuilder(Heuristic heuristic, Requirement.Type requirementType, Long timeSpent, List<AbstractTestRequirement> abstractTestRequirementList, File projectBeingTestedDir) {
+		this.heuristic = heuristic;
 		this.requirementType = requirementType;
-	}
-
-	public void abstractTestRequirementList(List<AbstractTestRequirement> abstractTestRequirementList){
+		this.timeSpent = timeSpent;
 		this.abstractTestRequirementList = abstractTestRequirementList;
-	}
-
-	public void projectBeingTestedDir(File projectBeingTestedDir) {
 		this.projectBeingTestedDir = projectBeingTestedDir;
 	}
-
+	
+	public void heuristic(Heuristic heuristic) {
+		this.heuristic = heuristic;
+	}
+	
+	public void timeSpent(Long timeSpent) {
+		this.timeSpent = timeSpent;
+	}
+	
+	public void requirementType(Requirement.Type requirementType) {
+		this.requirementType = requirementType;
+	}
+	
+	public void abstractTestRequirementList(List<AbstractTestRequirement> abstractTestRequirementList) {
+		this.abstractTestRequirementList = abstractTestRequirementList;
+	}
+	
+	public void projectBeingTestedDirectory(File projectBeingTestedDir) {
+		this.projectBeingTestedDir = projectBeingTestedDir;
+	}
+	
 	public String build() throws IOException {
 		File htmlTemplateFile = new File("br.usp.each.saeg.jaguar.core/src/main/resources/html-output/index.html");
-		String htmlString = FileUtils.readFileToString(htmlTemplateFile);
-
+		String htmlString = getStringFromHtmlTemplate("br.usp.each.saeg.jaguar.core/src/main/resources/html-output/index.html");
+		
 		htmlString = htmlString.replace("$heuristic$",
 				StringUtils.upperCase(
 						StringUtils.removeEndIgnoreCase(
@@ -70,7 +70,7 @@ public class HtmlBuilder {
 						)
 				)
 		);
-
+		
 		int[] testsData = getGeneralTestsNumbers();
 		htmlString = htmlString.replace("$numberOfTests$", String.valueOf(testsData[0]));
 		htmlString = htmlString.replace("$numFailTests$", String.valueOf(testsData[1]));
@@ -84,24 +84,20 @@ public class HtmlBuilder {
 	}
 
 	public String requirementListHtml() throws IOException {
-
-		MultiValuedMap<String, AbstractTestRequirement> requirementsGroupByClass = new ArrayListValuedHashMap<>();
-
-		for (AbstractTestRequirement requirement : abstractTestRequirementList){
-			requirementsGroupByClass.put(requirement.getClassName(), requirement);
-		}
-
+		
+		MultiValuedMap<String, AbstractTestRequirement> requirementsGroupByClass = ModelMapUtils.testRequirementsGroupByClassName(abstractTestRequirementList);
+		
 		StringBuilder requirementHtmlList = new StringBuilder();
-
-		for (String className : requirementsGroupByClass.keySet()){
+		
+		for (String className : requirementsGroupByClass.keySet()) {
 			requirementHtmlList.append("<div class=\"java-class\" id = \"java-class-")
 					.append(className).append("\">");
-
+			
 			requirementHtmlList.append("<div style=\"overflow-x:auto;\">")
 					.append(buildHTMLTable(abstractTestRequirementList))
 					.append("<div class=\"java-class-code\" id = \"java-class-code")
 					.append(className).append("\">");
-
+			
 			String codeFromClass = getCodeFromAbsolutePath(
 					projectBeingTestedDir.getAbsolutePath()
 							+ System.getProperty("file.separator") + "src"
@@ -109,94 +105,120 @@ public class HtmlBuilder {
 							+ System.getProperty("file.separator") + "java"
 							+ System.getProperty("file.separator") + className + ".java"
 			);
-
+			
 			Collection<AbstractTestRequirement> requirementsForThisClass = requirementsGroupByClass.get(className);
-			String codeFromClassTransformedForHtml = transformJavaCodeToDisplayInHtml(codeFromClass, requirementsForThisClass);
-
-
+			String codeFromClassTransformedForHtml = transformJavaCodeToHtml(codeFromClass, requirementsForThisClass);
+			
+			
 			String htmlCode = new HtmlTagBuilder(HtmlDomTree.CODE)
-									.setCssClass("language-java")
-									.setInnerHtml(codeFromClassTransformedForHtml)
-									.build();
-
+					.setCssClass("language-java")
+					.setInnerHtml(codeFromClassTransformedForHtml)
+					.build();
+			
 			String preCode = new HtmlTagBuilder(HtmlDomTree.PRE)
-									.setInnerHtml(htmlCode)
-									.build();
-
+					.setInnerHtml(htmlCode)
+					.build();
+			
 			requirementHtmlList.append(preCode);
-
+			
 			requirementHtmlList.append("</div>");
-
-
+			
+			
 			requirementHtmlList.append("</div>");
 		}
-
-
+		
+		
 		return requirementHtmlList.toString();
 	}
-
-	private String getCodeFromAbsolutePath(String absolutePath) throws IOException {
+	
+	public String getCodeFromAbsolutePath(String absolutePath) throws IOException {
 		File clazz = new File(absolutePath);
-		return FileUtils.readFileToString(clazz );
+		return getCodeFromAbsolutePath(clazz);
 	}
-
-	private String transformJavaCodeToDisplayInHtml(String javaCode, Collection<AbstractTestRequirement> requirementsForThisClass){
-
-		StringBuilder codeFromClassTransformedForHtml = new StringBuilder();
-
+	
+	public String getCodeFromAbsolutePath(File classFile) throws IOException {
+		return FileUtils.readFileToString(classFile);
+	}
+	
+	private String transformJavaCodeToHtml(String javaCode, AbstractTestRequirement abstractTestRequirement) {
+		return transformJavaCodeToHtml(javaCode, Collections.singleton(abstractTestRequirement));
+	}
+	
+	private String transformJavaCodeToHtml(String javaCode, Collection<AbstractTestRequirement> requirementsForThisClass) {
 		List<String> rowsInJavaCode = Arrays.asList(javaCode.split("\\n"));
-
-		codeFromClassTransformedForHtml.append("<ol class=\"linenumbers\">");
-
-		for(int rowIndex = 0; rowIndex < rowsInJavaCode.size(); rowIndex++){
-
-			final int rowIndexfinal = rowIndex;
-
+		
+		HtmlTagBuilder olHtmlTagBuilder = new HtmlTagBuilder(OL);
+		olHtmlTagBuilder.setCssClass("linenumbers");
+		
+		for (int rowIndex = 0; rowIndex < rowsInJavaCode.size() - 1 ; rowIndex++) {
+			
+			final int rowIndexFinal = rowIndex /* To use in lambda need to be final */;
+			
 			String codeLine = rowsInJavaCode.get(rowIndex);
-
-			Optional<AbstractTestRequirement> optionalAbstractTestRequirementForThisLine = requirementsForThisClass.stream().filter(abstractTestRequirement -> {
-				if(abstractTestRequirement instanceof LineTestRequirement){
-					LineTestRequirement lineTestRequirement = (LineTestRequirement) abstractTestRequirement;
-					return Objects.equals(lineTestRequirement.getLineNumber(), rowIndexfinal);
-				}else {
-					return false;
+			
+			Optional<AbstractTestRequirement> optionalTestRequirementWithMostHighSuspeciosForThisLine = requirementsForThisClass.stream()
+					.filter(abstractTestRequirement -> {
+						if (abstractTestRequirement instanceof LineTestRequirement) {
+							LineTestRequirement lineTestRequirement = (LineTestRequirement) abstractTestRequirement;
+							return Objects.equals(lineTestRequirement.getLineNumber(), rowIndexFinal + 1);
+						} else {
+							return false;
+						}
+					}).max(Comparator.comparingDouble(AbstractTestRequirement::getSuspiciousness));
+			
+			if (optionalTestRequirementWithMostHighSuspeciosForThisLine.isPresent()) {
+				
+				AbstractTestRequirement requirement = optionalTestRequirementWithMostHighSuspeciosForThisLine.get();
+				
+				HtmlTagBuilder codeLineHtmlTagBuilder = new HtmlTagBuilder(HtmlDomTree.SPAN)
+						.addCssClass(getSuspiciousnessCssColor(requirement.getSuspiciousness()))
+						.setInnerHtml(codeLine)
+						;
+				
+				if(requirementsForThisClass.size() == 1){
+					codeLineHtmlTagBuilder.addCssClass("focus-item");
 				}
-			}).findFirst();
-
-			if(optionalAbstractTestRequirementForThisLine.isPresent()){
-
-				AbstractTestRequirement requirement = optionalAbstractTestRequirementForThisLine.get();
-
-				codeLine= new HtmlTagBuilder(HtmlDomTree.SPAN)
-								.setCssClass(getSuspiciousnessCssColor(requirement.getSuspiciousness()))
-								.setInnerHtml(codeLine)
-								.build();
+				
+				codeLine = codeLineHtmlTagBuilder.build();
 			}
-
+			
 			String newListItem = new HtmlTagBuilder(HtmlDomTree.LI)
-										.setInnerHtml(codeLine)
-										.setSiblingHtml(System.lineSeparator())
-										.build();
-
-			codeFromClassTransformedForHtml.append(newListItem);
+					.setInnerHtml(codeLine)
+					.setSiblingHtml(System.lineSeparator())
+					.build();
+			
+			olHtmlTagBuilder.addInnerHtml(newListItem);
 		}
-
-
-		return codeFromClassTransformedForHtml.toString();
+		
+		
+		return new HtmlTagBuilder(PRE)
+				.setInnerHtml(
+						new HtmlTagBuilder(CODE)
+								.setCssClass("language-java")
+								.setInnerHtml(olHtmlTagBuilder.build())
+								.build()
+				).build();
 	}
-
-	public String getSuspiciousnessCssColor(double suspiciousness){
-		return "red";
-
+	
+	public String getSuspiciousnessCssColor(double suspiciousness) {
+		if (suspiciousness >= 0.75D) {
+			return "red";
+		} else if (suspiciousness >= 0.5D) {
+			return "orange";
+		} else if (suspiciousness >= 0.25D) {
+			return "yellow";
+		} else {
+			return "green";
+		}
 	}
-
+	
 	public String buildHTMLTable(List<AbstractTestRequirement> requirementsForThisClass) {
 		StringBuilder tableLines = new StringBuilder();
 		for (AbstractTestRequirement currentRequirement : requirementsForThisClass) {
 			tableLines.append(buildTableRowForLineTestRequirement(currentRequirement));
 		}
-
-		return wrapData(new String[] {buildTableHeader(), tableLines.toString()}, "table");
+		
+		return wrapData(new String[]{buildTableHeader(), tableLines.toString()}, "table");
 	}
 
 	public String wrapData(String[] data, String tag) {
@@ -265,15 +287,27 @@ public class HtmlBuilder {
 		for (String line : data) {
 			if (line == null)
 				line = "";
-
+			
 			String currentWrappedData = new HtmlTagBuilder(openTag)
 					.setInnerHtml(line)
 					.build();
-
+			
 			wrappedData.append(currentWrappedData);
 		}
-
+		
 		return wrappedData;
 	}
-
+	
+	public String buildTestRequirementHtml(String javaCode, AbstractTestRequirement abstractTestRequirement) throws IOException {
+		String htmlTemplateForTestRequirement = getStringFromHtmlTemplate(TEST_REQUIREMENT_HTML_TEMPLATE_PATH);
+		
+		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$javaCode$", transformJavaCodeToHtml(javaCode, abstractTestRequirement));
+		
+		return htmlTemplateForTestRequirement;
+	}
+	
+	public String getStringFromHtmlTemplate(String templatePath) throws IOException {
+		File htmlTemplateFile = new File(templatePath);
+		return FileUtils.readFileToString(htmlTemplateFile);
+	}
 }

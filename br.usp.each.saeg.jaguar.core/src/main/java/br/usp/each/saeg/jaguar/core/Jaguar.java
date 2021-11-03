@@ -4,12 +4,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
+import br.usp.each.saeg.jaguar.codeforest.model.Requirement;
+import br.usp.each.saeg.jaguar.core.output.html.HtmlBuilder;
 import br.usp.each.saeg.jaguar.core.output.html.HtmlWriter;
+import br.usp.each.saeg.jaguar.core.utils.TestRequirementUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jacoco.core.analysis.AbstractAnalyzer;
 import org.jacoco.core.analysis.ControlFlowAnalyzer;
@@ -285,12 +285,32 @@ public class Jaguar {
 		xmlWriter.generateXML(projectDir, fileName);
 	}
 	
-	public void generateHtml(Heuristic heuristic, File projectDir, String outputFile) throws Exception {
+	public void generateHtml(Heuristic heuristic, File projectDirectory, String outputFile) throws Exception {
 		ArrayList<AbstractTestRequirement> testRequirements = generateRank(heuristic);
 		
-		HtmlWriter htmlWriter = new HtmlWriter(testRequirements, heuristic, totalTimeSpent);
+		if(testRequirements.isEmpty()){
+			return;
+		}
 		
-		htmlWriter.generateHtml(projectDir, outputFile);
+		Requirement.Type testRequirementType = TestRequirementUtils.getType(testRequirements);
+		
+		HtmlBuilder htmlBuilder = new HtmlBuilder(
+				heuristic,
+				testRequirementType,
+				totalTimeSpent,
+				testRequirements,
+				projectDirectory
+		);
+		
+		HtmlWriter htmlWriter = new HtmlWriter(
+				testRequirements,
+				heuristic,
+				totalTimeSpent,
+				testRequirementType,
+				htmlBuilder
+		);
+		
+		htmlWriter.generateHtml(projectDirectory, outputFile);
 	}
 
 	/**

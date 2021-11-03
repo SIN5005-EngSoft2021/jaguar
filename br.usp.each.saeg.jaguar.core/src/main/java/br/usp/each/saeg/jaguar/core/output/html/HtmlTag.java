@@ -15,6 +15,7 @@ public class HtmlTag {
         this.tag = tag;
         this.cssClass = cssClass;
         this.innerHtml = innerHtml;
+        this.siblingHtml = siblingHtml;
         this.inlineStyle = inlineStyle;
 
         this.finalTag = new StringBuilder();

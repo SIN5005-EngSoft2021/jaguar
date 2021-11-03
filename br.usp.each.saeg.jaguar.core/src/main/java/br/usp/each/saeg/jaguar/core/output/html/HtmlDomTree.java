@@ -2,6 +2,7 @@ package br.usp.each.saeg.jaguar.core.output.html;
 
 public final class HtmlDomTree {
     public static final String SPAN = "span";
+    public static final String OL = "ol";
     public static final String LI = "li";
     public static final String CODE = "code";
     public static final String PRE = "pre";

@@ -23,9 +23,23 @@ public class HtmlTagBuilder {
         this.cssClass = cssClass;
         return this;
     }
+    
+    public HtmlTagBuilder addCssClass(String newCssClass) {
+        this.cssClass = this.cssClass == null ?
+            newCssClass : this.cssClass + " " + newCssClass;
+        return this;
+    }
 
     public HtmlTagBuilder setInnerHtml(String innerHtml) {
         this.innerHtml = innerHtml;
+        return this;
+    }
+    
+    public HtmlTagBuilder addInnerHtml(String newInnerHtml) {
+        this.innerHtml = this.innerHtml == null ?
+                newInnerHtml :
+                this.innerHtml + newInnerHtml
+        ;
         return this;
     }
 
