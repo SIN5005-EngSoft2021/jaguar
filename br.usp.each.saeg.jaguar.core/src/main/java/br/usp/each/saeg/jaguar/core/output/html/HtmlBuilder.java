@@ -17,6 +17,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+import static br.usp.each.saeg.jaguar.core.output.html.HtmlDomTree.*;
+
 public class HtmlBuilder {
 
 	private static Logger logger = LoggerFactory.getLogger("JaguarLogger");
@@ -111,9 +113,17 @@ public class HtmlBuilder {
 			Collection<AbstractTestRequirement> requirementsForThisClass = requirementsGroupByClass.get(className);
 			String codeFromClassTransformedForHtml = transformJavaCodeToDisplayInHtml(codeFromClass, requirementsForThisClass);
 
-			requirementHtmlList.append("<pre><code class=\"language-java\">")
-					.append(codeFromClassTransformedForHtml)
-					.append("</code> </pre>");
+
+			String htmlCode = new HtmlTagBuilder(HtmlDomTree.CODE)
+									.setCssClass("language-java")
+									.setInnerHtml(codeFromClassTransformedForHtml)
+									.build();
+
+			String preCode = new HtmlTagBuilder(HtmlDomTree.PRE)
+									.setInnerHtml(htmlCode)
+									.build();
+
+			requirementHtmlList.append(preCode);
 
 			requirementHtmlList.append("</div>");
 
@@ -157,15 +167,18 @@ public class HtmlBuilder {
 
 				AbstractTestRequirement requirement = optionalAbstractTestRequirementForThisLine.get();
 
-				codeLine = "<span class=\""+getSuspiciousnessCssColor(requirement.getSuspiciousness())+"\">"
-						+ codeLine
-						+ "</span>"
-				;
+				codeLine= new HtmlTagBuilder(HtmlDomTree.SPAN)
+								.setCssClass(getSuspiciousnessCssColor(requirement.getSuspiciousness()))
+								.setInnerHtml(codeLine)
+								.build();
 			}
 
-			codeFromClassTransformedForHtml.append("<li>")
-					.append(codeLine).append(System.lineSeparator())
-					.append("</li>");
+			String newListItem = new HtmlTagBuilder(HtmlDomTree.LI)
+										.setInnerHtml(codeLine)
+										.setSiblingHtml(System.lineSeparator())
+										.build();
+
+			codeFromClassTransformedForHtml.append(newListItem);
 		}
 
 
@@ -187,40 +200,30 @@ public class HtmlBuilder {
 	}
 
 	public String wrapData(String[] data, String tag) {
-		StringBuilder wrappedData = new StringBuilder();
-		boolean enclosed = false;
-		String open = "<p>";
-		String close = "</p>";
-		String begin = null;
-		String end = null;
+		boolean isEnclosed = false;
+		String openTag = P;
+		String beginTag = null;
 
-		if (tag.equals("th")){
-			open = "<th>";
-			close = "</th>";
-			enclosed = true;
-			begin = "<tr>";
-			end = "</tr>";
-		} else if ( tag.equals("td")) {
-			open = "<td>";
-			close = "</td>";
-			enclosed = true;
-			begin = "<tr>";
-			end = "</tr>";
-		} else if ( tag.equals("table")) {
-			enclosed = true;
-			begin = "<table>";
-			end = "</table>";
-			open = "<tr>";
-			close = "</tr>";
+		if (isHeaderCell(tag)) {
+			isEnclosed = true;
+			openTag = TH;
+			beginTag = TR;
+		} else if (isDataCell(tag)) {
+			isEnclosed = true;
+			openTag = TD;
+			beginTag = TR;
+		} else if (isTable(tag)) {
+			isEnclosed = true;
+			openTag = TD;
+			beginTag = TABLE;
 		}
 
-		for( String line: data) {
-			if (line == null) line ="";
-			wrappedData.append(open).append(line).append(close);
+		StringBuilder wrappedData = buildWrappedData(data, openTag);
+		if (isEnclosed) {
+			return new HtmlTagBuilder(beginTag)
+							.setInnerHtml(wrappedData.toString())
+							.build();
 		}
-
-		if (enclosed)
-			return begin + wrappedData + end;
 
 		return wrappedData.toString();
 	}
@@ -255,4 +258,22 @@ public class HtmlBuilder {
 		if(Jaguar.getnTestsFailed() > 0) temp[1] = Jaguar.getnTestsFailed();
 		return temp;
 	}
+
+	private StringBuilder buildWrappedData(String[] data, String openTag) {
+		StringBuilder wrappedData = new StringBuilder();
+
+		for (String line : data) {
+			if (line == null)
+				line = "";
+
+			String currentWrappedData = new HtmlTagBuilder(openTag)
+					.setInnerHtml(line)
+					.build();
+
+			wrappedData.append(currentWrappedData);
+		}
+
+		return wrappedData;
+	}
+
 }
