@@ -19,7 +19,7 @@ package br.usp.each.saeg.jaguar.maven.plugin;
 import org.apache.maven.plugin.AbstractMojo;
 import java.io.*;
 import org.apache.maven.plugin.MojoExecutionException;
-
+import java.net.URL;
 import java.io.File;
 
 /**
@@ -98,9 +98,13 @@ public class JaguarVerifyMojo
     		 else
     			logLevel =  "ERROR";
     		 
-    		 //VERIFICA SE O SO É WINDOWS
+			// URL f = JaguarAgentJar.getResource();
+
+			 //VERIFICA SE O SO É WINDOWS
     		 boolean isWindows = System.getProperty("os.name")
     				  .toLowerCase().startsWith("windows");
+
+		
     		 
     		 System.out.println("Is Windows: " + isWindows); 
     		 System.out.println("logLevel: " + logLevel);  
@@ -109,6 +113,15 @@ public class JaguarVerifyMojo
     		 System.out.println("testOutputDirectory: " + testOutputDirectory.toString());  
     		 System.out.println("outputDirectory: " + outputDirectory.toString());  
     		 System.out.println("format: " + format.toString());  
+
+			 File jaguar = JaguarAgentJar.extractJaguarToTempLocation();
+
+			 File jacocoagent = JacocoAgentJar.extractJacocoToTempLocation();
+
+
+			 System.out.println("Jaguar Agent Path: " + jaguar);
+			 System.out.println("Jacoco Agent Path: " + jacocoagent);
+
     		 
     		 //DEFINE O CARACTER QUE FAZ A CONCATENAÇÃO DE COMANDOS
     		 String commandConcat = (isWindows) ? "&" : ";";   		     		 
@@ -121,8 +134,8 @@ public class JaguarVerifyMojo
     		 
     		 String command = "set -x " + commandConcat
     				 		//TODO: VERIFICAR FORMA DE PEGAR DE ALGUM LUGAR AS LIBS DA JAGUAR E JACOCO
-    	            		+ "JAGUAR_JAR=\"/mnt/e/gitericksonlbs/jaguar/br.usp.each.saeg.jaguar.core/target/br.usp.each.saeg.jaguar.core-1.0.0-jar-with-dependencies.jar\" " + commandConcat    	            		
-    	            		+ "JACOCO_JAR=\"/mnt/e/gitericksonlbs/jaguar/br.usp.each.saeg.jaguar.plugin/lib/jacocoagent.jar\" " + commandConcat   
+    	            		+ "JAGUAR_JAR=\"" + jaguar + "\"" + commandConcat    	            		
+    	            		+ "JACOCO_JAR=\""+ jacocoagent + "\"" + commandConcat   
     	            		+ "java -javaagent:$JACOCO_JAR=output=tcpserver "
     	            		+ ((isDataFlow) ? ",dataflow=true " : "")
     	            		+ "-cp " + outputDirectory + "/:" + testOutputDirectory + "/:$JAGUAR_JAR:$JACOCO_JAR "
