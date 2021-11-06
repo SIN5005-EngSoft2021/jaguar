@@ -2,14 +2,16 @@ package br.usp.each.saeg.jaguar.core.utils;
 
 public class OperationalSystemUtils {
 	
-	private static String OperationalSystem = null;
+	private static String operationalSystem = null;
+	
+	private static String fileSeparator = null;
 	
 	private OperationalSystemUtils() {
 	}
 	
 	public static String getOsName() {
-		if(OperationalSystem == null) { OperationalSystem = System.getProperty("os.name"); }
-		return OperationalSystem;
+		if(operationalSystem == null) { operationalSystem = System.getProperty("os.name"); }
+		return operationalSystem;
 	}
 	
 	public static boolean isWindows()
@@ -22,7 +24,12 @@ public class OperationalSystemUtils {
 	}
 	
 	public static String systemFileSeparator(){
-		return System.getProperty("file.separator");
+		
+		if(fileSeparator == null){
+			fileSeparator = System.getProperty("file.separator");
+		}
+		
+		return fileSeparator;
 	}
 	
 }

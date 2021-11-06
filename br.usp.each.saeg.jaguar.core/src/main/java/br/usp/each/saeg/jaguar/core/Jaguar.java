@@ -48,12 +48,15 @@ public class Jaguar {
 	private static final String XML_NAME = "jaguar_output";
 	private static int nTests = 0;
 	private static int nTestsFailed = 0;
+	
 	private Map<String, File> classFilesCache;
 
 	private JaguarSFL sfl = new JaguarSFL();
 	
 	private Long startTime;
 	private Long totalTimeSpent;
+	
+	public static final String REPORTS_FOLDER_NAME = ".jaguar";
 
 	/**
 	 * Construct the Jaguar object.
@@ -285,7 +288,7 @@ public class Jaguar {
 		xmlWriter.generateXML(projectDir, fileName);
 	}
 	
-	public void generateHtml(Heuristic heuristic, File projectDirectory, String outputFile) throws Exception {
+	public void generateHtml(Heuristic heuristic, File projectDirectory, String outputFile) throws IOException {
 		ArrayList<AbstractTestRequirement> testRequirements = generateRank(heuristic);
 		
 		if(testRequirements.isEmpty()){
@@ -294,23 +297,18 @@ public class Jaguar {
 		
 		Requirement.Type testRequirementType = TestRequirementUtils.getType(testRequirements);
 		
-		HtmlBuilder htmlBuilder = new HtmlBuilder(
-				heuristic,
-				testRequirementType,
-				totalTimeSpent,
-				testRequirements,
-				projectDirectory
-		);
-		
 		HtmlWriter htmlWriter = new HtmlWriter(
 				testRequirements,
 				heuristic,
-				totalTimeSpent,
-				testRequirementType,
-				htmlBuilder
+				new HtmlBuilder()
 		);
 		
-		htmlWriter.generateHtml(projectDirectory, outputFile);
+		if(Requirement.Type.LINE.equals(testRequirementType)){
+			htmlWriter.generateHtmlForLineType(projectDirectory, outputFile);
+		}else {
+			htmlWriter.generateHtmlForDuaType(projectDirectory);
+		}
+		
 	}
 
 	/**

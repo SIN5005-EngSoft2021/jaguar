@@ -1,6 +1,9 @@
 package br.usp.each.saeg.jaguar.core.output.html;
 
 public final class HtmlDomTree {
+    
+    private HtmlDomTree(){}
+    
     public static final String SPAN = "span";
     public static final String OL = "ol";
     public static final String LI = "li";
@@ -11,6 +14,7 @@ public final class HtmlDomTree {
     public static final String TD = "td";
     public static final String TABLE = "table";
     public static final String P = "p";
+    public static final String A = "a";
 
     public static boolean isHeaderCell(String tag) {
         return tag.equals(TH);

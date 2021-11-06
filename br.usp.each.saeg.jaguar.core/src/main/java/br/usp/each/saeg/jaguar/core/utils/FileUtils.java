@@ -22,6 +22,9 @@ import java.util.List;
  */
 public class FileUtils {
 	
+	private FileUtils() {
+	}
+	
 	private static final String COMMAND_TO_MAKE_FILE_HIDDEN_ON_WINDOWS = "C:\\\\WINDOWS\\\\System32\\\\ATTRIB.EXE +H " /* plus file name */;
 
 	/**
@@ -230,5 +233,14 @@ public class FileUtils {
 		}
 		
 		return folder;
+	}
+	
+	public static void copyFile(File folderWhereToPutCopy, String fileToCopy) throws IOException {
+		File originalFile = new File(fileToCopy);
+		File copyFile = new File(
+				folderWhereToPutCopy.getAbsolutePath() + OperationalSystemUtils.systemFileSeparator()
+						+ originalFile.getName()
+		);
+		org.apache.commons.io.FileUtils.copyFile(originalFile, copyFile);
 	}
 }

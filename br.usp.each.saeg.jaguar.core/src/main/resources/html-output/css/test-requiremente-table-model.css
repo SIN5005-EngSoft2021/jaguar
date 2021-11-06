@@ -1,0 +1,67 @@
+.executionConfigs{
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+
+.testRequirements {
+    margin-left:20px;
+}
+
+.subTitle{
+    margin-left: 10px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+table, th, td {
+    padding: 2px;
+    text-align: left;
+    border: 1px solid black;
+    border-collapse: collapse;
+
+}
+
+table{
+    width: 90vw;
+    margin-bottom: 15px;
+}
+
+td > a{
+    display:block;
+    text-decoration:none;
+}
+
+tr:hover {
+    background-color: aquamarine;
+}
+
+th {
+    text-transform: uppercase;
+}
+
+.test-success {
+    color: green;
+}
+
+.test-fail {
+    color: red;
+}
+
+meter {
+    background: none;
+    background-color: lightgreen;
+    border: 1px solid black;
+    display: inline;
+    margin-left: 10px;
+    color: black;
+    border-radius: 25px;
+}
+
+meter::-webkit-meter-optimum-value {
+    background: lightcoral;
+    border-radius: 25px 0 0 25px;
+}
+meter::-moz-meter-bar {
+    background: lightcoral;
+    border-radius: 25px 0 0 25px;
+}

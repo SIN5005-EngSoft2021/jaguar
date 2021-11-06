@@ -1,0 +1,24 @@
+.suspiciousness-more-than-or-equal-75{
+    background-color: #F6B7B7;
+}
+
+.suspiciousness-more-than-or-equal-50{
+    background-color: #F2BC95;
+}
+
+.suspiciousness-more-than-or-equal-25{
+    background-color: #E6C529;
+}
+
+.suspiciousness-below-25{
+    background-color: #71e31b80;
+}
+
+pre {
+    margin-top: 15px;
+    overflow:auto;
+}
+
+.linenumbers{
+    background-color: white;
+}

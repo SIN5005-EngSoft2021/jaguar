@@ -25,83 +25,6 @@ body{
     transform: translate(0, -15px);
 }
 
-.wrapper {
-    width: 80%;
-}
-
-.executionConfigs{
-    margin-bottom: 20px;
-    width: 100%;
-}
-
-.testRequirements {
-    width: 100%;
-}
-
-.red{
-    background-color: #e31b1b80;
-}
-
-.orange{
-    background-color: #e36e1b91;
-}
-
-.yellow{
-    background-color: #e3c11b80;
-}
-
-.green{
-    background-color: #71e31b80;
-}
-
-table, th, td {
-    padding: 2px;
-    text-align: left;
-    border: 1px solid black;
-    border-collapse: collapse;
-    width: 100%;
-}
-
-tr:hover {
-    background-color: aquamarine;
-}
-
-pre {
-    margin-top: 15px;
-    overflow:auto;
-}
-
-th {
-    text-transform: uppercase;
-}
-
-.test-success {
-    color: green;
-}
-
-.test-fail {
-    color: red;
-}
-
-meter {
-    background: none;
-    background-color: lightgreen;
-    border: 1px solid black;
-    display: inline;
-    margin-left: 10px;
-    color: black;
-    border-radius: 25px;
-}
-
-meter::-webkit-meter-optimum-value {
-    background: lightcoral;
-    border-radius: 25px 0 0 25px;
-}
-meter::-moz-meter-bar { 
-    background: lightcoral;
-    border-radius: 25px 0 0 25px;
-}
-
 ul.breadcrumbs {
     padding: 6px 20px;
     font-size: 14px;
@@ -124,12 +47,13 @@ ul.breadcrumbs li a:hover {
     text-decoration: underline;
 }
 
-.linenumbers{
-    background-color: white;
-}
-
 footer {
     border-top: 1px solid grey;
     text-align: center;
     padding: 2px;
 }
+
+a, a:hover, a:focus, a:active {
+      text-decoration: none;
+      color: inherit;
+ }

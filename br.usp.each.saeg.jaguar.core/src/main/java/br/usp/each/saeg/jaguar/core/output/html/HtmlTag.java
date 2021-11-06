@@ -1,22 +1,24 @@
 package br.usp.each.saeg.jaguar.core.output.html;
 
 public class HtmlTag {
-    private String id = "";
-    private String tag = "";
-    private String cssClass = "";
-    private String innerHtml = "";
-    private String siblingHtml = "";
-    private String inlineStyle = "";
+    private final String id;
+    private final String tag;
+    private final String cssClass;
+    private final String innerHtml;
+    private final String siblingHtml;
+    private final String inlineStyle;
+    private final String href;
 
     private StringBuilder finalTag;
 
-    public HtmlTag(String id, String tag, String cssClass, String siblingHtml, String innerHtml, String inlineStyle) {
+    public HtmlTag(String id, String tag, String cssClass, String siblingHtml, String innerHtml, String inlineStyle, String href) {
         this.id = id;
         this.tag = tag;
         this.cssClass = cssClass;
         this.innerHtml = innerHtml;
         this.siblingHtml = siblingHtml;
         this.inlineStyle = inlineStyle;
+        this.href = href;
 
         this.finalTag = new StringBuilder();
     }
@@ -41,6 +43,12 @@ public class HtmlTag {
             finalTag.append(" style=\"")
                     .append(inlineStyle)
                     .append("\"");
+        }
+        
+        if(!href.isEmpty()){
+            finalTag.append(" href=\"")
+                    .append(href)
+                    .append('"');
         }
 
         finalTag.append(">");

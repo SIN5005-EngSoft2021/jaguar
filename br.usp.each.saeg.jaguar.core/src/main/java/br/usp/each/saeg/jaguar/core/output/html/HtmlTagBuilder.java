@@ -7,6 +7,7 @@ public class HtmlTagBuilder {
     private String innerHtml = "";
     private String inlineStyle = "";
     private String siblingHtml = "";
+    private String href = "";
 
     private HtmlTagBuilder() {}
 
@@ -42,19 +43,39 @@ public class HtmlTagBuilder {
         ;
         return this;
     }
-
+    
+    public HtmlTagBuilder addInnerHtml(String... newInnerHtml) {
+        StringBuilder allNewInnerHtmlConcatenate = new StringBuilder();
+        for (String newInnerHtmlTemp : newInnerHtml) {
+            allNewInnerHtmlConcatenate.append(newInnerHtmlTemp);
+        }
+        return this.addInnerHtml(allNewInnerHtmlConcatenate.toString());
+    }
+    
     public HtmlTagBuilder setInlineStyle(String inlineStyle) {
         this.inlineStyle = inlineStyle;
         return this;
     }
-
+    
     public HtmlTagBuilder setSiblingHtml(String siblingHtml) {
         this.siblingHtml = siblingHtml;
         return this;
     }
-
+    
+    public HtmlTagBuilder setHref(String href) {
+        this.href = href;
+        return this;
+    }
+    
     public String build() {
-        HtmlTag tag = new HtmlTag(id, this.tag, cssClass, siblingHtml, innerHtml, inlineStyle);
-        return tag.buildTag();
+        return new HtmlTag(
+                this.id,
+                this.tag,
+                this.cssClass,
+                this.siblingHtml,
+                this.innerHtml,
+                this.inlineStyle,
+                this.href
+        ).buildTag();
     }
 }
