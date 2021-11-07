@@ -99,6 +99,8 @@ public class HtmlBuilder {
 				.stream()
 				.max(Comparator.comparingDouble(AbstractTestRequirement::getSuspiciousness))
 				.orElseThrow(NullPointerException::new);
+
+		double suspValue = abstractTestRequirementWithHigherSuspiciousness.getSuspiciousness();
 		
 		return new HtmlTagBuilder(TR).addInnerHtml(
 				new HtmlTagBuilder(TD)
@@ -109,11 +111,23 @@ public class HtmlBuilder {
 										.build()
 						)
 						.build(),
+				new HtmlTagBuilder(TD) //add bar
+						.setInnerHtml(
+								new HtmlTagBuilder(DIV)
+										.setCssClass("suspBar")
+										.addInnerHtml(
+											new HtmlTagBuilder(DIV)
+													.setCssClass("redBar")
+													.setInlineStyle("grid-column-end: "+ (int) Math.round((suspValue+0.1)*10))
+													.build()
+										).build()
+						)
+						.build(),
 				new HtmlTagBuilder(TD)
 						.setInnerHtml(
 								new HtmlTagBuilder(A)
 										.setHref(htmlClassFileAbsolutePath)
-										.addInnerHtml(String.valueOf(abstractTestRequirementWithHigherSuspiciousness.getSuspiciousness()))
+										.addInnerHtml(String.valueOf(suspValue))
 										.build()
 						)
 						.build(),
@@ -174,7 +188,8 @@ public class HtmlBuilder {
 			LineTestRequirement lineRequirement = (LineTestRequirement) abstractTestRequirement;
 			location = lineRequirement.getLineNumber();
 		}
-		
+
+		double suspValue = abstractTestRequirement.getSuspiciousness();
 		return new HtmlTagBuilder(TR).addInnerHtml(
 				new HtmlTagBuilder(TD)
 						.setInnerHtml(
@@ -192,11 +207,23 @@ public class HtmlBuilder {
 										.build()
 						)
 						.build(),
+				new HtmlTagBuilder(TD) //add bar
+						.setInnerHtml(
+								new HtmlTagBuilder(DIV)
+										.setCssClass("suspBar")
+										.addInnerHtml(
+												new HtmlTagBuilder(DIV)
+														.setCssClass("redBar")
+														.setInlineStyle("grid-column-end: "+ (int) Math.round((suspValue+0.1)*10))
+														.build()
+										).build()
+						)
+						.build(),
 				new HtmlTagBuilder(TD)
 						.setInnerHtml(
 								new HtmlTagBuilder(A)
 										.setHref(linkToAnchor + "#" + abstractTestRequirement.getUuid())
-										.addInnerHtml(String.valueOf(abstractTestRequirement.getSuspiciousness()))
+										.addInnerHtml(String.valueOf(suspValue))
 										.build()
 						)
 						.build(),
