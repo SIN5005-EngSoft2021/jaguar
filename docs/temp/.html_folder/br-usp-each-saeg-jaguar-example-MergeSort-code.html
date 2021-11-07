@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+	
+	<link rel="icon" href=".img_folder/jaguar-icon.svg"/>
+	<title>JAGUAR REPORT</title>
+
+	<link rel="stylesheet" href=".css_folder/style.css">
+	<link rel="stylesheet" href=".css_folder/test-requirement-type-line-code-model.css">
+	<link rel="stylesheet" id="codeStyle" href=".css_folder/stackoverflow-light.css">
+
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,400;1,500&display=swap');
+	</style>
+
+</head>
+<body>
+	<div id="wrapper">
+		<header>
+			<nav>
+				<ul class="breadcrumbs">
+					<li><a href=" /home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/control-flow.html ">src/main/java</a></li>
+					<li><a href=" /home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-MergeSort.html ">br/usp/each/saeg/jaguar/example/MergeSort</a></li>
+					<li>code</li>
+				</ul>
+			</nav>
+
+			<div class="icon-title">
+				<img alt="jaguar icon" class="icon" src=".img_folder/jaguar-icon.svg">
+				<h1 class="title">Jaguar Report</h1>
+			</div>
+
+		</header>
+		<main>
+			<aside>
+				<div class="colorSubtitles">
+					<div class="suspiciousness-more-than-or-equal-75"> line >= 0.75</div>
+					<div class="suspiciousness-more-than-or-equal-50"> 0.50 =< line < 0.75</div>
+					<div class="suspiciousness-more-than-or-equal-25"> 0.25 =< line < 0.50 </div>
+					<div class="suspiciousness-below-25">line < 0.25</div>
+				</div>
+
+			</aside>
+			<section class="code">
+				<pre><code class="language-java"><ol class="linenumbers"><li>package br.usp.each.saeg.jaguar.example;</li>
+<li></li>
+<li>/* Java program for Merge Sort */</li>
+<li><span id="2d1e0529-79c5-46ac-bdb0-4357740ced40" class=" suspiciousness-more-than-or-equal-75">class MergeSort</span></li>
+<li>{</li>
+<li>    // Merges two subarrays of arr[].</li>
+<li>    // First subarray is arr[l..m]</li>
+<li>    // Second subarray is arr[m+1..r]</li>
+<li>    void merge(int arr[], int l, int m, int r)</li>
+<li>    {</li>
+<li>        // Find sizes of two subarrays to be merged</li>
+<li><span id="6072c57e-81f3-4444-b909-454e77eed987" class=" suspiciousness-more-than-or-equal-75">        int n1 = m - l + 1;</span></li>
+<li><span id="06722587-3a34-4900-939d-1554b0cef0ba" class=" suspiciousness-more-than-or-equal-75">        int n2 = r - m;</span></li>
+<li></li>
+<li>        /* Create temp arrays */</li>
+<li><span id="0a7f5c5b-9dab-4eb5-90f3-9e00715192c2" class=" suspiciousness-more-than-or-equal-75">        int L[] = new int [n1];</span></li>
+<li><span id="9f4f0690-d977-42ee-887a-fc36d5e3f934" class=" suspiciousness-more-than-or-equal-75">        int R[] = new int [n2];</span></li>
+<li></li>
+<li>        /*Copy data to temp arrays*/</li>
+<li><span id="aff6804d-040e-4dc6-be40-2e0c78c2b530" class=" suspiciousness-more-than-or-equal-75">        for (int i=0; i<n1; ++i)</span></li>
+<li><span id="bdd9e50c-5062-417d-b35f-34adec35cba1" class=" suspiciousness-more-than-or-equal-75">            L[i] = arr[l + i];</span></li>
+<li><span id="c5f65979-e540-453a-a7e1-99e168fadd9e" class=" suspiciousness-more-than-or-equal-75">        for (int j=0; j<n2; ++j)</span></li>
+<li><span id="8d2afbe1-23e2-41b6-a185-2f39e060dd56" class=" suspiciousness-more-than-or-equal-75">            R[j] = arr[m + 1+ j];</span></li>
+<li></li>
+<li></li>
+<li>        /* Merge the temp arrays */</li>
+<li></li>
+<li>        // Initial indexes of first and second subarrays</li>
+<li><span id="4d6b7744-f1e3-42b8-9425-9e452ef04326" class=" suspiciousness-more-than-or-equal-75">        int i = 0, j = 0;</span></li>
+<li></li>
+<li>        // Initial index of merged subarray array</li>
+<li><span id="6e6cc32b-2377-4278-a427-dbf61e689ca3" class=" suspiciousness-more-than-or-equal-75">        int k = l;</span></li>
+<li><span id="a541c759-a2a6-4593-9805-e5143d1f84fc" class=" suspiciousness-more-than-or-equal-75">        while (i < n1 && j < n2)</span></li>
+<li>        {</li>
+<li><span id="016ad28a-d101-4813-a0b5-2ca98553acc3" class=" suspiciousness-more-than-or-equal-75">            if (L[i] <= R[j])</span></li>
+<li>            {</li>
+<li><span id="83017510-76bf-4c41-bf16-d0b12c3e114b" class=" suspiciousness-more-than-or-equal-75">                arr[k] = L[i];</span></li>
+<li><span id="0f7759c8-0f85-4b3d-b6fb-2a4d63551e76" class=" suspiciousness-more-than-or-equal-75">                i++;</span></li>
+<li>            }</li>
+<li>            else</li>
+<li>            {</li>
+<li><span id="806a1357-6ede-4ad7-ae3f-f23fe8d8714b" class=" suspiciousness-more-than-or-equal-75">                arr[k] = R[j];</span></li>
+<li><span id="a8092e94-ecfe-4893-993d-80abdad5072f" class=" suspiciousness-more-than-or-equal-75">                j++;</span></li>
+<li>            }</li>
+<li><span id="9d5a818b-c7ec-4d6c-bc02-3100403f8a88" class=" suspiciousness-more-than-or-equal-75">            k++;</span></li>
+<li>        }</li>
+<li></li>
+<li>        /* Copy remaining elements of L[] if any */</li>
+<li><span id="79d50b02-25ff-48fb-bbc0-64a9582e4e41" class=" suspiciousness-more-than-or-equal-75">        while (i < n1)</span></li>
+<li>        {</li>
+<li><span id="da5ab3f0-b150-4549-9bb3-8e6a230f2764" class=" suspiciousness-more-than-or-equal-75">            arr[k] = L[i];</span></li>
+<li><span id="bc402157-2346-46c8-9e11-13e39fe6b89b" class=" suspiciousness-more-than-or-equal-75">            i++;</span></li>
+<li><span id="db0b8ad2-1f02-4612-a201-66f509d54212" class=" suspiciousness-more-than-or-equal-75">            k++;</span></li>
+<li>        }</li>
+<li></li>
+<li>        /* Copy remaining elements of R[] if any */</li>
+<li><span id="0098d9b5-7613-4e7d-8506-8c60d1b05e68" class=" suspiciousness-more-than-or-equal-75">        while (j < n2)</span></li>
+<li>        {</li>
+<li><span id="3948aa21-4611-40ea-b0cd-216dd97546de" class=" suspiciousness-more-than-or-equal-75">            arr[k] = R[j];</span></li>
+<li><span id="ec8343f6-ef38-490c-95e3-44290b4dc8b1" class=" suspiciousness-more-than-or-equal-75">            j++;</span></li>
+<li><span id="368851b9-a9e9-4c12-ae51-9346f55b8b7f" class=" suspiciousness-more-than-or-equal-75">            k++;</span></li>
+<li>        }</li>
+<li><span id="ede63027-2ff1-4a43-9a3d-bda8d52a1dbb" class=" suspiciousness-more-than-or-equal-75">    }</span></li>
+<li></li>
+<li>    // Main function that sorts arr[l..r] using</li>
+<li>    // merge()</li>
+<li>    void sort(int arr[], int l, int r)</li>
+<li>    {</li>
+<li><span id="72c7899d-932d-440f-bf80-7196871ac36d" class=" suspiciousness-more-than-or-equal-75">        if (l < r)</span></li>
+<li>        {</li>
+<li>            // Find the middle point</li>
+<li><span id="9838e6bb-0f57-4398-b4ed-6116721e270a" class=" suspiciousness-more-than-or-equal-75">            int m = (l+r)/2;</span></li>
+<li></li>
+<li>            // Sort first and second halves</li>
+<li><span id="ac12bc72-1b9c-44b7-b712-f8bcc091cd65" class=" suspiciousness-more-than-or-equal-75">            sort(arr, l, m);</span></li>
+<li><span id="d05663c1-4f1b-49da-b529-7680e131a9a6" class=" suspiciousness-more-than-or-equal-75">            sort(arr , m+1, r);</span></li>
+<li></li>
+<li>            // Merge the sorted halves</li>
+<li><span id="293933a8-c09c-4ac3-b659-7316d7e5e043" class=" suspiciousness-more-than-or-equal-75">            merge(arr, l, m, r);</span></li>
+<li>        }</li>
+<li><span id="47e4c992-30c2-47a5-b402-473d868329ae" class=" suspiciousness-more-than-or-equal-75">    }</span></li>
+<li></li>
+<li>    /* A utility function to print array of size n */</li>
+<li>    static StringBuilder printArray(int arr[])</li>
+<li>    {</li>
+<li><span id="96978098-ab5e-44bb-abb7-290335b9e7d1" class=" suspiciousness-more-than-or-equal-75">        int n = arr.length;</span></li>
+<li><span id="8c4e1639-d503-460d-beae-2fa7c4b468b5" class=" suspiciousness-more-than-or-equal-75">        StringBuilder output = new StringBuilder();</span></li>
+<li><span id="75c6f668-a489-424d-b1ea-059acf2c302b" class=" suspiciousness-more-than-or-equal-75">        for (int i=0; i<n; ++i)</span></li>
+<li><span id="f97238d2-49af-4ed9-b202-03ad3859d8c8" class=" suspiciousness-more-than-or-equal-75">            output.append(arr[i]).append(" ");</span></li>
+<li><span id="96d3d428-1559-495e-88ac-c49d0dac3ef0" class=" suspiciousness-more-than-or-equal-75">        return output;</span></li>
+<li>    }</li>
+<li></li>
+<li>}</li>
+</ol></code></pre>
+			</section>
+		</main>
+		<footer>
+			<p class="credits">Report generated by Jaguar at 07/11/2021 - 03:21</p>
+		</footer>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+	<script>hljs.highlightAll();</script>
+</body>
+</html>

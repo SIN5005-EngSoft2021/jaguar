@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+	
+	<link rel="icon" href=".img_folder/jaguar-icon.svg"/>
+	<title>JAGUAR REPORT</title>
+	
+	<link rel="stylesheet" href=".css_folder/style.css">
+	<link rel="stylesheet" href=".css_folder/test-requiremente-table-model.css">
+	
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,400;1,500&display=swap');
+	</style>
+
+</head>
+<body>
+	<div id="wrapper">
+		<header>
+			<nav>
+				<ul class="breadcrumbs">
+					<li><a href=" /home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/control-flow.html ">src/main/java</a></li>
+					<li>br/usp/each/saeg/jaguar/example/Max</li>
+				</ul>
+			</nav>
+
+			<div class="icon-title">
+				<img alt="jaguar icon" class="icon" src=".img_folder/jaguar-icon.svg">
+				<h1 class="title">Jaguar Report</h1>
+			</div>
+
+		</header>
+
+		<main>
+			<section class="executionConfigs">
+				<p><em>Heuristic: </em>TARANTULA</p>
+				<p><em>Requirement Type: </em>LINE</p>
+				<p><em>Executed Tests: </em>12</p>
+				<p>
+					<em>Failed Tests: </em>
+					6 failed out of 12
+				</p>
+			</section>
+
+			<section class="testRequirements">
+				<h2 class="subTitle">Max</h2>
+
+				<article class="tableControls">
+					<p>
+						Suspiciouness Filter:
+						<input type="range" min="0.0" max="1.0" step="0.1" value="1.0" id="susRange" list="tickmarks">
+						<datalist id="tickmarks">
+							<option value="0.0"></option>
+							<option value="0.1"></option>
+							<option value="0.2"></option>
+							<option value="0.3"></option>
+							<option value="0.4"></option>
+							<option value="0.5"></option>
+							<option value="0.6"></option>
+							<option value="0.7"></option>
+							<option value="0.8"></option>
+							<option value="0.9"></option>
+							<option value="1.0" selected></option>
+						</datalist>
+
+						<span id="rangeText"></span>
+					</p>
+					<p>
+						<label for="itensPerTable">Itens per table: </label>
+						<select name="itensPerTable" id="itensPerTable">
+							<option value="10" selected>10</option>
+							<option value="20">20</option>
+							<option value="30">30</option>
+							<option value="40">40</option>
+							<option value="all">All</option>
+						</select>
+					</p>
+				</article>
+
+				<table id="dataTable">
+					<tr>
+						<th><abbr title="location">Loc.</abbr> </th>
+						<th>Method Signature</th>
+						<th>Bar</th>
+						<th id="suspColumn"><abbr title="suspiciousness">Susp.</abbr> </th>
+						<th>
+							<abbr title="the number of failed test cases that executed the component">C.E.F</abbr>
+						</th>
+						<th>
+							<abbr title="the number of passed test cases that executed the component">C.E.P</abbr>
+						</th>
+						<th>
+							<abbr title="the number of failed test cases that did not execute the component">C.N.F</abbr>
+						</th>
+						<th>
+							<abbr title="the number of passed test cases that did not execute the component">C.N.P</abbr>
+						</th>
+					</tr>
+					<tr><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#fdba0c04-5844-431f-b397-e1e1a09b0ab6">16</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#fdba0c04-5844-431f-b397-e1e1a09b0ab6">max(int[])</a></td><td><div class="suspBar"><div class="redBar" style="grid-column-end: 4"></div></div></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#fdba0c04-5844-431f-b397-e1e1a09b0ab6">0.25</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#fdba0c04-5844-431f-b397-e1e1a09b0ab6">1</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#fdba0c04-5844-431f-b397-e1e1a09b0ab6">3</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#fdba0c04-5844-431f-b397-e1e1a09b0ab6">5</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#fdba0c04-5844-431f-b397-e1e1a09b0ab6">3</a></td></tr><tr><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#f37631dc-3f64-4e5c-bb33-e25599c0a6ce">14</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#f37631dc-3f64-4e5c-bb33-e25599c0a6ce">max(int[])</a></td><td><div class="suspBar"><div class="redBar" style="grid-column-end: 4"></div></div></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#f37631dc-3f64-4e5c-bb33-e25599c0a6ce">0.25</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#f37631dc-3f64-4e5c-bb33-e25599c0a6ce">1</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#f37631dc-3f64-4e5c-bb33-e25599c0a6ce">3</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#f37631dc-3f64-4e5c-bb33-e25599c0a6ce">5</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#f37631dc-3f64-4e5c-bb33-e25599c0a6ce">3</a></td></tr><tr><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#a03f5615-5058-448c-8157-b6a7531bb622">13</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#a03f5615-5058-448c-8157-b6a7531bb622">max(int[])</a></td><td><div class="suspBar"><div class="redBar" style="grid-column-end: 4"></div></div></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#a03f5615-5058-448c-8157-b6a7531bb622">0.25</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#a03f5615-5058-448c-8157-b6a7531bb622">1</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#a03f5615-5058-448c-8157-b6a7531bb622">3</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#a03f5615-5058-448c-8157-b6a7531bb622">5</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#a03f5615-5058-448c-8157-b6a7531bb622">3</a></td></tr><tr><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#0c56d00f-4e7c-409a-b744-126870a3096b">12</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#0c56d00f-4e7c-409a-b744-126870a3096b">max(int[])</a></td><td><div class="suspBar"><div class="redBar" style="grid-column-end: 4"></div></div></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#0c56d00f-4e7c-409a-b744-126870a3096b">0.25</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#0c56d00f-4e7c-409a-b744-126870a3096b">1</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#0c56d00f-4e7c-409a-b744-126870a3096b">3</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#0c56d00f-4e7c-409a-b744-126870a3096b">5</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#0c56d00f-4e7c-409a-b744-126870a3096b">3</a></td></tr><tr><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#d833d804-25bc-4440-b3a4-eba7283abc59">20</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#d833d804-25bc-4440-b3a4-eba7283abc59">max(int[])</a></td><td><div class="suspBar"><div class="redBar" style="grid-column-end: 4"></div></div></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#d833d804-25bc-4440-b3a4-eba7283abc59">0.25</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#d833d804-25bc-4440-b3a4-eba7283abc59">1</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#d833d804-25bc-4440-b3a4-eba7283abc59">3</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#d833d804-25bc-4440-b3a4-eba7283abc59">5</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#d833d804-25bc-4440-b3a4-eba7283abc59">3</a></td></tr><tr><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#2ee84f0c-fe62-4669-a02a-bbd07be26e30">18</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#2ee84f0c-fe62-4669-a02a-bbd07be26e30">max(int[])</a></td><td><div class="suspBar"><div class="redBar" style="grid-column-end: 4"></div></div></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#2ee84f0c-fe62-4669-a02a-bbd07be26e30">0.25</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#2ee84f0c-fe62-4669-a02a-bbd07be26e30">1</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#2ee84f0c-fe62-4669-a02a-bbd07be26e30">3</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#2ee84f0c-fe62-4669-a02a-bbd07be26e30">5</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#2ee84f0c-fe62-4669-a02a-bbd07be26e30">3</a></td></tr><tr><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#3c91e976-9511-4571-a946-6f9548a523ec">17</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#3c91e976-9511-4571-a946-6f9548a523ec">max(int[])</a></td><td><div class="suspBar"><div class="redBar" style="display: none"></div></div></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#3c91e976-9511-4571-a946-6f9548a523ec">0.0</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#3c91e976-9511-4571-a946-6f9548a523ec">0</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#3c91e976-9511-4571-a946-6f9548a523ec">3</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#3c91e976-9511-4571-a946-6f9548a523ec">6</a></td><td><a href="/home/barbara/IdeaProjects/jaguar/./br.usp.each.saeg.jaguar.example/.jaguar/.html_folder/br-usp-each-saeg-jaguar-example-Max-code.html#3c91e976-9511-4571-a946-6f9548a523ec">3</a></td></tr>
+				</table>
+				<div id="pagination"></div>
+			</section>
+		</main>
+
+		<footer>
+			<p class="credits">Report generated by Jaguar at 07/11/2021 - 03:21</p>
+		</footer>
+	</div>
+
+	<script src=".js_folder/table-controls.js" async></script>
+
+</body>
+</html>
