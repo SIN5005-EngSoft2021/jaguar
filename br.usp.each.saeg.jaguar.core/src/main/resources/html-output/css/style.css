@@ -1,34 +1,64 @@
+/* **************************************
+ * GENERAL
+ * ***************************************/
+
 * {
     margin: 0;
 }
+
 body{
     color: black;
     font-family: Garamond, serif;
     font-size: 16px;
+    width: 100vw;
+}
+
+#wrapper {
+    width: 90%;
+    margin: 1vw;
+}
+
+a, a:focus, a:active {
+      text-decoration: underline;
+      color: inherit;
+}
+
+a:hover{
+    color: #001f3f;
+    text-decoration: underline;
+}
+
+em {
+    text-shadow: 1px 1px 0.5px #AAAAAA;
+
+}
+
+section {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+main {
     width: 100%;
 }
 
-.icon-title{
-    font-family: 'Montserrat', sans-serif;
-    position: relative;
-    border-bottom: 1px solid black
+main section{
+    line-height: 2rem;
 }
 
-.icon{
-    height: 100px;
-}
-
-.title{
-    display: inline;
-    top: 50%;
-    position: absolute;
-    transform: translate(0, -15px);
+/* **************************************
+ * BREADCRUMBS
+ * ***************************************/
+nav{
+    width: 100%;
+    height: auto;
+    border: 1px solid black;
+    display: flex;
 }
 
 ul.breadcrumbs {
     padding: 6px 20px;
-    font-size: 14px;
-     border-bottom: 1px solid black;
 }
 
 ul.breadcrumbs li {
@@ -40,20 +70,86 @@ ul.breadcrumbs li+li:before {
     color: black;
     content: "> ";
 }
+
 ul.breadcrumbs li a {
-    text-decoration: none;
-}
-ul.breadcrumbs li a:hover {
     text-decoration: underline;
 }
 
+ul.breadcrumbs li a:hover {
+    text-decoration: none;
+}
+
+/* **************************************
+ * ICON AND TITLE
+ * ***************************************/
+.icon-title{
+    width: 100%;
+    margin-top: 5vh;
+    height: 30vh;
+    max-height: 100px;
+    font-family: 'Montserrat', sans-serif;
+    position: relative;
+}
+
+.icon{
+    height: 100%;
+}
+
+.title{
+    display: inline;
+    top: 50%;
+    position: absolute;
+    transform: translate(0, -15px);
+}
+
+/* **************************************
+ * TABLE CONTROLS
+ * ***************************************/
+.tableControls {
+    width: 100%;
+    display: flex;
+    grid-template-columns: repeat(10, 1fr);
+    grid-column-gap: 20px;
+}
+
+.tableControls p:nth-child(1){
+    width: 100%;
+    grid-column-start: 3;
+    grid-column-end: 7;
+}
+
+.tableControls p:nth-child(2){
+    width: 100%;
+    grid-column-start: 7;
+    grid-column-end: 11;
+}
+
+#rangeText {
+    font-weight: bold;
+}
+
+#itensPerTable {
+    background-color: white;
+    border: 1px solid black;
+    width: 50px;
+    font-weight: bold
+}
+
+/* **************************************
+ * FOOTER
+ * ***************************************/
 footer {
+    width: 100%;
+    min-height: 3rem;
     border-top: 1px solid grey;
-    text-align: center;
+    text-align: right;
     padding: 2px;
 }
 
-a, a:hover, a:focus, a:active {
-      text-decoration: none;
-      color: inherit;
- }
+footer p{
+    width: 100%;
+    height: 100%;
+    padding-top: 1rem;
+}
+
+

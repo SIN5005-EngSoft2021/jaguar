@@ -1,24 +1,47 @@
-.executionConfigs{
-    margin-top: 10px;
-    margin-bottom: 20px;
-    margin-left: 20px;
-}
-
-.testRequirements {
-    margin-left:20px;
-}
-
 .subTitle{
-    margin-left: 10px;
+    margin: 10px;
     font-family: 'Montserrat', sans-serif;
 }
+
+
+ .suspBar{
+     width: 100%;
+     min-width: 4vw;
+     height: auto;
+     min-height: 1rem;
+     display: grid;
+     grid-template-columns: repeat(10, 1fr);
+     background-color: #2ECC40;
+     border-radius: 25px;
+     border: 1px solid black;
+     padding: 0;
+ }
+
+ .redBar {
+     width: 100%;
+     grid-column-start: 1;
+     background-color: #FF4136;
+     border-right: 1px solid black;
+     border-radius: 25px;
+     margin: 0;
+ }
+
 
 table, th, td {
     padding: 2px;
     text-align: left;
     border: 1px solid black;
     border-collapse: collapse;
+}
 
+th {
+    background-color: #111111;
+    color: white;
+    border:1px solid #AAA;
+}
+
+td {
+    padding: 5px;
 }
 
 table{
@@ -31,38 +54,38 @@ td > a{
     text-decoration:none;
 }
 
-tr:hover {
-    background-color: aquamarine;
+tr:hover:nth-child(n+2) {
+    background-color: #DDD;
 }
 
 th {
     text-transform: uppercase;
 }
 
-.test-success {
-    color: green;
+abbr{
+    cursor: help;
 }
 
-.test-fail {
-    color: red;
+#pagination {
+    width: 100%;
+    display: flex ;
+    text-align: center;
+    float: center;
+    justify-content: center;
+
 }
 
 
- .suspBar{
-     width: 100%;
-     min-width: 50px;
-     height: auto;
-     min-height: 10px;
-     display: grid;
-     grid-template-columns: repeat(10, 1fr);
-     background-color: green;
-     border-radius: 25px;
-     border: 1px solid black;
- }
+.pagButton{
+    max-width: 30px;
+    max-height: 30px;
+    font-size: 1.25rem;
+    width: 5vw;
+    height: 10vh;
+    margin: 10px;
+    border: 1px solid black;
+    cursor: pointer;
 
- .redBar {
-     grid-column-start: 1;
-     background-color: red;
-     border: none;
-     border-radius: 25px;
- }
+}
+
+
