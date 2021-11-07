@@ -1,3 +1,19 @@
+aside{
+    width: 100%;
+    display: grid;
+    justify-items: right;
+}
+
+
+.colorSubtitles{
+    width: auto;
+    min-width: 30%;
+    border: 1px solid black;
+    float: right;
+    text-align: center;
+}
+
+
 .code{
     overflow-x: scroll;
     line-height: 1rem !important;
