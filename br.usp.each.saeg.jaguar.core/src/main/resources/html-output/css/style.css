@@ -57,23 +57,3 @@ a, a:hover, a:focus, a:active {
       text-decoration: none;
       color: inherit;
  }
-
-
- .suspBar{
-     width: 100%;
-     min-width: 50px;
-     height: auto;
-     min-height: 10px;
-     display: grid;
-     grid-template-columns: repeat(10, 1fr);
-     background-color: green;
-     border-radius: 25px;
-     border: 1px solid black;
- }
-
- .redBar {
-     grid-column-start: 1;
-     background-color: red;
-     border: none;
-     border-radius: 25px;
- }

@@ -118,7 +118,7 @@ public class HtmlBuilder {
 										.addInnerHtml(
 											new HtmlTagBuilder(DIV)
 													.setCssClass("redBar")
-													.setInlineStyle("grid-column-end: "+ (int) Math.round((suspValue+0.1)*10))
+													.setInlineStyle(defineSuspBarCss((int) Math.round((suspValue+0.1)*10)))
 													.build()
 										).build()
 						)
@@ -214,7 +214,7 @@ public class HtmlBuilder {
 										.addInnerHtml(
 												new HtmlTagBuilder(DIV)
 														.setCssClass("redBar")
-														.setInlineStyle("grid-column-end: "+ (int) Math.round((suspValue+0.1)*10))
+														.setInlineStyle(defineSuspBarCss((int) Math.round((suspValue+0.1)*10)))
 														.build()
 										).build()
 						)
@@ -265,5 +265,11 @@ public class HtmlBuilder {
 	public String getStringFromHtmlTemplate(String templatePath) throws IOException {
 		File htmlTemplateFile = new File(templatePath);
 		return FileUtils.readFileToString(htmlTemplateFile);
+	}
+
+	public String defineSuspBarCss(int value){
+		if (value <= 1)
+			return "display: none";
+		return "grid-column-end: " + value;
 	}
 }
