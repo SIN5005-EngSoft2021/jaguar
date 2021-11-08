@@ -8,10 +8,12 @@ public class HtmlTag {
     private final String siblingHtml;
     private final String inlineStyle;
     private final String href;
+    private final String ariaLabel;
+    private final String title;
 
     private StringBuilder finalTag;
 
-    public HtmlTag(String id, String tag, String cssClass, String siblingHtml, String innerHtml, String inlineStyle, String href) {
+    public HtmlTag(String id, String tag, String cssClass, String siblingHtml, String innerHtml, String inlineStyle, String href, String ariaLabel, String title) {
         this.id = id;
         this.tag = tag;
         this.cssClass = cssClass;
@@ -19,6 +21,8 @@ public class HtmlTag {
         this.siblingHtml = siblingHtml;
         this.inlineStyle = inlineStyle;
         this.href = href;
+        this.ariaLabel = ariaLabel;
+        this.title = title;
 
         this.finalTag = new StringBuilder();
     }
@@ -48,6 +52,18 @@ public class HtmlTag {
         if(!href.isEmpty()){
             finalTag.append(" href=\"")
                     .append(href)
+                    .append('"');
+        }
+
+        if(!ariaLabel.isEmpty()){
+            finalTag.append(" aria-label=\"")
+                    .append(ariaLabel)
+                    .append('"');
+        }
+
+        if(!title.isEmpty()){
+            finalTag.append(" title=\"")
+                    .append(title)
                     .append('"');
         }
 

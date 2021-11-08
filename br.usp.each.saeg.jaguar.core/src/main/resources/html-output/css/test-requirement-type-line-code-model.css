@@ -69,3 +69,7 @@ pre {
     border: 1px solid black;
 }
 
+abbr{
+    text-decoration: none;
+    cursor: help;
+}

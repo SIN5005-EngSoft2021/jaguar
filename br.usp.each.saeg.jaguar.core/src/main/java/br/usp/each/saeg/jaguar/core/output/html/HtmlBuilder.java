@@ -39,11 +39,16 @@ public class HtmlBuilder {
 			if (optionalTestRequirementWithMostHighSuspeciosForThisLine.isPresent()) {
 				
 				AbstractTestRequirement requirement = optionalTestRequirementWithMostHighSuspeciosForThisLine.get();
-				
+				String cssClass = getSuspiciousnessCssColor(requirement.getSuspiciousness());
+
 				codeLine = new HtmlTagBuilder(HtmlDomTree.SPAN)
-						.addCssClass(getSuspiciousnessCssColor(requirement.getSuspiciousness()))
+						.addCssClass(cssClass)
 						.setId(requirement.getUuid().toString())
-						.setInnerHtml(codeLine)
+						.setAriaLabel(cssClass)
+						.setInnerHtml(new HtmlTagBuilder(ABBR)
+										.setTitle(cssClass.replace("-", " "))
+										.setInnerHtml(codeLine).build()
+									)
 						.build()
 				;
 			}

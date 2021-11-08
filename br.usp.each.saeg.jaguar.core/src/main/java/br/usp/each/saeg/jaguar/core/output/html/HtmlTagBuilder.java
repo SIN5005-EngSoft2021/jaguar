@@ -8,6 +8,8 @@ public class HtmlTagBuilder {
     private String inlineStyle = "";
     private String siblingHtml = "";
     private String href = "";
+    private String ariaLabel = "";
+    private String title = "";
 
     private HtmlTagBuilder() {}
 
@@ -66,7 +68,17 @@ public class HtmlTagBuilder {
         this.href = href;
         return this;
     }
-    
+
+    public HtmlTagBuilder setAriaLabel(String ariaLabel) {
+        this.ariaLabel = ariaLabel;
+        return this;
+    }
+
+    public HtmlTagBuilder setTitle(String title) {
+        this.title = title;
+        return this;
+    }
+
     public String build() {
         return new HtmlTag(
                 this.id,
@@ -75,7 +87,9 @@ public class HtmlTagBuilder {
                 this.siblingHtml,
                 this.innerHtml,
                 this.inlineStyle,
-                this.href
+                this.href,
+                this.ariaLabel,
+                this.title
         ).buildTag();
     }
 }
