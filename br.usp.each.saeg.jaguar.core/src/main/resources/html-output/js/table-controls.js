@@ -1,9 +1,9 @@
 const table = document.getElementById("dataTable");
 const rows = table.getElementsByTagName('tr');
-const cells = (index) => rows[index].getElementsByTagName('td');
 const itensSelect = document.getElementById("itensPerTable");
 const range = document.getElementById("susRange");
 const label = document.getElementById("rangeText");
+let selectedPagButton = 1;
 
 startPagination(rows);
 
@@ -19,7 +19,7 @@ function filterSuspiciousness() {
 
 
   for (let j=1; j<rows.length; j++){
-    const tds = cells(j);
+    const tds = rows[j].getElementsByTagName('td');
     const sc = document.getElementById("suspColumn");
     const item = tds.item(Array.from(sc.parentNode.children).indexOf(sc));
 
@@ -58,22 +58,60 @@ function createPagButtons(filter, displayedRows){
   if (s === 1) return;
   else if (r > 0) s += 1;
 
+  const previous = document.createElement("button");
+  previous.className = "pagButton";
+  previous.disabled = true;
+  previous.innerHTML = "<<";
+  previous.id = "pagButtonPrevious";
+  pagination.appendChild(previous);
+
+  const next = document.createElement("button");
+  next.className = "pagButton";
+  next.innerHTML = ">>";
+  previous.id = "pagButtonNext";
+
   for (let i=0; i < s; i++) {
+    // create the buttons
     const pag = document.createElement("button");
     pag.className = "pagButton";
     pag.name = i+1;
     pag.innerHTML = i+1;
     pag.disabled = false;
     pag.autocomplete = 'off';
-    if ( i == 0) pag.disabled = true;
+    pag.id = `pagButton${i+1}`;
 
-    pagination.appendChild(pag);
     pag.addEventListener("click", function(){
+      selectedPagButton = pag.name;
+
+      // organize the disabled status
       const siblings = Array.from(pag.parentElement.children);
       siblings.forEach(s => s === pag? s.disabled = true : s.disabled = false);
 
+      // organize the table data
       clickPagination(filter, pag.name, displayedRows);
+
+      if (i >= 1) previous.disabled = false;
+      else previous.disabled = true;
+
+      if (i >= s-1) next.disabled = true;
+      else next.disabled = false;
     });
+
+    if (i == 0) pag.disabled = true;
+    pagination.appendChild(pag);
+  }
+
+  if (s <= 1) next.disabled = true;
+  pagination.appendChild(next);
+
+  previous.onclick = function () {
+    let temp = parseInt(selectedPagButton) - 1;
+    document.getElementById(`pagButton${temp}`).click();
+  }
+
+  next.onclick = function () {
+    let temp = parseInt(selectedPagButton) + 1;
+    document.getElementById(`pagButton${temp}`).click();
   }
 }
 
@@ -88,6 +126,3 @@ function clickPagination(itensPerPage, page, displayedRows){
     else displayedRows[i].style.display = 'none';
   }
 }
-
-
-
