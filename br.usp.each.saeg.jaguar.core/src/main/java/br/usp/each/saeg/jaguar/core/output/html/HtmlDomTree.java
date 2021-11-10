@@ -15,6 +15,8 @@ public final class HtmlDomTree {
     public static final String TABLE = "table";
     public static final String P = "p";
     public static final String A = "a";
+    public static final String DIV = "div";
+    public static final String ABBR = "abbr";
 
     public static boolean isHeaderCell(String tag) {
         return tag.equals(TH);

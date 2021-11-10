@@ -53,11 +53,11 @@ public class HtmlWriter {
 	}
 	
 	public static void writeImgFiles(File subHtmlFolder, String imgFilesFolderName) throws IOException {
-		
+
 		File imgFolder = FileUtils.createOrGetFolder(subHtmlFolder.getAbsolutePath(), imgFilesFolderName);
-		
+
 		FileUtils.copyFile(imgFolder, "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/img/jaguar-icon.svg");
-		
+
 	}
 	
 	public static void writeCssFiles(File subHtmlFolder, String cssFilesFolderName) throws IOException {
@@ -73,6 +73,14 @@ public class HtmlWriter {
 		FileUtils.copyFile(cssFolder, "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/css/test-requirement-type-line-code-model.css");
 		
 		FileUtils.copyFile(cssFolder, "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/css/test-requiremente-table-model.css");
+	}
+
+	public static void writeJsFiles(File subHtmlFolder, String jsFilesFolderName) throws IOException {
+
+		File jsFolder = FileUtils.createOrGetFolder(subHtmlFolder.getAbsolutePath(), jsFilesFolderName);
+
+		FileUtils.copyFile(jsFolder, "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/js/table-controls.js");
+
 	}
 	
 	

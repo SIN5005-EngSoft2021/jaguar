@@ -39,11 +39,16 @@ public class HtmlBuilder {
 			if (optionalTestRequirementWithMostHighSuspeciosForThisLine.isPresent()) {
 				
 				AbstractTestRequirement requirement = optionalTestRequirementWithMostHighSuspeciosForThisLine.get();
-				
+				String cssClass = getSuspiciousnessCssColor(requirement.getSuspiciousness());
+
 				codeLine = new HtmlTagBuilder(HtmlDomTree.SPAN)
-						.addCssClass(getSuspiciousnessCssColor(requirement.getSuspiciousness()))
+						.addCssClass(cssClass)
 						.setId(requirement.getUuid().toString())
-						.setInnerHtml(codeLine)
+						.setAriaLabel(cssClass)
+						.setInnerHtml(new HtmlTagBuilder(ABBR)
+										.setTitle(cssClass.replace("-", " "))
+										.setInnerHtml(codeLine).build()
+									)
 						.build()
 				;
 			}
@@ -99,6 +104,8 @@ public class HtmlBuilder {
 				.stream()
 				.max(Comparator.comparingDouble(AbstractTestRequirement::getSuspiciousness))
 				.orElseThrow(NullPointerException::new);
+
+		double suspValue = abstractTestRequirementWithHigherSuspiciousness.getSuspiciousness();
 		
 		return new HtmlTagBuilder(TR).addInnerHtml(
 				new HtmlTagBuilder(TD)
@@ -109,11 +116,23 @@ public class HtmlBuilder {
 										.build()
 						)
 						.build(),
+				new HtmlTagBuilder(TD) //add bar
+						.setInnerHtml(
+								new HtmlTagBuilder(DIV)
+										.setCssClass("suspBar")
+										.addInnerHtml(
+											new HtmlTagBuilder(DIV)
+													.setCssClass("redBar")
+													.setInlineStyle(defineSuspBarCss((int) Math.round((suspValue+0.1)*10)))
+													.build()
+										).build()
+						)
+						.build(),
 				new HtmlTagBuilder(TD)
 						.setInnerHtml(
 								new HtmlTagBuilder(A)
 										.setHref(htmlClassFileAbsolutePath)
-										.addInnerHtml(String.valueOf(abstractTestRequirementWithHigherSuspiciousness.getSuspiciousness()))
+										.addInnerHtml(String.valueOf(suspValue))
 										.build()
 						)
 						.build(),
@@ -174,7 +193,8 @@ public class HtmlBuilder {
 			LineTestRequirement lineRequirement = (LineTestRequirement) abstractTestRequirement;
 			location = lineRequirement.getLineNumber();
 		}
-		
+
+		double suspValue = abstractTestRequirement.getSuspiciousness();
 		return new HtmlTagBuilder(TR).addInnerHtml(
 				new HtmlTagBuilder(TD)
 						.setInnerHtml(
@@ -192,11 +212,23 @@ public class HtmlBuilder {
 										.build()
 						)
 						.build(),
+				new HtmlTagBuilder(TD) //add bar
+						.setInnerHtml(
+								new HtmlTagBuilder(DIV)
+										.setCssClass("suspBar")
+										.addInnerHtml(
+												new HtmlTagBuilder(DIV)
+														.setCssClass("redBar")
+														.setInlineStyle(defineSuspBarCss((int) Math.round((suspValue+0.1)*10)))
+														.build()
+										).build()
+						)
+						.build(),
 				new HtmlTagBuilder(TD)
 						.setInnerHtml(
 								new HtmlTagBuilder(A)
 										.setHref(linkToAnchor + "#" + abstractTestRequirement.getUuid())
-										.addInnerHtml(String.valueOf(abstractTestRequirement.getSuspiciousness()))
+										.addInnerHtml(String.valueOf(suspValue))
 										.build()
 						)
 						.build(),
@@ -238,5 +270,11 @@ public class HtmlBuilder {
 	public String getStringFromHtmlTemplate(String templatePath) throws IOException {
 		File htmlTemplateFile = new File(templatePath);
 		return FileUtils.readFileToString(htmlTemplateFile);
+	}
+
+	public String defineSuspBarCss(int value){
+		if (value <= 1)
+			return "display: none";
+		return "grid-column-end: " + value;
 	}
 }

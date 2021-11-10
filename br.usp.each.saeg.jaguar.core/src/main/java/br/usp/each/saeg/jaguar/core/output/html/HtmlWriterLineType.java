@@ -59,6 +59,7 @@ public class HtmlWriterLineType {
 		
 		HtmlWriter.writeCssFiles(subHtmlFolder, HtmlWriter.CSS_FILES_FOLDER_NAME);
 		HtmlWriter.writeImgFiles(subHtmlFolder, HtmlWriter.IMG_FILES_FOLDER_NAME);
+		HtmlWriter.writeJsFiles(subHtmlFolder, HtmlWriter.JS_FILES_FOLDER_NAME);
 		
 		MultiValuedMap<File, AbstractTestRequirement> requirementsGroupByClassFile = TestRequirementUtils
 				.testRequirementsGroupByClassFile(testRequirementsList, projectDirectory.getAbsolutePath());

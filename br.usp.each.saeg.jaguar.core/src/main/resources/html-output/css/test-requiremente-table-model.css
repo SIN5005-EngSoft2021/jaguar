@@ -1,16 +1,18 @@
-.executionConfigs{
-    margin-top: 10px;
-    margin-bottom: 20px;
-    margin-left: 20px;
-}
-
-.testRequirements {
-    margin-left:20px;
-}
-
 .subTitle{
-    margin-left: 10px;
+    margin: 10px;
     font-family: 'Montserrat', sans-serif;
+}
+
+#itensPerTable {
+    height: 2rem;
+}
+
+/* **************************************
+ * TABLE
+ * ***************************************/
+
+#tableContainer{
+    overflow-x: scroll;
 }
 
 table, th, td {
@@ -18,12 +20,32 @@ table, th, td {
     text-align: left;
     border: 1px solid black;
     border-collapse: collapse;
+}
 
+th {
+    background-color: #111111;
+    color: white;
+    border:1px solid #AAA;
+}
+
+td {
+    padding: 5px;
 }
 
 table{
-    width: 90vw;
-    margin-bottom: 15px;
+    width: 100%;
+    margin: 15px 0;
+    line-height: 1.75rem;
+}
+
+@media only screen and (max-width: 600px) {
+    table{
+        line-height: 1rem;
+    }
+
+    th:nth-child(2){
+        min-width: 10vw;
+    }
 }
 
 td > a{
@@ -31,37 +53,68 @@ td > a{
     text-decoration:none;
 }
 
-tr:hover {
-    background-color: aquamarine;
+tr:hover:nth-child(n+2) {
+    background-color: #DDD;
 }
 
 th {
     text-transform: uppercase;
 }
 
-.test-success {
-    color: green;
+abbr{
+    cursor: help;
 }
 
-.test-fail {
-    color: red;
-}
+/* **************************************
+ * SUSPICIOUSNESS BAR ELEMENT
+ * ***************************************/
 
-meter {
-    background: none;
-    background-color: lightgreen;
-    border: 1px solid black;
-    display: inline;
-    margin-left: 10px;
-    color: black;
+ .suspBar{
+    width: 100%;
+    min-width: 4vw;
+    height: auto;
+    min-height: 1rem;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    background-color: #2ECC40;
     border-radius: 25px;
+    border: 1px solid black;
+    padding: 0;
 }
 
-meter::-webkit-meter-optimum-value {
-    background: lightcoral;
-    border-radius: 25px 0 0 25px;
+.redBar {
+    width: 100%;
+    grid-column-start: 1;
+    background-color: #FF4136;
+    border-right: 1px solid black;
+    border-radius: 25px;
+     margin: 0;
+ }
+
+/* **************************************
+ * PAGINATION
+ * ***************************************/
+
+#pagination {
+    width: 100%;
+    display: flex ;
+    text-align: center;
+    float: center;
+    justify-content: center;
+    overflow-x: scroll;
 }
-meter::-moz-meter-bar {
-    background: lightcoral;
-    border-radius: 25px 0 0 25px;
+
+
+.pagButton{
+    max-width: 30px;
+    max-height: 30px;
+    font-size: 1.25rem;
+    width: 5vw;
+    height: 2rem;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.pagButton:disabled {
+    cursor: auto;
 }
