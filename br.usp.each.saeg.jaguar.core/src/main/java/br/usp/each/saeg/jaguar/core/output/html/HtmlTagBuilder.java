@@ -7,6 +7,9 @@ public class HtmlTagBuilder {
     private String innerHtml = "";
     private String inlineStyle = "";
     private String siblingHtml = "";
+    private String href = "";
+    private String ariaLabel = "";
+    private String title = "";
 
     private HtmlTagBuilder() {}
 
@@ -23,24 +26,70 @@ public class HtmlTagBuilder {
         this.cssClass = cssClass;
         return this;
     }
+    
+    public HtmlTagBuilder addCssClass(String newCssClass) {
+        this.cssClass = this.cssClass == null ?
+            newCssClass : this.cssClass + " " + newCssClass;
+        return this;
+    }
 
     public HtmlTagBuilder setInnerHtml(String innerHtml) {
         this.innerHtml = innerHtml;
         return this;
     }
-
+    
+    public HtmlTagBuilder addInnerHtml(String newInnerHtml) {
+        this.innerHtml = this.innerHtml == null ?
+                newInnerHtml :
+                this.innerHtml + newInnerHtml
+        ;
+        return this;
+    }
+    
+    public HtmlTagBuilder addInnerHtml(String... newInnerHtml) {
+        StringBuilder allNewInnerHtmlConcatenate = new StringBuilder();
+        for (String newInnerHtmlTemp : newInnerHtml) {
+            allNewInnerHtmlConcatenate.append(newInnerHtmlTemp);
+        }
+        return this.addInnerHtml(allNewInnerHtmlConcatenate.toString());
+    }
+    
     public HtmlTagBuilder setInlineStyle(String inlineStyle) {
         this.inlineStyle = inlineStyle;
         return this;
     }
-
+    
     public HtmlTagBuilder setSiblingHtml(String siblingHtml) {
         this.siblingHtml = siblingHtml;
         return this;
     }
+    
+    public HtmlTagBuilder setHref(String href) {
+        this.href = href;
+        return this;
+    }
+
+    public HtmlTagBuilder setAriaLabel(String ariaLabel) {
+        this.ariaLabel = ariaLabel;
+        return this;
+    }
+
+    public HtmlTagBuilder setTitle(String title) {
+        this.title = title;
+        return this;
+    }
 
     public String build() {
-        HtmlTag tag = new HtmlTag(id, this.tag, cssClass, siblingHtml, innerHtml, inlineStyle);
-        return tag.buildTag();
+        return new HtmlTag(
+                this.id,
+                this.tag,
+                this.cssClass,
+                this.siblingHtml,
+                this.innerHtml,
+                this.inlineStyle,
+                this.href,
+                this.ariaLabel,
+                this.title
+        ).buildTag();
     }
 }

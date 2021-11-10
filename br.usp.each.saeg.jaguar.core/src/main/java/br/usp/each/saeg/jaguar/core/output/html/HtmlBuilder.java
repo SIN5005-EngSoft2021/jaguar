@@ -1,17 +1,10 @@
 package br.usp.each.saeg.jaguar.core.output.html;
 
-import br.usp.each.saeg.jaguar.codeforest.model.Requirement;
-import br.usp.each.saeg.jaguar.core.Jaguar;
-import br.usp.each.saeg.jaguar.core.heuristic.Heuristic;
 import br.usp.each.saeg.jaguar.core.model.core.requirement.AbstractTestRequirement;
 import br.usp.each.saeg.jaguar.core.model.core.requirement.DuaTestRequirement;
 import br.usp.each.saeg.jaguar.core.model.core.requirement.LineTestRequirement;
 import org.apache.commons.collections4.MultiValuedMap;
-import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,260 +13,268 @@ import java.util.*;
 import static br.usp.each.saeg.jaguar.core.output.html.HtmlDomTree.*;
 
 public class HtmlBuilder {
-
-	private static Logger logger = LoggerFactory.getLogger("JaguarLogger");
-
-	private String project;
-
-	private Heuristic heuristic;
-
-	private Requirement.Type requirementType;
-
-	private Long timeSpent;
-
-	private List<AbstractTestRequirement> abstractTestRequirementList = new ArrayList<>();
-
-	private File projectBeingTestedDir;
-
-	public void project(String project){
-		this.project = project;
-	}
-
-	public void heuristic(Heuristic heuristic){
-		this.heuristic =  heuristic;
-	}
-
-	public void timeSpent(Long timeSpent){
-		this.timeSpent = timeSpent;
-	}
-
-	public void requirementType(Requirement.Type requirementType){
-		this.requirementType = requirementType;
-	}
-
-	public void abstractTestRequirementList(List<AbstractTestRequirement> abstractTestRequirementList){
-		this.abstractTestRequirementList = abstractTestRequirementList;
-	}
-
-	public void projectBeingTestedDir(File projectBeingTestedDir) {
-		this.projectBeingTestedDir = projectBeingTestedDir;
-	}
-
-	public String build() throws IOException {
-		File htmlTemplateFile = new File("br.usp.each.saeg.jaguar.core/src/main/resources/html-output/index.html");
-		String htmlString = FileUtils.readFileToString(htmlTemplateFile);
-
-		htmlString = htmlString.replace("$heuristic$",
-				StringUtils.upperCase(
-						StringUtils.removeEndIgnoreCase(
-								heuristic.getClass().getSimpleName(), "heuristic"
-						)
-				)
-		);
-
-		int[] testsData = getGeneralTestsNumbers();
-		htmlString = htmlString.replace("$numberOfTests$", String.valueOf(testsData[0]));
-		htmlString = htmlString.replace("$numFailTests$", String.valueOf(testsData[1]));
-
-
-		htmlString = htmlString.replace("$requirementType$", requirementType.toString());
-
-		htmlString = htmlString.replace("$testRequirementsList$", requirementListHtml());
-
-		return htmlString;
-	}
-
-	public String requirementListHtml() throws IOException {
-
-		MultiValuedMap<String, AbstractTestRequirement> requirementsGroupByClass = new ArrayListValuedHashMap<>();
-
-		for (AbstractTestRequirement requirement : abstractTestRequirementList){
-			requirementsGroupByClass.put(requirement.getClassName(), requirement);
-		}
-
-		StringBuilder requirementHtmlList = new StringBuilder();
-
-		for (String className : requirementsGroupByClass.keySet()){
-			requirementHtmlList.append("<div class=\"java-class\" id = \"java-class-")
-					.append(className).append("\">");
-
-			requirementHtmlList.append("<div style=\"overflow-x:auto;\">")
-					.append(buildHTMLTable(abstractTestRequirementList))
-					.append("<div class=\"java-class-code\" id = \"java-class-code")
-					.append(className).append("\">");
-
-			String codeFromClass = getCodeFromAbsolutePath(
-					projectBeingTestedDir.getAbsolutePath()
-							+ System.getProperty("file.separator") + "src"
-							+ System.getProperty("file.separator") + "main"
-							+ System.getProperty("file.separator") + "java"
-							+ System.getProperty("file.separator") + className + ".java"
-			);
-
-			Collection<AbstractTestRequirement> requirementsForThisClass = requirementsGroupByClass.get(className);
-			String codeFromClassTransformedForHtml = transformJavaCodeToDisplayInHtml(codeFromClass, requirementsForThisClass);
-
-
-			String htmlCode = new HtmlTagBuilder(HtmlDomTree.CODE)
-									.setCssClass("language-java")
-									.setInnerHtml(codeFromClassTransformedForHtml)
-									.build();
-
-			String preCode = new HtmlTagBuilder(HtmlDomTree.PRE)
-									.setInnerHtml(htmlCode)
-									.build();
-
-			requirementHtmlList.append(preCode);
-
-			requirementHtmlList.append("</div>");
-
-
-			requirementHtmlList.append("</div>");
-		}
-
-
-		return requirementHtmlList.toString();
-	}
-
-	private String getCodeFromAbsolutePath(String absolutePath) throws IOException {
-		File clazz = new File(absolutePath);
-		return FileUtils.readFileToString(clazz );
-	}
-
-	private String transformJavaCodeToDisplayInHtml(String javaCode, Collection<AbstractTestRequirement> requirementsForThisClass){
-
-		StringBuilder codeFromClassTransformedForHtml = new StringBuilder();
-
+	
+	public String transformJavaCodeToHtml(String javaCode, Collection<AbstractTestRequirement> requirementsForThisClass) {
 		List<String> rowsInJavaCode = Arrays.asList(javaCode.split("\\n"));
-
-		codeFromClassTransformedForHtml.append("<ol class=\"linenumbers\">");
-
-		for(int rowIndex = 0; rowIndex < rowsInJavaCode.size(); rowIndex++){
-
-			final int rowIndexfinal = rowIndex;
-
+		
+		HtmlTagBuilder olHtmlTagBuilder = new HtmlTagBuilder(OL);
+		olHtmlTagBuilder.setCssClass("linenumbers");
+		
+		for (int rowIndex = 0; rowIndex < rowsInJavaCode.size() - 1; rowIndex++) {
+			
+			final int rowIndexFinal = rowIndex /* To use in lambda need to be final */;
+			
 			String codeLine = rowsInJavaCode.get(rowIndex);
+			
+			Optional<AbstractTestRequirement> optionalTestRequirementWithMostHighSuspeciosForThisLine = requirementsForThisClass.stream()
+					.filter(abstractTestRequirement -> {
+						if (abstractTestRequirement instanceof LineTestRequirement) {
+							LineTestRequirement lineTestRequirement = (LineTestRequirement) abstractTestRequirement;
+							return Objects.equals(lineTestRequirement.getLineNumber(), rowIndexFinal + 1);
+						} else {
+							return false;
+						}
+					}).max(Comparator.comparingDouble(AbstractTestRequirement::getSuspiciousness));
+			
+			if (optionalTestRequirementWithMostHighSuspeciosForThisLine.isPresent()) {
+				
+				AbstractTestRequirement requirement = optionalTestRequirementWithMostHighSuspeciosForThisLine.get();
+				String cssClass = getSuspiciousnessCssColor(requirement.getSuspiciousness());
 
-			Optional<AbstractTestRequirement> optionalAbstractTestRequirementForThisLine = requirementsForThisClass.stream().filter(abstractTestRequirement -> {
-				if(abstractTestRequirement instanceof LineTestRequirement){
-					LineTestRequirement lineTestRequirement = (LineTestRequirement) abstractTestRequirement;
-					return Objects.equals(lineTestRequirement.getLineNumber(), rowIndexfinal);
-				}else {
-					return false;
-				}
-			}).findFirst();
-
-			if(optionalAbstractTestRequirementForThisLine.isPresent()){
-
-				AbstractTestRequirement requirement = optionalAbstractTestRequirementForThisLine.get();
-
-				codeLine= new HtmlTagBuilder(HtmlDomTree.SPAN)
-								.setCssClass(getSuspiciousnessCssColor(requirement.getSuspiciousness()))
-								.setInnerHtml(codeLine)
-								.build();
+				codeLine = new HtmlTagBuilder(HtmlDomTree.SPAN)
+						.addCssClass(cssClass)
+						.setId(requirement.getUuid().toString())
+						.setAriaLabel(cssClass)
+						.setInnerHtml(new HtmlTagBuilder(ABBR)
+										.setTitle(cssClass.replace("-", " "))
+										.setInnerHtml(codeLine).build()
+									)
+						.build()
+				;
 			}
-
+			
 			String newListItem = new HtmlTagBuilder(HtmlDomTree.LI)
-										.setInnerHtml(codeLine)
-										.setSiblingHtml(System.lineSeparator())
-										.build();
-
-			codeFromClassTransformedForHtml.append(newListItem);
+					.setInnerHtml(codeLine)
+					.setSiblingHtml(System.lineSeparator())
+					.build();
+			
+			olHtmlTagBuilder.addInnerHtml(newListItem);
 		}
-
-
-		return codeFromClassTransformedForHtml.toString();
+		
+		return new HtmlTagBuilder(PRE)
+				.setInnerHtml(
+						new HtmlTagBuilder(CODE)
+								.setCssClass("language-java")
+								.setInnerHtml(olHtmlTagBuilder.build())
+								.build()
+				).build();
 	}
-
-	public String getSuspiciousnessCssColor(double suspiciousness){
-		return "red";
-
-	}
-
-	public String buildHTMLTable(List<AbstractTestRequirement> requirementsForThisClass) {
-		StringBuilder tableLines = new StringBuilder();
-		for (AbstractTestRequirement currentRequirement : requirementsForThisClass) {
-			tableLines.append(buildTableRowForLineTestRequirement(currentRequirement));
+	
+	public String getSuspiciousnessCssColor(double suspiciousness) {
+		if (suspiciousness >= 0.75D) {
+			return "suspiciousness-more-than-or-equal-75";
+		} else if (suspiciousness >= 0.5D) {
+			return "suspiciousness-more-than-or-equal-50";
+		} else if (suspiciousness >= 0.25D) {
+			return "suspiciousness-more-than-or-equal-25";
+		} else {
+			return "suspiciousness-below-25";
 		}
-
-		return wrapData(new String[] {buildTableHeader(), tableLines.toString()}, "table");
 	}
-
-	public String wrapData(String[] data, String tag) {
-		boolean isEnclosed = false;
-		String openTag = P;
-		String beginTag = null;
-
-		if (isHeaderCell(tag)) {
-			isEnclosed = true;
-			openTag = TH;
-			beginTag = TR;
-		} else if (isDataCell(tag)) {
-			isEnclosed = true;
-			openTag = TD;
-			beginTag = TR;
-		} else if (isTable(tag)) {
-			isEnclosed = true;
-			openTag = TD;
-			beginTag = TABLE;
+	
+	public String buildTDTagForClassList(Map<File, File> htmlFileMapByClassFile, MultiValuedMap<File, AbstractTestRequirement> requirementsGroupByClassFile) {
+		
+		StringBuilder allTableDatas = new StringBuilder();
+		
+		for (Map.Entry<File, File> classFileAndHtmlClassFile : htmlFileMapByClassFile.entrySet()) {
+			allTableDatas.append(
+					buildTDTagForClassFile(
+							classFileAndHtmlClassFile.getValue(),
+							requirementsGroupByClassFile.get(classFileAndHtmlClassFile.getKey()))
+			);
 		}
+		
+		return allTableDatas.toString();
+	}
+	
+	public String buildTDTagForClassFile(File htmlClassFile, Collection<AbstractTestRequirement> testRequirementsForTheClass) {
+		String htmlClassFileAbsolutePath = htmlClassFile.getAbsolutePath();
+		
+		AbstractTestRequirement abstractTestRequirementWithHigherSuspiciousness = testRequirementsForTheClass
+				.stream()
+				.max(Comparator.comparingDouble(AbstractTestRequirement::getSuspiciousness))
+				.orElseThrow(NullPointerException::new);
 
-		StringBuilder wrappedData = buildWrappedData(data, openTag);
-		if (isEnclosed) {
-			return new HtmlTagBuilder(beginTag)
-							.setInnerHtml(wrappedData.toString())
-							.build();
+		double suspValue = abstractTestRequirementWithHigherSuspiciousness.getSuspiciousness();
+		
+		return new HtmlTagBuilder(TR).addInnerHtml(
+				new HtmlTagBuilder(TD)
+						.setInnerHtml(
+								new HtmlTagBuilder(A)
+										.setHref(htmlClassFileAbsolutePath)
+										.addInnerHtml(abstractTestRequirementWithHigherSuspiciousness.getClassName())
+										.build()
+						)
+						.build(),
+				new HtmlTagBuilder(TD) //add bar
+						.setInnerHtml(
+								new HtmlTagBuilder(DIV)
+										.setCssClass("suspBar")
+										.addInnerHtml(
+											new HtmlTagBuilder(DIV)
+													.setCssClass("redBar")
+													.setInlineStyle(defineSuspBarCss((int) Math.round((suspValue+0.1)*10)))
+													.build()
+										).build()
+						)
+						.build(),
+				new HtmlTagBuilder(TD)
+						.setInnerHtml(
+								new HtmlTagBuilder(A)
+										.setHref(htmlClassFileAbsolutePath)
+										.addInnerHtml(String.valueOf(suspValue))
+										.build()
+						)
+						.build(),
+				new HtmlTagBuilder(TD)
+						.setInnerHtml(
+								new HtmlTagBuilder(A)
+										.setHref(htmlClassFileAbsolutePath)
+										.addInnerHtml(String.valueOf(abstractTestRequirementWithHigherSuspiciousness.getCef()))
+										.build()
+						)
+						.build(),
+				new HtmlTagBuilder(TD)
+						.setInnerHtml(
+								new HtmlTagBuilder(A)
+										.setHref(htmlClassFileAbsolutePath)
+										.addInnerHtml(String.valueOf(abstractTestRequirementWithHigherSuspiciousness.getCep()))
+										.build()
+						)
+						.build(),
+				new HtmlTagBuilder(TD)
+						.setInnerHtml(
+								new HtmlTagBuilder(A)
+										.setHref(htmlClassFileAbsolutePath)
+										.addInnerHtml(String.valueOf(abstractTestRequirementWithHigherSuspiciousness.getCnf()))
+										.build()
+						)
+						.build(),
+				new HtmlTagBuilder(TD)
+						.setInnerHtml(
+								new HtmlTagBuilder(A)
+										.setHref(htmlClassFileAbsolutePath)
+										.addInnerHtml(String.valueOf(abstractTestRequirementWithHigherSuspiciousness.getCnp()))
+										.build()
+						)
+						.build()
+		).build();
+	}
+	
+	public String buildTDTagForTestRequirementList(Collection<AbstractTestRequirement> abstractTestRequirementList, String linkToAnchor) {
+		StringBuilder allTableDatas = new StringBuilder();
+		
+		for (AbstractTestRequirement abstractTestRequirement : abstractTestRequirementList) {
+			allTableDatas.append(
+					buildTDTagForTestRequirement(abstractTestRequirement, linkToAnchor)
+			);
 		}
-
-		return wrappedData.toString();
+		
+		return allTableDatas.toString();
 	}
-
-	public String buildTableHeader() {
-		String[] rowData = new String[]{"Class", "Method", "Location", "CEF", "CEP", "CNF",
-				"CNP", "Suspiciouness"};
-		return wrapData(rowData, "th");
-	}
-
-	public String buildTableRowForLineTestRequirement(AbstractTestRequirement atr) {
-		Integer location = null;
-		if (atr instanceof DuaTestRequirement) {
-			DuaTestRequirement duaRequirement = (DuaTestRequirement) atr;
+	
+	public String buildTDTagForTestRequirement(AbstractTestRequirement abstractTestRequirement, String linkToAnchor) {
+		Integer location;
+		
+		if (abstractTestRequirement instanceof DuaTestRequirement) {
+			DuaTestRequirement duaRequirement = (DuaTestRequirement) abstractTestRequirement;
 			location = duaRequirement.getDef();
-		} else if (atr instanceof LineTestRequirement){
-			LineTestRequirement lineRequirement = (LineTestRequirement) atr;
+		} else {
+			LineTestRequirement lineRequirement = (LineTestRequirement) abstractTestRequirement;
 			location = lineRequirement.getLineNumber();
 		}
 
-		String[] rowData = new String[]{atr.getClassName(), atr.getMethodSignature(),
-				location.toString(), String.valueOf(atr.getCef()),
-				String.valueOf(atr.getCep()), String.valueOf(atr.getCnf()),
-				String.valueOf(atr.getCnp()), String.valueOf(atr.getSuspiciousness())};
-
-		return wrapData(rowData, "td");
+		double suspValue = abstractTestRequirement.getSuspiciousness();
+		return new HtmlTagBuilder(TR).addInnerHtml(
+				new HtmlTagBuilder(TD)
+						.setInnerHtml(
+								new HtmlTagBuilder(A)
+										.setHref(linkToAnchor + "#" + abstractTestRequirement.getUuid())
+										.addInnerHtml(location.toString())
+										.build()
+						)
+						.build(),
+				new HtmlTagBuilder(TD)
+						.setInnerHtml(
+								new HtmlTagBuilder(A)
+										.setHref(linkToAnchor + "#" + abstractTestRequirement.getUuid())
+										.addInnerHtml(abstractTestRequirement.getMethodSignature())
+										.build()
+						)
+						.build(),
+				new HtmlTagBuilder(TD) //add bar
+						.setInnerHtml(
+								new HtmlTagBuilder(DIV)
+										.setCssClass("suspBar")
+										.addInnerHtml(
+												new HtmlTagBuilder(DIV)
+														.setCssClass("redBar")
+														.setInlineStyle(defineSuspBarCss((int) Math.round((suspValue+0.1)*10)))
+														.build()
+										).build()
+						)
+						.build(),
+				new HtmlTagBuilder(TD)
+						.setInnerHtml(
+								new HtmlTagBuilder(A)
+										.setHref(linkToAnchor + "#" + abstractTestRequirement.getUuid())
+										.addInnerHtml(String.valueOf(suspValue))
+										.build()
+						)
+						.build(),
+				new HtmlTagBuilder(TD)
+						.setInnerHtml(
+								new HtmlTagBuilder(A)
+										.setHref(linkToAnchor + "#" + abstractTestRequirement.getUuid())
+										.addInnerHtml(String.valueOf(abstractTestRequirement.getCef()))
+										.build()
+						)
+						.build(),
+				new HtmlTagBuilder(TD)
+						.setInnerHtml(
+								new HtmlTagBuilder(A)
+										.setHref(linkToAnchor + "#" + abstractTestRequirement.getUuid())
+										.addInnerHtml(String.valueOf(abstractTestRequirement.getCep()))
+										.build()
+						)
+						.build(),
+				new HtmlTagBuilder(TD)
+						.setInnerHtml(
+								new HtmlTagBuilder(A)
+										.setHref(linkToAnchor + "#" + abstractTestRequirement.getUuid())
+										.addInnerHtml(String.valueOf(abstractTestRequirement.getCnf()))
+										.build()
+						)
+						.build(),
+				new HtmlTagBuilder(TD)
+						.setInnerHtml(
+								new HtmlTagBuilder(A)
+										.setHref(linkToAnchor + "#" + abstractTestRequirement.getUuid())
+										.addInnerHtml(String.valueOf(abstractTestRequirement.getCnp()))
+										.build()
+						)
+						.build()
+		).build();
+	}
+	
+	public String getStringFromHtmlTemplate(String templatePath) throws IOException {
+		File htmlTemplateFile = new File(templatePath);
+		return FileUtils.readFileToString(htmlTemplateFile);
 	}
 
-	public int[] getGeneralTestsNumbers() {
-		int[] temp = new int[]{0,0};
-		if(Jaguar.getnTests() > 0) temp[0] = Jaguar.getnTests();
-		if(Jaguar.getnTestsFailed() > 0) temp[1] = Jaguar.getnTestsFailed();
-		return temp;
+	public String defineSuspBarCss(int value){
+		if (value <= 1)
+			return "display: none";
+		return "grid-column-end: " + value;
 	}
-
-	private StringBuilder buildWrappedData(String[] data, String openTag) {
-		StringBuilder wrappedData = new StringBuilder();
-
-		for (String line : data) {
-			if (line == null)
-				line = "";
-
-			String currentWrappedData = new HtmlTagBuilder(openTag)
-					.setInnerHtml(line)
-					.build();
-
-			wrappedData.append(currentWrappedData);
-		}
-
-		return wrappedData;
-	}
-
 }

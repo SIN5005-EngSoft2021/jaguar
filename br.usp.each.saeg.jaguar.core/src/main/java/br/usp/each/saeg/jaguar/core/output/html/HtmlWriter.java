@@ -1,79 +1,87 @@
 package br.usp.each.saeg.jaguar.core.output.html;
 
-import br.usp.each.saeg.jaguar.codeforest.model.Requirement;
 import br.usp.each.saeg.jaguar.core.heuristic.Heuristic;
 import br.usp.each.saeg.jaguar.core.model.core.requirement.AbstractTestRequirement;
-import org.apache.commons.io.FileUtils;
+import br.usp.each.saeg.jaguar.core.utils.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class HtmlWriter {
 	
 	private static final Logger logger = LoggerFactory.getLogger("JaguarLogger");
-	private static final String FOLDER_NAME = "Reports";
+	
+	public static final String HTML_FILES_FOLDER_NAME = ".html_folder";
+	public static final String CSS_FILES_FOLDER_NAME = ".css_folder";
+	public static final String IMG_FILES_FOLDER_NAME = ".img_folder";
+	public static final String JS_FILES_FOLDER_NAME = ".js_folder";
+	public static final String HTML_TYPE_FOR_FILE = ".html";
+	
 	
 	private final List<AbstractTestRequirement> testRequirements;
-	private final Heuristic currentHeuristic;
-	private final Long coverageTime;
+	private final Heuristic heuristic;
 	
-	public HtmlWriter(List<AbstractTestRequirement> testRequirements, Heuristic heuristic, Long coverageTime) {
+	private final HtmlBuilder htmlBuilder;
+	
+	public HtmlWriter(
+			List<AbstractTestRequirement> testRequirements,
+			Heuristic heuristic,
+			HtmlBuilder htmlBuilder
+	) {
 		super();
 		this.testRequirements = testRequirements;
-		this.currentHeuristic = heuristic;
-		this.coverageTime =  coverageTime;
+		this.heuristic = heuristic;
+		this.htmlBuilder = htmlBuilder;
 	}
 	
-	public void generateHtml(File projectDir, String outputFileName) throws Exception {
-		HtmlBuilder htmlBuilder = createHtmlBuilder(projectDir);
-		File htmlFile = write(htmlBuilder, projectDir, outputFileName);
+	public void generateHtmlForLineType(File projectDirectory, String outputFile) throws IOException {
+		File htmlFile = new HtmlWriterLineType(
+				htmlBuilder,
+				projectDirectory,
+				testRequirements,
+				heuristic,
+				outputFile
+		).write();
 		logger.info("Output html created at: {}", htmlFile.getAbsolutePath());
 	}
 	
-	private File write(HtmlBuilder htmlBuilder, File projectDir, String outputFileName) throws Exception {
-		projectDir = new File(projectDir.getPath() + System.getProperty("file.separator") + FOLDER_NAME);
-		if (!projectDir.exists()){
-			projectDir.mkdirs();
-		}
-		
-		File htmlFile = new File(projectDir.getAbsolutePath() + System.getProperty("file.separator") + outputFileName + ".html");
-		try {
-			FileUtils.writeStringToFile(htmlFile, htmlBuilder.build());
-		} catch (IOException e) {
-			throw new IOException("Error during transition content to html file", e);
-		}
-		
-		return htmlFile;
+	public void generateHtmlForDuaType(File projectDirectory) throws IOException {
+		throw new UnsupportedOperationException("Not implemented.");
 	}
 	
-	private HtmlBuilder createHtmlBuilder(File projectDir) {
-		
-		HtmlBuilder htmlBuilder = new HtmlBuilder();
-		htmlBuilder.project("fault localization");
-		htmlBuilder.heuristic(currentHeuristic);
-		htmlBuilder.timeSpent(coverageTime);
-		htmlBuilder.requirementType(getType());
-		htmlBuilder.abstractTestRequirementList(testRequirements);
-		htmlBuilder.projectBeingTestedDir(projectDir);
-		return htmlBuilder;
-		
+	public static void writeImgFiles(File subHtmlFolder, String imgFilesFolderName) throws IOException {
+
+		File imgFolder = FileUtils.createOrGetFolder(subHtmlFolder.getAbsolutePath(), imgFilesFolderName);
+
+		FileUtils.copyFile(imgFolder, "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/img/jaguar-icon.svg");
+
 	}
 	
-	private Requirement.Type getType() {
-		if (testRequirements.isEmpty()){
-			return null;
-		}
+	public static void writeCssFiles(File subHtmlFolder, String cssFilesFolderName) throws IOException {
 		
-		if (AbstractTestRequirement.Type.LINE == testRequirements.iterator().next().getType()){
-			return Requirement.Type.LINE;
-		}else if(AbstractTestRequirement.Type.DUA == testRequirements.iterator().next().getType()){
-			return Requirement.Type.DUA;
-		}
+		File cssFolder = FileUtils.createOrGetFolder(subHtmlFolder.getAbsolutePath(), cssFilesFolderName);
 		
-		return null;
+		FileUtils.copyFile(cssFolder, "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/css/stackoverflow-dark.css");
+		
+		FileUtils.copyFile(cssFolder, "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/css/stackoverflow-light.css");
+		
+		FileUtils.copyFile(cssFolder, "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/css/style.css");
+		
+		FileUtils.copyFile(cssFolder, "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/css/test-requirement-type-line-code-model.css");
+		
+		FileUtils.copyFile(cssFolder, "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/css/test-requiremente-table-model.css");
 	}
+
+	public static void writeJsFiles(File subHtmlFolder, String jsFilesFolderName) throws IOException {
+
+		File jsFolder = FileUtils.createOrGetFolder(subHtmlFolder.getAbsolutePath(), jsFilesFolderName);
+
+		FileUtils.copyFile(jsFolder, "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/js/table-controls.js");
+
+	}
+	
+	
 }

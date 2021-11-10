@@ -1,5 +1,7 @@
 package br.usp.each.saeg.jaguar.core.model.core.requirement;
 
+import java.util.UUID;
+
 public abstract class AbstractTestRequirement implements Comparable<AbstractTestRequirement> {
 
 	protected String className;
@@ -16,6 +18,8 @@ public abstract class AbstractTestRequirement implements Comparable<AbstractTest
 	
 	private Double suspiciousness = 0.0;
 	private Boolean covered;
+	
+	protected UUID uuid = UUID.randomUUID();
 
 	public enum Type{
 		LINE, DUA;
@@ -115,7 +119,15 @@ public abstract class AbstractTestRequirement implements Comparable<AbstractTest
 	public void setCovered(Boolean covered) {
 		this.covered = covered;
 	}
-
+	
+	public UUID getUuid() {
+		return uuid;
+	}
+	
+	public void setUuid(UUID uuid) {
+		this.uuid = uuid;
+	}
+	
 	@Override
 	public String toString() {
 		return "AbstractTestRequirement [className=" + className + ", classFirstLine=" + classFirstLine + ", methodId=" + methodId

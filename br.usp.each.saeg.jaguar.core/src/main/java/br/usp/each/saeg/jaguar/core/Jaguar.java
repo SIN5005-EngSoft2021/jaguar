@@ -4,12 +4,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
+import br.usp.each.saeg.jaguar.codeforest.model.Requirement;
+import br.usp.each.saeg.jaguar.core.output.html.HtmlBuilder;
 import br.usp.each.saeg.jaguar.core.output.html.HtmlWriter;
+import br.usp.each.saeg.jaguar.core.utils.TestRequirementUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jacoco.core.analysis.AbstractAnalyzer;
 import org.jacoco.core.analysis.ControlFlowAnalyzer;
@@ -48,12 +48,15 @@ public class Jaguar {
 	private static final String XML_NAME = "jaguar_output";
 	private static int nTests = 0;
 	private static int nTestsFailed = 0;
+	
 	private Map<String, File> classFilesCache;
 
 	private JaguarSFL sfl = new JaguarSFL();
 	
 	private Long startTime;
 	private Long totalTimeSpent;
+	
+	public static final String REPORTS_FOLDER_NAME = ".jaguar";
 
 	/**
 	 * Construct the Jaguar object.
@@ -285,12 +288,27 @@ public class Jaguar {
 		xmlWriter.generateXML(projectDir, fileName);
 	}
 	
-	public void generateHtml(Heuristic heuristic, File projectDir, String outputFile) throws Exception {
+	public void generateHtml(Heuristic heuristic, File projectDirectory, String outputFile) throws IOException {
 		ArrayList<AbstractTestRequirement> testRequirements = generateRank(heuristic);
 		
-		HtmlWriter htmlWriter = new HtmlWriter(testRequirements, heuristic, totalTimeSpent);
+		if(testRequirements.isEmpty()){
+			return;
+		}
 		
-		htmlWriter.generateHtml(projectDir, outputFile);
+		Requirement.Type testRequirementType = TestRequirementUtils.getType(testRequirements);
+		
+		HtmlWriter htmlWriter = new HtmlWriter(
+				testRequirements,
+				heuristic,
+				new HtmlBuilder()
+		);
+		
+		if(Requirement.Type.LINE.equals(testRequirementType)){
+			htmlWriter.generateHtmlForLineType(projectDirectory, outputFile);
+		}else {
+			htmlWriter.generateHtmlForDuaType(projectDirectory);
+		}
+		
 	}
 
 	/**
