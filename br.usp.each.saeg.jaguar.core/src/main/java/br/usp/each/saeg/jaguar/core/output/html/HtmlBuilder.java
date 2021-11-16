@@ -39,7 +39,7 @@ public class HtmlBuilder {
 			if (optionalTestRequirementWithMostHighSuspeciosForThisLine.isPresent()) {
 				
 				AbstractTestRequirement requirement = optionalTestRequirementWithMostHighSuspeciosForThisLine.get();
-				Double currentSuspiciousness =requirement.getSuspiciousness();
+				Double currentSuspiciousness = requirement.getSuspiciousness();
 				String cssClass = getSuspiciousnessCssColor(currentSuspiciousness);
 
 				codeLine = new HtmlTagBuilder(HtmlDomTree.SPAN)
