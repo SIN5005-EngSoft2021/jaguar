@@ -1,3 +1,7 @@
+/* *******************************
+ * Stylize the anchored code line
+ * ******************************/
+
 const fileName = document.URL;
 const startLine = fileName.indexOf("#");
 
@@ -6,20 +10,14 @@ if (startLine !== -1) {
 }
 
 function focusCodeLine(id) {
-    console.log(id);
-
-    // locate element
     const line = document.getElementById(id);
     if (line === null) return;
 
-    const parent = line.parent;
-    const sign = document.createElement("div");
+    const parent = line.parentElement
+    parent.id = "focusedLineParent";
+
+    const sign = document.createElement("figure");
     sign.id = "focusedLine";
 
-
-
-    // paint line
+    parent.prepend(sign);
 }
-
-
-
