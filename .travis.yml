@@ -1,22 +1,16 @@
+arch: amd64
+
 language: java
 
-sudo: false
-
-jdk:
-  - oraclejdk8
-
-install: true
-
-before_script:
-  - make prepare
-
-script: make build_core
-
-after_success:
-  - coveralls
+jdk: 
+  - openjdk11
 
 cache:
   directories:
-    - '$HOME/.m2/repository'
-    - '$HOME/.m2/wrapper'
-    
+  - $HOME/.m2
+
+before_script:
+  - make prepare
+  
+script:
+  - make build_core
