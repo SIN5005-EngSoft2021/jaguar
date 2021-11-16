@@ -10,10 +10,15 @@ public class HtmlTag {
     private final String href;
     private final String ariaLabel;
     private final String title;
+    private String dataKey = "";
+    private String dataValue = "";
 
     private StringBuilder finalTag;
 
-    public HtmlTag(String id, String tag, String cssClass, String siblingHtml, String innerHtml, String inlineStyle, String href, String ariaLabel, String title) {
+    public HtmlTag(String id, String tag, String cssClass, String siblingHtml, String innerHtml,
+                   String inlineStyle, String href, String ariaLabel, String title,
+                   String dataKey,
+                   String dataValue) {
         this.id = id;
         this.tag = tag;
         this.cssClass = cssClass;
@@ -23,6 +28,8 @@ public class HtmlTag {
         this.href = href;
         this.ariaLabel = ariaLabel;
         this.title = title;
+        this.dataKey = dataKey;
+        this.dataValue = dataValue;
 
         this.finalTag = new StringBuilder();
     }
@@ -64,6 +71,14 @@ public class HtmlTag {
         if(!title.isEmpty()){
             finalTag.append(" title=\"")
                     .append(title)
+                    .append('"');
+        }
+
+        if (!dataKey.isEmpty() && !dataValue.isEmpty()) {
+            finalTag.append(" data-")
+                    .append(this.dataKey)
+                    .append("=\"")
+                    .append(this.dataValue)
                     .append('"');
         }
 

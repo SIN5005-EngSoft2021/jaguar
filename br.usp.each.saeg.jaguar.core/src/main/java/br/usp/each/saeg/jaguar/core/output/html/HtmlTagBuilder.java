@@ -10,6 +10,8 @@ public class HtmlTagBuilder {
     private String href = "";
     private String ariaLabel = "";
     private String title = "";
+    private String dataKey = "";
+    private String dataValue = "";
 
     private HtmlTagBuilder() {}
 
@@ -79,6 +81,12 @@ public class HtmlTagBuilder {
         return this;
     }
 
+    public HtmlTagBuilder setData(String dataKey, String dataValue) {
+        this.dataKey = dataKey;
+        this.dataValue = dataValue;
+        return this;
+    }
+
     public String build() {
         return new HtmlTag(
                 this.id,
@@ -89,7 +97,9 @@ public class HtmlTagBuilder {
                 this.inlineStyle,
                 this.href,
                 this.ariaLabel,
-                this.title
+                this.title,
+                this.dataKey,
+                this.dataValue
         ).buildTag();
     }
 }
