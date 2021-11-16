@@ -36,7 +36,7 @@ public class HtmlWriterLineType {
 	
 	private final String outputFile;
 	
-	private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy - hh:mm");
+	private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
 	
 	public HtmlWriterLineType(
 			HtmlBuilder htmlBuilder,
