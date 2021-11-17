@@ -111,7 +111,7 @@ ul.breadcrumbs li a:hover {
 
 .title{
     display: inline;
-    top: 50%;
+    top: 40%;
     position: absolute;
     transform: translate(0, -15px);
 }
@@ -149,6 +149,14 @@ ul.breadcrumbs li a:hover {
     font-weight: bold
 }
 
+.align-right{
+    text-align: right;
+}
+
+.align-center{
+    text-align: center;
+}
+
 /* **************************************
  * FOOTER
  * ***************************************/
@@ -164,4 +172,9 @@ footer p{
     width: 100%;
     height: 100%;
     padding-top: 1rem;
+}
+
+.credits-icon{
+    margin-top: 3px;
+    font-size: 10px;
 }

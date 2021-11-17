@@ -8,11 +8,21 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.*;
 
 import static br.usp.each.saeg.jaguar.core.output.html.HtmlDomTree.*;
 
 public class HtmlBuilder {
+	
+	private static final NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+	
+	public static final String ALIGN_RIGHT = "align-right";
+	
+	static {
+			numberFormat.setMaximumFractionDigits(2);
+			numberFormat.setMinimumFractionDigits(2);
+	}
 	
 	public String transformJavaCodeToHtml(String javaCode, Collection<AbstractTestRequirement> requirementsForThisClass) {
 		List<String> rowsInJavaCode = Arrays.asList(javaCode.split("\\n"));
@@ -132,7 +142,10 @@ public class HtmlBuilder {
 						.setInnerHtml(
 								new HtmlTagBuilder(A)
 										.setHref(htmlClassFileAbsolutePath)
-										.addInnerHtml(String.valueOf(suspValue))
+										.addCssClass(ALIGN_RIGHT)
+										.addInnerHtml(
+												numberFormat.format(suspValue)
+										)
 										.build()
 						)
 						.build(),
@@ -140,7 +153,10 @@ public class HtmlBuilder {
 						.setInnerHtml(
 								new HtmlTagBuilder(A)
 										.setHref(htmlClassFileAbsolutePath)
-										.addInnerHtml(String.valueOf(abstractTestRequirementWithHigherSuspiciousness.getCef()))
+										.addCssClass(ALIGN_RIGHT)
+										.addInnerHtml(
+												numberFormat.format(abstractTestRequirementWithHigherSuspiciousness.getCef())
+										)
 										.build()
 						)
 						.build(),
@@ -148,7 +164,10 @@ public class HtmlBuilder {
 						.setInnerHtml(
 								new HtmlTagBuilder(A)
 										.setHref(htmlClassFileAbsolutePath)
-										.addInnerHtml(String.valueOf(abstractTestRequirementWithHigherSuspiciousness.getCep()))
+										.addCssClass(ALIGN_RIGHT)
+										.addInnerHtml(
+												numberFormat.format(abstractTestRequirementWithHigherSuspiciousness.getCep())
+										)
 										.build()
 						)
 						.build(),
@@ -156,7 +175,10 @@ public class HtmlBuilder {
 						.setInnerHtml(
 								new HtmlTagBuilder(A)
 										.setHref(htmlClassFileAbsolutePath)
-										.addInnerHtml(String.valueOf(abstractTestRequirementWithHigherSuspiciousness.getCnf()))
+										.addCssClass(ALIGN_RIGHT)
+										.addInnerHtml(
+												numberFormat.format(abstractTestRequirementWithHigherSuspiciousness.getCnf())
+										)
 										.build()
 						)
 						.build(),
@@ -164,7 +186,10 @@ public class HtmlBuilder {
 						.setInnerHtml(
 								new HtmlTagBuilder(A)
 										.setHref(htmlClassFileAbsolutePath)
-										.addInnerHtml(String.valueOf(abstractTestRequirementWithHigherSuspiciousness.getCnp()))
+										.addCssClass(ALIGN_RIGHT)
+										.addInnerHtml(
+												numberFormat.format(abstractTestRequirementWithHigherSuspiciousness.getCnp())
+										)
 										.build()
 						)
 						.build()
@@ -228,7 +253,8 @@ public class HtmlBuilder {
 						.setInnerHtml(
 								new HtmlTagBuilder(A)
 										.setHref(linkToAnchor + "#" + abstractTestRequirement.getUuid())
-										.addInnerHtml(String.valueOf(suspValue))
+										.addCssClass(ALIGN_RIGHT)
+										.addInnerHtml(numberFormat.format(suspValue))
 										.build()
 						)
 						.build(),
@@ -236,7 +262,8 @@ public class HtmlBuilder {
 						.setInnerHtml(
 								new HtmlTagBuilder(A)
 										.setHref(linkToAnchor + "#" + abstractTestRequirement.getUuid())
-										.addInnerHtml(String.valueOf(abstractTestRequirement.getCef()))
+										.addCssClass(ALIGN_RIGHT)
+										.addInnerHtml(numberFormat.format(abstractTestRequirement.getCef()))
 										.build()
 						)
 						.build(),
@@ -244,7 +271,8 @@ public class HtmlBuilder {
 						.setInnerHtml(
 								new HtmlTagBuilder(A)
 										.setHref(linkToAnchor + "#" + abstractTestRequirement.getUuid())
-										.addInnerHtml(String.valueOf(abstractTestRequirement.getCep()))
+										.addCssClass(ALIGN_RIGHT)
+										.addInnerHtml(numberFormat.format(abstractTestRequirement.getCep()))
 										.build()
 						)
 						.build(),
@@ -252,7 +280,8 @@ public class HtmlBuilder {
 						.setInnerHtml(
 								new HtmlTagBuilder(A)
 										.setHref(linkToAnchor + "#" + abstractTestRequirement.getUuid())
-										.addInnerHtml(String.valueOf(abstractTestRequirement.getCnf()))
+										.addCssClass(ALIGN_RIGHT)
+										.addInnerHtml(numberFormat.format(abstractTestRequirement.getCnf()))
 										.build()
 						)
 						.build(),
@@ -260,7 +289,8 @@ public class HtmlBuilder {
 						.setInnerHtml(
 								new HtmlTagBuilder(A)
 										.setHref(linkToAnchor + "#" + abstractTestRequirement.getUuid())
-										.addInnerHtml(String.valueOf(abstractTestRequirement.getCnp()))
+										.addCssClass(ALIGN_RIGHT)
+										.addInnerHtml(numberFormat.format(abstractTestRequirement.getCnp()))
 										.build()
 						)
 						.build()
