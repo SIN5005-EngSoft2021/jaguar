@@ -39,14 +39,16 @@ public class HtmlBuilder {
 			if (optionalTestRequirementWithMostHighSuspeciosForThisLine.isPresent()) {
 				
 				AbstractTestRequirement requirement = optionalTestRequirementWithMostHighSuspeciosForThisLine.get();
-				String cssClass = getSuspiciousnessCssColor(requirement.getSuspiciousness());
+				Double currentSuspiciousness = requirement.getSuspiciousness();
+				String cssClass = getSuspiciousnessCssColor(currentSuspiciousness);
 
 				codeLine = new HtmlTagBuilder(HtmlDomTree.SPAN)
 						.addCssClass(cssClass)
 						.setId(requirement.getUuid().toString())
 						.setAriaLabel(cssClass)
+						.setData("suspiciousness", String.valueOf(currentSuspiciousness))
 						.setInnerHtml(new HtmlTagBuilder(ABBR)
-										.setTitle(cssClass.replace("-", " "))
+										.setTitle("Suspiciousness of this line is " + currentSuspiciousness)
 										.setInnerHtml(codeLine).build()
 									)
 						.build()
