@@ -94,9 +94,10 @@ abbr{
     height: 0.6rem;
     margin-left: -0.70rem;
     margin-top: 0.2rem;
-    position: absolute;
+    position: sticky;
     background-color: red;
     border: 0.063rem solid black;
     z-index: 2;
     box-shadow: 0.063rem 0.063rem 0.063rem grey;
+    display: inline-block;
 }
