@@ -56,7 +56,7 @@ public class HtmlWriter {
 
 		File imgFolder = FileUtils.createOrGetFolder(subHtmlFolder.getAbsolutePath(), imgFilesFolderName);
 
-		FileUtils.copyFile(imgFolder, "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/img/jaguar-icon.svg");
+		FileUtils.copyFile(imgFolder, "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/img/jaguar-icon.png");
 
 	}
 	

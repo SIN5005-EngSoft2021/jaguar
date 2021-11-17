@@ -24,6 +24,8 @@ public class HtmlWriterLineType {
 	
 	private static final String TEST_REQUIREMENT_TYPE_LINE_CODE_HTML_TEMPLATE_PATH = "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/html/test-requirement-type-line-code-template.html";
 	
+	public static final String REPORT_DATE = "$reportDate$";
+	
 	private final HtmlBuilder htmlBuilder;
 	
 	private final File projectDirectory;
@@ -95,8 +97,8 @@ public class HtmlWriterLineType {
 		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$requirementType$", requirementType.toString());
 		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$numberOfTests$", String.valueOf(Jaguar.getnTests()));
 		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$numberOfFailTests$", String.valueOf(Jaguar.getnTestsFailed()));
-		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$AllTableDataForClassFiles&", htmlBuilder.buildTDTagForClassList(htmlFileMapByClassFile, requirementsGroupByClassFile));
-		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$reportDate$",  simpleDateFormat.format(new Date()));
+		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$allTableDataForClassFiles$", htmlBuilder.buildTDTagForClassList(htmlFileMapByClassFile, requirementsGroupByClassFile));
+		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace(REPORT_DATE,  simpleDateFormat.format(new Date()));
 		
 		return htmlTemplateForTestRequirement;
 	}
@@ -158,7 +160,7 @@ public class HtmlWriterLineType {
 		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$classNameWithPath$", testRequirementsList.iterator().next().getClassName());
 		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$htmlTable$", pathToHtmlWithTableForRequirements);
 		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$javaCode$", htmlBuilder.transformJavaCodeToHtml(javaCode, abstractTestRequirementsForThisClass));
-		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$reportDate$",  simpleDateFormat.format(new Date()));
+		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace(REPORT_DATE,  simpleDateFormat.format(new Date()));
 		
 		return htmlTemplateForTestRequirement;
 	}
@@ -177,8 +179,8 @@ public class HtmlWriterLineType {
 		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$numberOfTests$", String.valueOf(Jaguar.getnTests()));
 		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$numberOfFailTests$", String.valueOf(Jaguar.getnTestsFailed()));
 		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$subTitle$", className);
-		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$AllTableDataForTestRequirements&", htmlBuilder.buildTDTagForTestRequirementList(abstractTestRequirementsForThisClass, pathToHtmlWithCode));
-		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$reportDate$",  simpleDateFormat.format(new Date()));
+		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$allTableDataForTestRequirements$", htmlBuilder.buildTDTagForTestRequirementList(abstractTestRequirementsForThisClass, pathToHtmlWithCode));
+		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace(REPORT_DATE,  simpleDateFormat.format(new Date()));
 		
 		return htmlTemplateForTestRequirement;
 	}
