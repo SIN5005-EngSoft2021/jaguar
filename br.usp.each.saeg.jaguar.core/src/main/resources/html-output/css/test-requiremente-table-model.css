@@ -1,3 +1,7 @@
+/* **************************************
+ * TEST REQUIREMENT
+ * ***************************************/
+
 .subTitle{
     margin: 10px;
     font-family: 'Montserrat', sans-serif;
@@ -12,7 +16,7 @@
  * ***************************************/
 
 #tableContainer{
-    overflow-x: scroll;
+    overflow: auto;
 }
 
 table, th, td {
@@ -101,15 +105,14 @@ abbr{
     text-align: center;
     float: center;
     justify-content: center;
-    overflow-x: scroll;
+    overflow: auto;
 }
 
 
 .pagButton{
-    max-width: 30px;
-    max-height: 30px;
     font-size: 1.25rem;
-    width: 5vw;
+    width: auto;
+    min-width: 30px;
     height: 2rem;
     border: 1px solid black;
     cursor: pointer;
