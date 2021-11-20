@@ -82,7 +82,11 @@ public class HtmlWriter {
 		FileUtils.copyFile(jsFolder, "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/js/table-controls.js");
 
 		FileUtils.copyFile(jsFolder, "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/js/focus-code-line.js");
+
+		FileUtils.copyFile(jsFolder, "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/js/highlight.min.js");
+
 	}
+
 	
 	
 }
