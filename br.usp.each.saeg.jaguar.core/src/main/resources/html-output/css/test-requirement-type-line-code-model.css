@@ -67,13 +67,13 @@ code {
     width: 100%;
     height: 100%;
     margin: 0.313rem;
-    overflow-x: auto;
 }
 
 pre {
     margin-top: 15px;
     border: 0.063rem solid black;
     padding: 1rem 0.5rem;
+    overflow: auto;
 }
 
 abbr{
