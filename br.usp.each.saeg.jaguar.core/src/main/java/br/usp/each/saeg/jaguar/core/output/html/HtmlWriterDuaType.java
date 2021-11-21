@@ -16,13 +16,13 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class HtmlWriterLineType {
+public class HtmlWriterDuaType {
 	
 	private static final String MAIN_CLASS_TABLE_HTML_TEMPLATE_PATH = "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/html/main-class-table-template.html";
 	
-	private static final String TEST_REQUIREMENT_TABLE_HTML_TEMPLATE_PATH = "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/html/test-requirement-table-template.html";
-	
 	private static final String TEST_REQUIREMENT_TYPE_LINE_CODE_HTML_TEMPLATE_PATH = "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/html/test-requirement-code-template.html";
+	
+	private static final String TEST_REQUIREMENT_TABLE_HTML_TEMPLATE_PATH = "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/html/test-requirement-table-template.html";
 	
 	public static final String REPORT_DATE = "$reportDate$";
 	
@@ -40,13 +40,14 @@ public class HtmlWriterLineType {
 	
 	private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
 	
-	public HtmlWriterLineType(
+	public HtmlWriterDuaType(
 			HtmlBuilder htmlBuilder,
 			File projectDirectory,
 			List<AbstractTestRequirement> testRequirementsList,
 			Requirement.Type requirementType,
 			Heuristic heuristic,
-			String outputFile) {
+			String outputFile
+	) {
 		this.htmlBuilder = htmlBuilder;
 		this.projectDirectory = projectDirectory;
 		this.testRequirementsList = testRequirementsList;
@@ -86,6 +87,124 @@ public class HtmlWriterLineType {
 		);
 		
 		return mainHtml;
+		
+	}
+	
+	private File createHtmlforClass(File subHtmlFolder, File classFile, Collection<AbstractTestRequirement> abstractTestRequirementsForThisClass, String mainHtmlAbsolutePath) throws IOException {
+		
+		String classNameWithPath = abstractTestRequirementsForThisClass.iterator().next().getClassName();
+		String classNameToHtmlFile = classNameWithPath.replace(OperationalSystemUtils.systemFileSeparator(), "-");
+		
+		File htmlWithTableForTestRequirements = new File(
+				subHtmlFolder.getAbsolutePath()
+						+ OperationalSystemUtils.systemFileSeparator()
+						+ classNameToHtmlFile
+						+ HtmlWriter.HTML_TYPE_FOR_FILE
+		);
+		
+		String[] nameBreakBySeparator = abstractTestRequirementsForThisClass.iterator().next().getClassName().split(
+				OperationalSystemUtils.systemFileSeparator()
+		);
+		String classNameOnly = nameBreakBySeparator[nameBreakBySeparator.length - 1];
+		
+		Map<AbstractTestRequirement, File> htmlFileMapByTestRequirement = createHtmlFileWithCodeForEachTestRequirement(
+				classFile,
+				subHtmlFolder,
+				classNameToHtmlFile,
+				abstractTestRequirementsForThisClass,
+				mainHtmlAbsolutePath,
+				htmlWithTableForTestRequirements
+		);
+		
+		org.apache.commons.io.FileUtils.writeStringToFile(
+				htmlWithTableForTestRequirements,
+				buildContentForHtmlTestRequirementsTableFile(
+						classNameOnly,
+						classNameWithPath,
+						htmlFileMapByTestRequirement,
+						mainHtmlAbsolutePath
+				)
+		);
+		
+		return htmlWithTableForTestRequirements;
+	}
+	
+	private Map<AbstractTestRequirement, File> createHtmlFileWithCodeForEachTestRequirement(
+			File classFile,
+			File subHtmlFolder,
+			String classNameToHtmlFile,
+			Collection<AbstractTestRequirement> abstractTestRequirementsForThisClass,
+			String mainHtmlAbsolutePath,
+			File htmlWithTableForTestRequirements) throws IOException {
+		
+		Map<AbstractTestRequirement, File> htmlFileMapByTestRequirement = new HashMap<>();
+		
+		String javaCodeInString = CodeUtils.getCodeFromAbsolutePath(classFile);
+		
+		for(AbstractTestRequirement abstractTestRequirement : abstractTestRequirementsForThisClass){
+			
+			File htmlWithCodePaintedForThisTestRequirement = new File(
+					subHtmlFolder.getAbsolutePath()
+							+ OperationalSystemUtils.systemFileSeparator()
+							+ classNameToHtmlFile
+							+ "-code-"
+							+ abstractTestRequirement.getUuid()
+							+ HtmlWriter.HTML_TYPE_FOR_FILE
+			);
+			
+			org.apache.commons.io.FileUtils.writeStringToFile(
+					htmlWithCodePaintedForThisTestRequirement,
+					buildContentForHtmlCodeFile(
+							javaCodeInString,
+							htmlWithTableForTestRequirements.getAbsolutePath(),
+							abstractTestRequirement,
+							mainHtmlAbsolutePath
+					)
+			);
+			
+			htmlFileMapByTestRequirement.put(abstractTestRequirement, htmlWithCodePaintedForThisTestRequirement);
+		}
+		
+		return htmlFileMapByTestRequirement;
+	}
+	
+	public String buildContentForHtmlCodeFile(String javaCode, String pathToHtmlWithTableForRequirements, AbstractTestRequirement abstractTestRequirement, String mainHtmlAbsolutePath) throws IOException {
+		String htmlTemplateForTestRequirement = htmlBuilder.getStringFromHtmlTemplate(TEST_REQUIREMENT_TYPE_LINE_CODE_HTML_TEMPLATE_PATH);
+		
+		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$mainHtmlPath$", mainHtmlAbsolutePath);
+		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$classNameWithPath$", testRequirementsList.iterator().next().getClassName());
+		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$htmlTable$", pathToHtmlWithTableForRequirements);
+		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$javaCode$", htmlBuilder.transformJavaCodeToHtml(javaCode, abstractTestRequirement));
+		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace(REPORT_DATE,  simpleDateFormat.format(new Date()));
+		
+		return htmlTemplateForTestRequirement;
+	}
+	
+	public String buildContentForHtmlTestRequirementsTableFile(
+			String className,
+			String classNameWithPath,
+			Map<AbstractTestRequirement, File> htmlFileMapByTestRequirement,
+			String mainHtmlAbsolutePath
+	) throws IOException {
+		String htmlTemplateForTestRequirement = htmlBuilder.getStringFromHtmlTemplate(TEST_REQUIREMENT_TABLE_HTML_TEMPLATE_PATH);
+		
+		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$mainHtmlPath$", mainHtmlAbsolutePath);
+		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$classNameWithPath$", classNameWithPath);
+		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$heuristic$", StringUtils.upperCase(
+				StringUtils.removeEndIgnoreCase(
+						heuristic.getClass().getSimpleName(), "heuristic"
+				)
+		));
+		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$requirementType$", requirementType.toString());
+		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$numberOfTests$", String.valueOf(Jaguar.getnTests()));
+		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$numberOfFailTests$", String.valueOf(Jaguar.getnTestsFailed()));
+		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$subTitle$", className);
+		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace(
+				"$allTableDataForTestRequirements$",
+				htmlBuilder.buildTDTagForTestRequirementList(htmlFileMapByTestRequirement));
+		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace(REPORT_DATE,  simpleDateFormat.format(new Date()));
+		
+		return htmlTemplateForTestRequirement;
 	}
 	
 	public String buildContentForMainHtml(Map<File, File> htmlFileMapByClassFile, MultiValuedMap<File, AbstractTestRequirement> requirementsGroupByClassFile) throws IOException {
@@ -103,87 +222,4 @@ public class HtmlWriterLineType {
 		
 		return htmlTemplateForTestRequirement;
 	}
-	
-	private File createHtmlforClass(File subHtmlFolder, File classFile, Collection<AbstractTestRequirement> abstractTestRequirementsForThisClass, String mainHtmlAbsolutePath) throws IOException {
-		
-		String classNameWithPath = abstractTestRequirementsForThisClass.iterator().next().getClassName();
-		String classNameToHtmlFile = classNameWithPath.replace(OperationalSystemUtils.systemFileSeparator(), "-");
-		
-		File htmlWithTableForTestRequirements = new File(
-				subHtmlFolder.getAbsolutePath()
-						+ OperationalSystemUtils.systemFileSeparator()
-						+ classNameToHtmlFile
-						+ HtmlWriter.HTML_TYPE_FOR_FILE
-		);
-		
-		File htmlWithCodePaintedForAllRequirements = new File(
-				subHtmlFolder.getAbsolutePath()
-						+ OperationalSystemUtils.systemFileSeparator()
-						+ classNameToHtmlFile
-						+ "-code"
-						+ HtmlWriter.HTML_TYPE_FOR_FILE
-		);
-		
-		String javaCodeInString = CodeUtils.getCodeFromAbsolutePath(classFile);
-		String[] nameBreakBySeparator = abstractTestRequirementsForThisClass.iterator().next().getClassName().split(
-				OperationalSystemUtils.systemFileSeparator()
-		);
-		String classNameOnly = nameBreakBySeparator[nameBreakBySeparator.length - 1];
-		
-		org.apache.commons.io.FileUtils.writeStringToFile(
-				htmlWithCodePaintedForAllRequirements,
-				buildContentForHtmlCodeFile(
-						javaCodeInString,
-						htmlWithTableForTestRequirements.getAbsolutePath(),
-						abstractTestRequirementsForThisClass,
-						mainHtmlAbsolutePath
-				)
-		);
-		
-		org.apache.commons.io.FileUtils.writeStringToFile(
-				htmlWithTableForTestRequirements,
-				buildContentForHtmlTestRequirementsTableFile(
-						classNameOnly,
-						classNameWithPath,
-						htmlWithCodePaintedForAllRequirements.getAbsolutePath(),
-						abstractTestRequirementsForThisClass,
-						mainHtmlAbsolutePath
-				)
-		);
-		
-		return htmlWithTableForTestRequirements;
-	}
-	
-	public String buildContentForHtmlCodeFile(String javaCode, String pathToHtmlWithTableForRequirements, Collection<AbstractTestRequirement> abstractTestRequirementsForThisClass, String mainHtmlAbsolutePath) throws IOException {
-		String htmlTemplateForTestRequirement = htmlBuilder.getStringFromHtmlTemplate(TEST_REQUIREMENT_TYPE_LINE_CODE_HTML_TEMPLATE_PATH);
-		
-		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$mainHtmlPath$", mainHtmlAbsolutePath);
-		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$classNameWithPath$", testRequirementsList.iterator().next().getClassName());
-		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$htmlTable$", pathToHtmlWithTableForRequirements);
-		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$javaCode$", htmlBuilder.transformJavaCodeToHtml(javaCode, abstractTestRequirementsForThisClass));
-		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace(REPORT_DATE,  simpleDateFormat.format(new Date()));
-		
-		return htmlTemplateForTestRequirement;
-	}
-	
-	public String buildContentForHtmlTestRequirementsTableFile(String className, String classNameWithPath, String pathToHtmlWithCode, Collection<AbstractTestRequirement> abstractTestRequirementsForThisClass, String mainHtmlAbsolutePath) throws IOException {
-		String htmlTemplateForTestRequirement = htmlBuilder.getStringFromHtmlTemplate(TEST_REQUIREMENT_TABLE_HTML_TEMPLATE_PATH);
-		
-		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$mainHtmlPath$", mainHtmlAbsolutePath);
-		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$classNameWithPath$", classNameWithPath);
-		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$heuristic$", StringUtils.upperCase(
-				StringUtils.removeEndIgnoreCase(
-						heuristic.getClass().getSimpleName(), "heuristic"
-				)
-		));
-		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$requirementType$", requirementType.toString());
-		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$numberOfTests$", String.valueOf(Jaguar.getnTests()));
-		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$numberOfFailTests$", String.valueOf(Jaguar.getnTestsFailed()));
-		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$subTitle$", className);
-		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$allTableDataForTestRequirements$", htmlBuilder.buildTDTagForTestRequirementList(abstractTestRequirementsForThisClass, pathToHtmlWithCode));
-		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace(REPORT_DATE,  simpleDateFormat.format(new Date()));
-		
-		return htmlTemplateForTestRequirement;
-	}
-	
 }

@@ -1,22 +1,17 @@
 package br.usp.each.saeg.jaguar.core;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.*;
-
 import br.usp.each.saeg.jaguar.codeforest.model.Requirement;
+import br.usp.each.saeg.jaguar.core.heuristic.Heuristic;
+import br.usp.each.saeg.jaguar.core.heuristic.HeuristicCalculator;
+import br.usp.each.saeg.jaguar.core.model.core.CoverageStatus;
+import br.usp.each.saeg.jaguar.core.model.core.requirement.AbstractTestRequirement;
 import br.usp.each.saeg.jaguar.core.output.html.HtmlBuilder;
 import br.usp.each.saeg.jaguar.core.output.html.HtmlWriter;
+import br.usp.each.saeg.jaguar.core.output.xml.flat.FlatXmlWriter;
+import br.usp.each.saeg.jaguar.core.output.xml.hierarchical.HierarchicalXmlWriter;
 import br.usp.each.saeg.jaguar.core.utils.TestRequirementUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.jacoco.core.analysis.AbstractAnalyzer;
-import org.jacoco.core.analysis.ControlFlowAnalyzer;
-import org.jacoco.core.analysis.CoverageBuilder;
-import org.jacoco.core.analysis.DataflowAnalyzer;
-import org.jacoco.core.analysis.IClassCoverage;
-import org.jacoco.core.analysis.ILine;
+import org.jacoco.core.analysis.*;
 import org.jacoco.core.analysis.dua.DuaCoverageBuilder;
 import org.jacoco.core.analysis.dua.IDua;
 import org.jacoco.core.analysis.dua.IDuaClassCoverage;
@@ -28,12 +23,14 @@ import org.jacoco.core.data.DataFlowExecutionDataStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.usp.each.saeg.jaguar.core.heuristic.Heuristic;
-import br.usp.each.saeg.jaguar.core.heuristic.HeuristicCalculator;
-import br.usp.each.saeg.jaguar.core.model.core.CoverageStatus;
-import br.usp.each.saeg.jaguar.core.model.core.requirement.AbstractTestRequirement;
-import br.usp.each.saeg.jaguar.core.output.xml.flat.FlatXmlWriter;
-import br.usp.each.saeg.jaguar.core.output.xml.hierarchical.HierarchicalXmlWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class store the coverage information received from Jacoco and generate a
@@ -298,15 +295,18 @@ public class Jaguar {
 		Requirement.Type testRequirementType = TestRequirementUtils.getType(testRequirements);
 		
 		HtmlWriter htmlWriter = new HtmlWriter(
+				new HtmlBuilder(),
 				testRequirements,
+				testRequirementType,
 				heuristic,
-				new HtmlBuilder()
+				projectDirectory,
+				outputFile
 		);
 		
 		if(Requirement.Type.LINE.equals(testRequirementType)){
-			htmlWriter.generateHtmlForLineType(projectDirectory, outputFile);
+			htmlWriter.generateHtmlForLineType();
 		}else {
-			htmlWriter.generateHtmlForDuaType(projectDirectory);
+			htmlWriter.generateHtmlForDuaType();
 		}
 		
 	}

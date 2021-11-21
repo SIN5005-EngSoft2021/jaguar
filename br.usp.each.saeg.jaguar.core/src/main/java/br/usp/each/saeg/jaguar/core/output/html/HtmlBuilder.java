@@ -3,6 +3,7 @@ package br.usp.each.saeg.jaguar.core.output.html;
 import br.usp.each.saeg.jaguar.core.model.core.requirement.AbstractTestRequirement;
 import br.usp.each.saeg.jaguar.core.model.core.requirement.DuaTestRequirement;
 import br.usp.each.saeg.jaguar.core.model.core.requirement.LineTestRequirement;
+import br.usp.each.saeg.jaguar.core.utils.StringUtils;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.io.FileUtils;
 
@@ -24,6 +25,10 @@ public class HtmlBuilder {
 			numberFormat.setMinimumFractionDigits(2);
 	}
 	
+	public String transformJavaCodeToHtml(String javaCode, AbstractTestRequirement abstractTestRequirement) {
+		return transformJavaCodeToHtml(javaCode, Collections.singleton(abstractTestRequirement));
+	}
+	
 	public String transformJavaCodeToHtml(String javaCode, Collection<AbstractTestRequirement> requirementsForThisClass) {
 		List<String> rowsInJavaCode = Arrays.asList(javaCode.split("\\n"));
 		
@@ -42,7 +47,10 @@ public class HtmlBuilder {
 							LineTestRequirement lineTestRequirement = (LineTestRequirement) abstractTestRequirement;
 							return Objects.equals(lineTestRequirement.getLineNumber(), rowIndexFinal + 1);
 						} else {
-							return false;
+							DuaTestRequirement duaTestRequirement = (DuaTestRequirement) abstractTestRequirement;
+							return
+									Objects.equals(duaTestRequirement.getDef(), rowIndexFinal + 1)
+											|| Objects.equals(duaTestRequirement.getUse(),rowIndexFinal + 1);
 						}
 					}).max(Comparator.comparingDouble(AbstractTestRequirement::getSuspiciousness));
 			
@@ -198,6 +206,18 @@ public class HtmlBuilder {
 		).build();
 	}
 	
+	public String buildTDTagForTestRequirementList(Map<AbstractTestRequirement, File> htmlFileMapByTestRequirement) {
+		StringBuilder allTableDatas = new StringBuilder();
+		
+		for (Map.Entry<AbstractTestRequirement, File> abstractTestRequirementFileEntry : htmlFileMapByTestRequirement.entrySet()) {
+			allTableDatas.append(
+					buildTDTagForTestRequirement(abstractTestRequirementFileEntry.getKey(), abstractTestRequirementFileEntry.getValue().getAbsolutePath())
+			);
+		}
+		
+		return allTableDatas.toString();
+	}
+	
 	public String buildTDTagForTestRequirementList(Collection<AbstractTestRequirement> abstractTestRequirementList, String linkToAnchor) {
 		StringBuilder allTableDatas = new StringBuilder();
 		
@@ -211,14 +231,20 @@ public class HtmlBuilder {
 	}
 	
 	public String buildTDTagForTestRequirement(AbstractTestRequirement abstractTestRequirement, String linkToAnchor) {
-		Integer location;
+		String contentForLocation;
 		
 		if (abstractTestRequirement instanceof DuaTestRequirement) {
 			DuaTestRequirement duaRequirement = (DuaTestRequirement) abstractTestRequirement;
-			location = duaRequirement.getDef();
+			
+			contentForLocation =
+					duaRequirement.getDef()
+							+ "("
+							+ StringUtils.concateStringsWithSeparatorBetween(
+									String.valueOf(duaRequirement.getUse()))
+							+ ")";
 		} else {
 			LineTestRequirement lineRequirement = (LineTestRequirement) abstractTestRequirement;
-			location = lineRequirement.getLineNumber();
+			contentForLocation = String.valueOf(lineRequirement.getLineNumber());
 		}
 
 		double suspValue = abstractTestRequirement.getSuspiciousness();
@@ -227,7 +253,9 @@ public class HtmlBuilder {
 						.setInnerHtml(
 								new HtmlTagBuilder(A)
 										.setHref(linkToAnchor + "#" + abstractTestRequirement.getUuid())
-										.addInnerHtml(location.toString())
+										.addInnerHtml(
+											contentForLocation
+										)
 										.build()
 						)
 						.build(),
