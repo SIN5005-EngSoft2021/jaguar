@@ -60,7 +60,7 @@ h2 {
  * ******************************/
 
 .code{
-    line-height: 1rem !important;
+    line-height: 1.5rem;
 }
 
 code {
@@ -71,8 +71,9 @@ code {
 
 pre {
     margin-top: 15px;
-    overflow: auto;
     border: 0.063rem solid black;
+    padding: 1rem 0.5rem;
+    overflow: auto;
 }
 
 abbr{
