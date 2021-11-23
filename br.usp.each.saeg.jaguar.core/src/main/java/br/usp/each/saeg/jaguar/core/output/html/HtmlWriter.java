@@ -1,5 +1,6 @@
 package br.usp.each.saeg.jaguar.core.output.html;
 
+import br.usp.each.saeg.jaguar.codeforest.model.Requirement;
 import br.usp.each.saeg.jaguar.core.heuristic.Heuristic;
 import br.usp.each.saeg.jaguar.core.model.core.requirement.AbstractTestRequirement;
 import br.usp.each.saeg.jaguar.core.utils.FileUtils;
@@ -20,36 +21,51 @@ public class HtmlWriter {
 	public static final String JS_FILES_FOLDER_NAME = ".js_folder";
 	public static final String HTML_TYPE_FOR_FILE = ".html";
 	
-	
-	private final List<AbstractTestRequirement> testRequirements;
-	private final Heuristic heuristic;
-	
 	private final HtmlBuilder htmlBuilder;
+	private final List<AbstractTestRequirement> testRequirements;
+	private Requirement.Type testRequirementType;
+	private final Heuristic heuristic;
+	private final File projectDirectory;
+	private final String outputFile;
 	
 	public HtmlWriter(
+			HtmlBuilder htmlBuilder,
 			List<AbstractTestRequirement> testRequirements,
+			Requirement.Type testRequirementType,
 			Heuristic heuristic,
-			HtmlBuilder htmlBuilder
+			File projectDirectory,
+			String outputFile
 	) {
-		super();
-		this.testRequirements = testRequirements;
-		this.heuristic = heuristic;
 		this.htmlBuilder = htmlBuilder;
+		this.testRequirements = testRequirements;
+		this.testRequirementType = testRequirementType;
+		this.heuristic = heuristic;
+		this.projectDirectory = projectDirectory;
+		this.outputFile = outputFile;
 	}
 	
-	public void generateHtmlForLineType(File projectDirectory, String outputFile) throws IOException {
+	public void generateHtmlForLineType() throws IOException {
 		File htmlFile = new HtmlWriterLineType(
 				htmlBuilder,
 				projectDirectory,
 				testRequirements,
+				testRequirementType,
 				heuristic,
 				outputFile
 		).write();
 		logger.info("Output html created at: {}", htmlFile.getAbsolutePath());
 	}
 	
-	public void generateHtmlForDuaType(File projectDirectory) throws IOException {
-		throw new UnsupportedOperationException("Not implemented.");
+	public void generateHtmlForDuaType() throws IOException {
+		File htmlFile = new HtmlWriterDuaType(
+				htmlBuilder,
+				projectDirectory,
+				testRequirements,
+				testRequirementType,
+				heuristic,
+				outputFile
+		).write();
+		logger.info("Output html created at: {}", htmlFile.getAbsolutePath());
 	}
 	
 	public static void writeImgFiles(File subHtmlFolder, String imgFilesFolderName) throws IOException {
