@@ -60,6 +60,7 @@ public class HtmlWriterDuaType {
 		
 		File reportsFolder = FileUtils.createOrGetFolder(projectDirectory.getAbsolutePath(), Jaguar.REPORTS_FOLDER_NAME);
 		File subHtmlFolder = FileUtils.createOrGetHiddenFolder(reportsFolder.getAbsolutePath(), HtmlWriter.HTML_FILES_FOLDER_NAME);
+		File duaFolder = FileUtils.createOrGetFolder(subHtmlFolder.getAbsolutePath(),"dua");
 		
 		HtmlWriter.writeCssFiles(subHtmlFolder, HtmlWriter.CSS_FILES_FOLDER_NAME);
 		HtmlWriter.writeImgFiles(subHtmlFolder, HtmlWriter.IMG_FILES_FOLDER_NAME);
@@ -77,7 +78,7 @@ public class HtmlWriterDuaType {
 		for (File classFile : requirementsGroupByClassFile.keySet()) {
 			htmlFileMapByClassFile.put(
 					classFile,
-					createHtmlforClass(subHtmlFolder, classFile, requirementsGroupByClassFile.get(classFile), mainHtml.getAbsolutePath())
+					createHtmlforClass(duaFolder, classFile, requirementsGroupByClassFile.get(classFile), mainHtml.getAbsolutePath())
 			);
 		}
 		

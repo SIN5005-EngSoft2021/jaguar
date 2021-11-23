@@ -43,3 +43,16 @@ java -javaagent:$JACOCO_JAR=output=tcpserver,dataflow=true -cp $PROJECT_DIR/targ
 			--classesDir "$PROJECT_DIR/target/classes/" \
 			--testsDir "$PROJECT_DIR/target/test-classes/" \
 			--testsListFile "$PROJECT_DIR/testListFile.txt"
+
+# DATA-FLOW HTML OUTPUT
+
+java -javaagent:$JACOCO_JAR=output=tcpserver,dataflow=true -cp $PROJECT_DIR/target/classes/:$PROJECT_DIR/target/test-classes/:$JAGUAR_JAR:$JACOCO_JAR \
+		"$JAGUAR_MAIN_CLASS" \
+			--dataflow \
+			--outputExtension="HTML" \
+			--output "data-flow" \
+			--logLevel "$LOG_LEVEL" \
+			--projectDir "$PROJECT_DIR" \
+			--classesDir "$PROJECT_DIR/target/classes/" \
+			--testsDir "$PROJECT_DIR/target/test-classes/" \
+			--testsListFile "$PROJECT_DIR/testListFile.txt"

@@ -59,6 +59,7 @@ public class HtmlWriterLineType {
 		
 		File reportsFolder = FileUtils.createOrGetFolder(projectDirectory.getAbsolutePath(), Jaguar.REPORTS_FOLDER_NAME);
 		File subHtmlFolder = FileUtils.createOrGetHiddenFolder(reportsFolder.getAbsolutePath(), HtmlWriter.HTML_FILES_FOLDER_NAME);
+		File lineFolder = FileUtils.createOrGetFolder(subHtmlFolder.getAbsolutePath(),"line");
 		
 		HtmlWriter.writeCssFiles(subHtmlFolder, HtmlWriter.CSS_FILES_FOLDER_NAME);
 		HtmlWriter.writeImgFiles(subHtmlFolder, HtmlWriter.IMG_FILES_FOLDER_NAME);
@@ -76,7 +77,7 @@ public class HtmlWriterLineType {
 		for (File classFile : requirementsGroupByClassFile.keySet()) {
 			htmlFileMapByClassFile.put(
 					classFile,
-					createHtmlforClass(subHtmlFolder, classFile, requirementsGroupByClassFile.get(classFile), mainHtml.getAbsolutePath())
+					createHtmlforClass(lineFolder, classFile, requirementsGroupByClassFile.get(classFile), mainHtml.getAbsolutePath())
 			);
 		}
 		
