@@ -20,7 +20,7 @@ public class HtmlWriterDuaType {
 	
 	private static final String MAIN_CLASS_TABLE_HTML_TEMPLATE_PATH = "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/html/main-class-table-template.html";
 	
-	private static final String TEST_REQUIREMENT_TYPE_LINE_CODE_HTML_TEMPLATE_PATH = "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/html/test-requirement-code-template.html";
+	private static final String TEST_REQUIREMENT_CODE_HTML_TEMPLATE_PATH = "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/html/test-requirement-code-template.html";
 	
 	private static final String TEST_REQUIREMENT_TABLE_HTML_TEMPLATE_PATH = "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/html/test-requirement-table-template.html";
 	
@@ -169,7 +169,7 @@ public class HtmlWriterDuaType {
 	}
 	
 	public String buildContentForHtmlCodeFile(String javaCode, String pathToHtmlWithTableForRequirements, AbstractTestRequirement abstractTestRequirement, String mainHtmlAbsolutePath) throws IOException {
-		String htmlTemplateForTestRequirement = htmlBuilder.getStringFromHtmlTemplate(TEST_REQUIREMENT_TYPE_LINE_CODE_HTML_TEMPLATE_PATH);
+		String htmlTemplateForTestRequirement = htmlBuilder.getStringFromHtmlTemplate(TEST_REQUIREMENT_CODE_HTML_TEMPLATE_PATH);
 		
 		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$mainHtmlPath$", mainHtmlAbsolutePath);
 		htmlTemplateForTestRequirement = htmlTemplateForTestRequirement.replace("$classNameWithPath$", testRequirementsList.iterator().next().getClassName());
