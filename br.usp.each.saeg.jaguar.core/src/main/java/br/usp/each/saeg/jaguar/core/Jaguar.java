@@ -289,8 +289,6 @@ public class Jaguar {
 	public void generateHtml(Heuristic heuristic, File projectDirectory, String outputFile) throws IOException {
 		ArrayList<AbstractTestRequirement> testRequirements = generateRank(heuristic);
 		
-		testRequirements.add(new DuaTestRequirement("br/usp/each/saeg/jaguar/example/MergeSort",1,2,3,4,"var"));
-		
 		if(testRequirements.isEmpty()){
 			return;
 		}
