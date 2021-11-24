@@ -86,9 +86,9 @@ public class HtmlWriter {
 		
 		FileUtils.copyFile(cssFolder, "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/css/style.css");
 		
-		FileUtils.copyFile(cssFolder, "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/css/test-requirement-type-line-code-model.css");
+		FileUtils.copyFile(cssFolder, "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/css/test-requirement-code-template.css");
 		
-		FileUtils.copyFile(cssFolder, "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/css/test-requiremente-table-model.css");
+		FileUtils.copyFile(cssFolder, "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/css/test-requiremente-table-template.css");
 	}
 
 	public static void writeJsFiles(File subHtmlFolder, String jsFilesFolderName) throws IOException {

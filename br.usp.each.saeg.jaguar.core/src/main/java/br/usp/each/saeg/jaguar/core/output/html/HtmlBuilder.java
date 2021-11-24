@@ -37,7 +37,7 @@ public class HtmlBuilder {
 		
 		for (int rowIndex = 0; rowIndex < rowsInJavaCode.size() - 1; rowIndex++) {
 			
-			final int rowIndexFinal = rowIndex /* To use in lambda need to be final */;
+			final int rowNumber = rowIndex + 1 /* To use in lambda need to be final */;
 			
 			String codeLine = rowsInJavaCode.get(rowIndex);
 			
@@ -45,12 +45,14 @@ public class HtmlBuilder {
 					.filter(abstractTestRequirement -> {
 						if (abstractTestRequirement instanceof LineTestRequirement) {
 							LineTestRequirement lineTestRequirement = (LineTestRequirement) abstractTestRequirement;
-							return Objects.equals(lineTestRequirement.getLineNumber(), rowIndexFinal + 1);
+							return Objects.equals(lineTestRequirement.getLineNumber(), rowNumber);
 						} else {
 							DuaTestRequirement duaTestRequirement = (DuaTestRequirement) abstractTestRequirement;
 							return
-									Objects.equals(duaTestRequirement.getDef(), rowIndexFinal + 1)
-											|| Objects.equals(duaTestRequirement.getUse(),rowIndexFinal + 1);
+									Objects.equals(duaTestRequirement.getDef(), rowNumber)
+											|| Objects.equals(duaTestRequirement.getUse(), rowNumber)
+											|| Objects.equals(duaTestRequirement.getTarget(), rowNumber)
+									;
 						}
 					}).max(Comparator.comparingDouble(AbstractTestRequirement::getSuspiciousness));
 			
@@ -138,13 +140,17 @@ public class HtmlBuilder {
 						.build(),
 				new HtmlTagBuilder(TD) //add bar
 						.setInnerHtml(
-								new HtmlTagBuilder(DIV)
-										.setCssClass("suspBar")
+								new HtmlTagBuilder(A)
+										.setHref(htmlClassFileAbsolutePath)
 										.addInnerHtml(
-											new HtmlTagBuilder(DIV)
-													.setCssClass("redBar")
-													.setInlineStyle(defineSuspBarCss((int) Math.round((suspValue+0.1)*10)))
-													.build()
+												new HtmlTagBuilder(DIV)
+														.setCssClass("suspBar")
+														.addInnerHtml(
+																new HtmlTagBuilder(DIV)
+																		.setCssClass("redBar")
+																		.setInlineStyle(defineSuspBarCss((int) Math.round((suspValue + 0.1) * 10)))
+																		.build()
+														).build()
 										).build()
 						)
 						.build(),
@@ -248,11 +254,13 @@ public class HtmlBuilder {
 		}
 
 		double suspValue = abstractTestRequirement.getSuspiciousness();
+		String href = linkToAnchor + "#" + abstractTestRequirement.getUuid();
+		
 		return new HtmlTagBuilder(TR).addInnerHtml(
 				new HtmlTagBuilder(TD)
 						.setInnerHtml(
 								new HtmlTagBuilder(A)
-										.setHref(linkToAnchor + "#" + abstractTestRequirement.getUuid())
+										.setHref(href)
 										.addInnerHtml(
 											contentForLocation
 										)
@@ -262,27 +270,32 @@ public class HtmlBuilder {
 				new HtmlTagBuilder(TD)
 						.setInnerHtml(
 								new HtmlTagBuilder(A)
-										.setHref(linkToAnchor + "#" + abstractTestRequirement.getUuid())
+										.setHref(href)
 										.addInnerHtml(abstractTestRequirement.getMethodSignature())
 										.build()
 						)
 						.build(),
 				new HtmlTagBuilder(TD) //add bar
 						.setInnerHtml(
-								new HtmlTagBuilder(DIV)
-										.setCssClass("suspBar")
+								
+								new HtmlTagBuilder(A)
+										.setHref(href)
 										.addInnerHtml(
 												new HtmlTagBuilder(DIV)
-														.setCssClass("redBar")
-														.setInlineStyle(defineSuspBarCss((int) Math.round((suspValue+0.1)*10)))
-														.build()
+														.setCssClass("suspBar")
+														.addInnerHtml(
+																new HtmlTagBuilder(DIV)
+																		.setCssClass("redBar")
+																		.setInlineStyle(defineSuspBarCss((int) Math.round((suspValue + 0.1) * 10)))
+																		.build()
+														).build()
 										).build()
 						)
 						.build(),
 				new HtmlTagBuilder(TD)
 						.setInnerHtml(
 								new HtmlTagBuilder(A)
-										.setHref(linkToAnchor + "#" + abstractTestRequirement.getUuid())
+										.setHref(href)
 										.addCssClass(ALIGN_RIGHT)
 										.addInnerHtml(numberFormat.format(suspValue))
 										.build()
@@ -291,7 +304,7 @@ public class HtmlBuilder {
 				new HtmlTagBuilder(TD)
 						.setInnerHtml(
 								new HtmlTagBuilder(A)
-										.setHref(linkToAnchor + "#" + abstractTestRequirement.getUuid())
+										.setHref(href)
 										.addCssClass(ALIGN_RIGHT)
 										.addInnerHtml(numberFormat.format(abstractTestRequirement.getCef()))
 										.build()
@@ -300,7 +313,7 @@ public class HtmlBuilder {
 				new HtmlTagBuilder(TD)
 						.setInnerHtml(
 								new HtmlTagBuilder(A)
-										.setHref(linkToAnchor + "#" + abstractTestRequirement.getUuid())
+										.setHref(href)
 										.addCssClass(ALIGN_RIGHT)
 										.addInnerHtml(numberFormat.format(abstractTestRequirement.getCep()))
 										.build()
@@ -309,7 +322,7 @@ public class HtmlBuilder {
 				new HtmlTagBuilder(TD)
 						.setInnerHtml(
 								new HtmlTagBuilder(A)
-										.setHref(linkToAnchor + "#" + abstractTestRequirement.getUuid())
+										.setHref(href)
 										.addCssClass(ALIGN_RIGHT)
 										.addInnerHtml(numberFormat.format(abstractTestRequirement.getCnf()))
 										.build()
@@ -318,7 +331,7 @@ public class HtmlBuilder {
 				new HtmlTagBuilder(TD)
 						.setInnerHtml(
 								new HtmlTagBuilder(A)
-										.setHref(linkToAnchor + "#" + abstractTestRequirement.getUuid())
+										.setHref(href)
 										.addCssClass(ALIGN_RIGHT)
 										.addInnerHtml(numberFormat.format(abstractTestRequirement.getCnp()))
 										.build()

@@ -5,6 +5,7 @@ import br.usp.each.saeg.jaguar.core.heuristic.Heuristic;
 import br.usp.each.saeg.jaguar.core.heuristic.HeuristicCalculator;
 import br.usp.each.saeg.jaguar.core.model.core.CoverageStatus;
 import br.usp.each.saeg.jaguar.core.model.core.requirement.AbstractTestRequirement;
+import br.usp.each.saeg.jaguar.core.model.core.requirement.DuaTestRequirement;
 import br.usp.each.saeg.jaguar.core.output.html.HtmlBuilder;
 import br.usp.each.saeg.jaguar.core.output.html.HtmlWriter;
 import br.usp.each.saeg.jaguar.core.output.xml.flat.FlatXmlWriter;
@@ -287,6 +288,8 @@ public class Jaguar {
 	
 	public void generateHtml(Heuristic heuristic, File projectDirectory, String outputFile) throws IOException {
 		ArrayList<AbstractTestRequirement> testRequirements = generateRank(heuristic);
+		
+		testRequirements.add(new DuaTestRequirement("br/usp/each/saeg/jaguar/example/MergeSort",1,2,3,4,"var"));
 		
 		if(testRequirements.isEmpty()){
 			return;
