@@ -18,6 +18,8 @@ function nullElements(tableName, table, itensName, itens, rangeName, range, rang
 
   if (nElement.length === 0) return false;
 
+  if (range !== null) range.disabled = true;
+  if (itens != null) itens.disabled = true;
   nElement.forEach(e => { console.error("Couldn't find element with id '" + e + "'.") });
   return true;
 }
