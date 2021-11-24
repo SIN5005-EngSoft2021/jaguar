@@ -65,7 +65,7 @@ public class HtmlBuilder {
 				codeLine = new HtmlTagBuilder(HtmlDomTree.SPAN)
 						.addCssClass(cssClass)
 						.setId(requirement.getUuid().toString())
-						.setAriaLabel(cssClass)
+						.setAriaLabel("Suspiciousness of this line is " + currentSuspiciousness)
 						.setData("suspiciousness", String.valueOf(currentSuspiciousness))
 						.setInnerHtml(new HtmlTagBuilder(ABBR)
 										.setTitle("Suspiciousness of this line is " + currentSuspiciousness)

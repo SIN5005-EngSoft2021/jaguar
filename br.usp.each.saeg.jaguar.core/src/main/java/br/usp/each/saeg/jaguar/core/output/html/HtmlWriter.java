@@ -80,8 +80,6 @@ public class HtmlWriter {
 		
 		File cssFolder = FileUtils.createOrGetFolder(subHtmlFolder.getAbsolutePath(), cssFilesFolderName);
 		
-		FileUtils.copyFile(cssFolder, "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/css/stackoverflow-dark.css");
-		
 		FileUtils.copyFile(cssFolder, "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/css/stackoverflow-light.css");
 		
 		FileUtils.copyFile(cssFolder, "br.usp.each.saeg.jaguar.core/src/main/resources/html-output/css/style.css");
