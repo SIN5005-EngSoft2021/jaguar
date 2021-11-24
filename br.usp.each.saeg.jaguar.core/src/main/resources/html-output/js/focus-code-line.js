@@ -12,8 +12,7 @@ if (startLine !== -1) {
 function focusCodeLine(id) {
     const line = document.getElementById(id);
     if (line === null) {
-        throw Error("Couldn't find element with id of " + id);
-        return;
+        throw Error("Couldn't find element with id '" + id +"'.");
     }
 
     const parent = line.parentElement
