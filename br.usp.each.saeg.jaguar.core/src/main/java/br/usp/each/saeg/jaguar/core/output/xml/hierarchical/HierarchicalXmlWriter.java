@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.xml.bind.JAXB;
 
+import br.usp.each.saeg.jaguar.core.Jaguar;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +17,6 @@ import br.usp.each.saeg.jaguar.codeforest.model.Requirement.Type;
 public class HierarchicalXmlWriter {
 
 	private static Logger logger = LoggerFactory.getLogger("JaguarLogger");
-	private static final String FOLDER_NAME = ".jaguar";
 
 	private ArrayList<AbstractTestRequirement> testRequirements;
 	private Heuristic currentHeuristic;
@@ -36,7 +36,7 @@ public class HierarchicalXmlWriter {
 	}
 
 	private File write(HierarchicalXmlBuilder xmlBuilder, File projectDir, String fileName) {
-		projectDir = new File(projectDir.getPath() + System.getProperty("file.separator") + FOLDER_NAME);
+		projectDir = new File(projectDir.getPath() + System.getProperty("file.separator") + Jaguar.REPORTS_FOLDER_NAME);
 		if (!projectDir.exists()){
 			projectDir.mkdirs();
 		}

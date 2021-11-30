@@ -1,6 +1,9 @@
 package br.usp.each.saeg.jaguar.core.utils;
 
 
+import java.util.Arrays;
+import java.util.Iterator;
+
 /**
  * @author Henrique Ribeiro
  * 
@@ -87,5 +90,22 @@ public class StringUtils {
 		}
 
 		return result;
+	}
+	
+	public static String concateStringsWithSeparatorBetween(String... string){
+		
+		if(string == null || string.length == 0){
+			return "";
+		}
+		
+		Iterator<String> stringIterable = Arrays.stream(string).iterator();
+		
+		StringBuilder stringBuilder = new StringBuilder(stringIterable.next());
+		
+		while (stringIterable.hasNext()){
+			stringBuilder.append(", ").append(stringIterable.next());
+		}
+		
+		return stringBuilder.toString();
 	}
 }

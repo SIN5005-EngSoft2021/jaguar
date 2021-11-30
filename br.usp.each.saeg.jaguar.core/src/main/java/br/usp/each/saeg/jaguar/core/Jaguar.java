@@ -1,21 +1,18 @@
 package br.usp.each.saeg.jaguar.core;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
+import br.usp.each.saeg.jaguar.codeforest.model.Requirement;
+import br.usp.each.saeg.jaguar.core.heuristic.Heuristic;
+import br.usp.each.saeg.jaguar.core.heuristic.HeuristicCalculator;
+import br.usp.each.saeg.jaguar.core.model.core.CoverageStatus;
+import br.usp.each.saeg.jaguar.core.model.core.requirement.AbstractTestRequirement;
+import br.usp.each.saeg.jaguar.core.model.core.requirement.DuaTestRequirement;
+import br.usp.each.saeg.jaguar.core.output.html.HtmlBuilder;
+import br.usp.each.saeg.jaguar.core.output.html.HtmlWriter;
+import br.usp.each.saeg.jaguar.core.output.xml.flat.FlatXmlWriter;
+import br.usp.each.saeg.jaguar.core.output.xml.hierarchical.HierarchicalXmlWriter;
+import br.usp.each.saeg.jaguar.core.utils.TestRequirementUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.jacoco.core.analysis.AbstractAnalyzer;
-import org.jacoco.core.analysis.ControlFlowAnalyzer;
-import org.jacoco.core.analysis.CoverageBuilder;
-import org.jacoco.core.analysis.DataflowAnalyzer;
-import org.jacoco.core.analysis.IClassCoverage;
-import org.jacoco.core.analysis.ILine;
+import org.jacoco.core.analysis.*;
 import org.jacoco.core.analysis.dua.DuaCoverageBuilder;
 import org.jacoco.core.analysis.dua.IDua;
 import org.jacoco.core.analysis.dua.IDuaClassCoverage;
@@ -27,12 +24,14 @@ import org.jacoco.core.data.DataFlowExecutionDataStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.usp.each.saeg.jaguar.core.heuristic.Heuristic;
-import br.usp.each.saeg.jaguar.core.heuristic.HeuristicCalculator;
-import br.usp.each.saeg.jaguar.core.model.core.CoverageStatus;
-import br.usp.each.saeg.jaguar.core.model.core.requirement.AbstractTestRequirement;
-import br.usp.each.saeg.jaguar.core.output.xml.flat.FlatXmlWriter;
-import br.usp.each.saeg.jaguar.core.output.xml.hierarchical.HierarchicalXmlWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class store the coverage information received from Jacoco and generate a
@@ -42,17 +41,20 @@ import br.usp.each.saeg.jaguar.core.output.xml.hierarchical.HierarchicalXmlWrite
  */
 public class Jaguar {
 
-	private final static Logger logger = LoggerFactory.getLogger("JaguarLogger");
+	private static final Logger logger = LoggerFactory.getLogger("JaguarLogger");
 
 	private static final String XML_NAME = "jaguar_output";
-	private int nTests = 0;
-	private int nTestsFailed = 0;
+	private static int nTests = 0;
+	private static int nTestsFailed = 0;
+	
 	private Map<String, File> classFilesCache;
 
 	private JaguarSFL sfl = new JaguarSFL();
 	
 	private Long startTime;
 	private Long totalTimeSpent;
+	
+	public static final String REPORTS_FOLDER_NAME = ".jaguar";
 
 	/**
 	 * Construct the Jaguar object.
@@ -283,6 +285,32 @@ public class Jaguar {
 		HierarchicalXmlWriter xmlWriter = new HierarchicalXmlWriter(testRequirements, heuristic, totalTimeSpent);
 		xmlWriter.generateXML(projectDir, fileName);
 	}
+	
+	public void generateHtml(Heuristic heuristic, File projectDirectory, String outputFile) throws IOException {
+		ArrayList<AbstractTestRequirement> testRequirements = generateRank(heuristic);
+		
+		if(testRequirements.isEmpty()){
+			return;
+		}
+		
+		Requirement.Type testRequirementType = TestRequirementUtils.getType(testRequirements);
+		
+		HtmlWriter htmlWriter = new HtmlWriter(
+				new HtmlBuilder(),
+				testRequirements,
+				testRequirementType,
+				heuristic,
+				projectDirectory,
+				outputFile
+		);
+		
+		if(Requirement.Type.LINE.equals(testRequirementType)){
+			htmlWriter.generateHtmlForLineType();
+		}else {
+			htmlWriter.generateHtmlForDuaType();
+		}
+		
+	}
 
 	/**
 	 * Currently only used to save the total time spent since Jaguar was
@@ -293,19 +321,19 @@ public class Jaguar {
 		totalTimeSpent = System.currentTimeMillis() - startTime;
 	}
 
-	public int getnTests() {
+	public static int getnTests() {
 		return nTests;
 	}
 
-	public int getnTestsFailed() {
+	public static int getnTestsFailed() {
 		return nTestsFailed;
 	}
 
-	public int increaseNTests() {
+	public static int increaseNTests() {
 		return ++nTests;
 	}
 
-	public int increaseNTestsFailed() {
+	public static int increaseNTestsFailed() {
 		return ++nTestsFailed;
 	}
 
