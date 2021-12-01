@@ -31,7 +31,7 @@
 				<artifactId>jaguar-maven-plugin</artifactId>
 				<version>0.0.1-SNAPSHOT</version>			
 				<executions>
-					<execution>
+					<!--<execution>
 						<id>Jaguar-DataFlow</id>
 						<goals>
 							<goal>jaguarVerify
@@ -40,9 +40,9 @@
 						<configuration>		
 							<logLevel>ERROR</logLevel>				
 							<type>DataFlow</type>
-							<format>XML</format>
+							<format>HTML</format>
 						</configuration>					
-					</execution>	
+					</execution>	-->
 					<execution>
 						<id>Jaguar-ControlFlow</id>
 						<goals>
@@ -52,7 +52,7 @@
 						<configuration>			
 							<logLevel>ERROR</logLevel>			
 							<type>ControlFlow</type>	
-							<format>XML</format>
+							<format>HTML</format>
 						</configuration>					
 					</execution>				
 				</executions>

@@ -104,12 +104,12 @@ public class JaguarVerifyMojo
     		 boolean isWindows = System.getProperty("os.name")
     				  .toLowerCase().startsWith("windows");
 
-		
+			 String path = directory.toString().substring(0, directory.toString().length() - 7);
     		 
     		 System.out.println("Is Windows: " + isWindows); 
     		 System.out.println("logLevel: " + logLevel);  
     		 System.out.println("type: " + type);  
-    		 System.out.println("directory: " + directory.toString());  
+    		 System.out.println("directory: " + path);
     		 System.out.println("testOutputDirectory: " + testOutputDirectory.toString());  
     		 System.out.println("outputDirectory: " + outputDirectory.toString());  
     		 System.out.println("format: " + format.toString());  
@@ -142,11 +142,11 @@ public class JaguarVerifyMojo
     	            		+ "		\"br.usp.each.saeg.jaguar.core.cli.JaguarRunner\" "
     	            		+ ((isDataFlow) ? " --dataflow \\" : "")
     	            		//TODO: IMPLEMENTAR PARÂMETRO PARA ENVIO DE FORMATO PARA A CLI DA JAGUAR (XML ou HTML)
-    	            		//+ "         --format \"" + format + "\" "
+    	            		+ "         --outputExtension \"" + format + "\" "
     	            		+ "			--outputType F "
     	            		+ "			--output \"" + outputFile + "\" "
     	            		+ "			--logLevel \"" + logLevel + "\" "
-    	            		+ "			--projectDir \"" + directory + "\" "
+    	            		+ "			--projectDir \"" + path + "\" "
     	            		+ "			--classesDir \"" + outputDirectory + "/\" "
     	            		+ "			--testsDir \"" + testOutputDirectory + "/\" "
     	            		+ "			--testsListFile \"" + directory + "/testListFile.txt\"";
