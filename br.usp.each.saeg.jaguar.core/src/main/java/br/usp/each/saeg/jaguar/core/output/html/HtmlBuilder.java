@@ -39,8 +39,8 @@ public class HtmlBuilder {
 			
 			final int rowNumber = rowIndex + 1 /* To use in lambda need to be final */;
 			
-			String codeLine = rowsInJavaCode.get(rowIndex);
-			
+			String codeLine = rowsInJavaCode.get(rowIndex).replaceAll("<(?=\\w)", "$0 ");
+
 			Optional<AbstractTestRequirement> optionalTestRequirementWithMostHighSuspeciosForThisLine = requirementsForThisClass.stream()
 					.filter(abstractTestRequirement -> {
 						if (abstractTestRequirement instanceof LineTestRequirement) {
