@@ -38,8 +38,8 @@ public class HtmlBuilder {
 		for (int rowIndex = 0; rowIndex < rowsInJavaCode.size() - 1; rowIndex++) {
 			
 			final int rowNumber = rowIndex + 1 /* To use in lambda need to be final */;
-			
-			String codeLine = rowsInJavaCode.get(rowIndex);
+
+			String codeLine = rowsInJavaCode.get(rowIndex).replaceAll("<(?=\\w)", "$0 ");
 			
 			Optional<AbstractTestRequirement> optionalTestRequirementWithMostHighSuspeciosForThisLine = requirementsForThisClass.stream()
 					.filter(abstractTestRequirement -> {
