@@ -166,3 +166,13 @@ Add the plugin to build/plugins in your pom.xml
           </plugin>
 </plugins>
 `````
+
+## Additional Parameters
+
+There are additional parameters to modify report generation. They are:
+
+logLevel: log level for analysis (TRACE, INFO, DEBUG or ERROR ) 
+
+type: DataFlow or  ControlFlow
+
+format: XML or HTML
