@@ -33,11 +33,16 @@ Jaguar supports both control-flow and data-flow spectra (i.e., source code lines
 Jaguar Runner collects control-flow spectrum using the **JaCoCo** coverage tool (eclemma.org/jacoco). To collect data flow spectra, Jaguar uses the ba-dua coverage tool (github.com/saeg/ba-dua). The **ba-dua** tool uses the **Bitwise Algorithm** (BA), which tracks duas at low execution costs by using inexpensive data structures. BA enables the tracking of only those duas that are potentially covered at each node visited during a program execution. Jaguar invokes unit tests of a subject program and collects spectra data for each element covered during the test execution. It iterates over the classes, methods, and then lines or definition-use associations (duas).
 Jaguar then calculates the suspiciousness score of each element (line or dua) according to a chosen ranking metric.
 ### Jaguar Viewer
-Jaguar Viewer provides visual information of the SFL lists for debugging within the Eclipse IDE. It colors the suspicious program entities according to their suspiciousness scores. The colors represent four score levels: red (danger) are the most suspicious entities, orange (warning) are those with high suspiciousness, yellow (caution) are the entities with a moderate suspiciousness level, and green (safety) are the least suspicious ones. The color schema was based on that of the Tarantula tool. Additionally, we included the orange color, as done to increase the distinction among the program elements. The suspiciousness range for the colors is: 
+Jaguar Viewer provides visual information of the SFL lists for debugging within the Eclipse IDE. It colors the suspicious program entities according to their suspiciousness scores. The colors represent four score levels: red (danger) are the most suspicious entities, orange (warning) are those with high suspiciousness, yellow (caution) are the entities with a moderate suspiciousness level, and green (safety) are the least suspicious ones. The color schema was based on that of the Tarantula tool. Additionally, we included the orange color, as done to increase the distinction among the program elements. The suspiciousness range for the colors is:
+
 red ≥ 0.75 
+
 0.75 > orange ≥ 0.5 
+
 0.5 > yellow ≥ 0.25 
+
 and green < 0.25
+
 The Jaguar Viewer also has two filtering widgets to facilitate debugging: a text search box to filter by terms of the source code and a slider to narrow down entities by suspiciousness score. 
 
 
@@ -126,7 +131,7 @@ XI) classDir/ --c : Path of compiled classes.
 XII) testDir/ --t: Path of compiled tests.
 
 
-D.	To change the parameters simplified:
+### D.	To change the parameters simplified:
 
 I) cat Makefile.
 
@@ -139,22 +144,31 @@ V) Add, for example, the new heuristic to be used: -- heuristic "Op".
 
 This can be done for dataflow and controlflow.
 
-E.	Bellow, we have other heuristics
+### E.	Bellow, we have other heuristics
 DRTHeuristic
+
 JaccardHeuristic
+
 Kulczynski2Heuristic
+
 McConHeuristic
+
 MinusHeuristic
+
 OchiaHeuristic
+
 OpHeuristic
+
 TarantulaHeuristic
+
 Wong3Heuristic
+
 ZoltarHeurisitc
 
-3)	Build/plugins
+## 3)	Build/plugins
 
 Add the plugin to build/plugins in your pom.xml
-
+`````
 <plugins>
         <plugin> 
         <groupId>br.usp.each.saeg.jaguar.maven.plugin</groupId>
@@ -175,3 +189,4 @@ Add the plugin to build/plugins in your pom.xml
           </executions>
           </plugin>
 </plugins>
+`````
