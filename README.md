@@ -67,9 +67,12 @@ $make run
 ```
  
 ### B. Jaguar home screen elements:
-I) Heuristic: Heuristic used to detect possible snippets of suspicious code. It is possible to configure this one;
-II) Requirement type - LINE: parse line by line;
-III) Test: displays how many tests passed and failed;
+I) Heuristic: Heuristic used to detect possible snippets of suspicious code. It is possible to configure this one.
+
+II) Requirement type - LINE: parse line by line.
+
+III) Test: displays how many tests passed and failed.
+
 IV) Line color Susp: Filter to show lines with a certain suspension value;
 V) CLASS : Analyzed class;
 VI) BAR: color symbolized by the suspension level;
