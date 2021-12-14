@@ -62,10 +62,12 @@ and to build the project:
 $make build_core
 ````
 The first time the command $make prepare is executed takes longer.
+
 c) Now to run a jaguar default example, use 
 ````
 $make run
-```
+`````
+
  
 ### B. Jaguar home screen elements:
 I) Heuristic: Heuristic used to detect possible snippets of suspicious code. It is possible to configure this one.
