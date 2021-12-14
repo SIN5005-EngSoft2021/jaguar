@@ -47,25 +47,24 @@ SFL - Spectrum-based fault localization is a promising auto- mated debugging app
 
 ## 2)	The html
 ### A. To run the project you need follow this steps:
-a) Clone the project using
+a) In https://github.com/SIN5005-EngSoft2021/jaguar.git clone the project using
 ````
 $git clone
 ````
-https://github.com/SIN5005-EngSoft2021/jaguar.git
+
 b) Now use 
 ````
 $make prepare
 ````
-and 
+and to build the project:
 ````
 $make build_core
 ````
-to build the project;
-the first time the command $make prepare is executed takes longer.
+The first time the command $make prepare is executed takes longer.
 c) Now to run a jaguar default example, use 
 ````
 $make run
-
+```
  
 ### B. Jaguar home screen elements:
 I) Heuristic: Heuristic used to detect possible snippets of suspicious code. It is possible to configure this one;
