@@ -76,40 +76,67 @@ II) Requirement type - LINE: parse line by line.
 
 III) Test: displays how many tests passed and failed.
 
-IV) Line color Susp: Filter to show lines with a certain suspension value;
-V) CLASS : Analyzed class;
-VI) BAR: color symbolized by the suspension level;
-VII) SUSP: Suspension of code;
-VIII) C.E.F.: Number of test cases that failed and executed the suspicious code snippet;
-IX) C.E.P. : Number of test cases that passed and ran the suspect component;
-X) C.N.F: Number of test cases that did not run the suspect component but failed;
-XI) C.N.P.: Number of test cases that passed and did not run the suspect component;
+IV) Line color Susp: Filter to show lines with a certain suspension value.
+
+V) CLASS : Analyzed class.
+
+VI) BAR: color symbolized by the suspension level.
+
+VII) SUSP: Suspension of code.
+
+VIII) C.E.F.: Number of test cases that failed and executed the suspicious code snippet.
+
+IX) C.E.P. : Number of test cases that passed and ran the suspect component.
+
+X) C.N.F: Number of test cases that did not run the suspect component but failed.
+
+XI) C.N.P.: Number of test cases that passed and did not run the suspect component.
+
 XII) Items per table: Filter how many project classes will be presented. If there are more classes than the filtered amount, use the arrows at the bottom of the page to explore the remaining classes. Clicking on the link in CLASS displays the suspicious lines.
-XIII) LOC: parsed line of code. By clicking on the value in LOC, the user will be directed to the suspicious line; When hovering over the line, a description of the suspect will appear;
+
+XIII) LOC: parsed line of code. By clicking on the value in LOC, the user will be directed to the suspicious line; When hovering over the line, a description of the suspect will appear.
+
 XIV) Method Signature: signature of the method where the suspicious line is contained.
+
 
 ### C. Modifying the Heuristic
 Is possible to change the Jaguar heuristics through the parameters: 
-I) help : find out more information about Jaguar;
-II) dataflow / –df: run dataflow analysis/collection;
-III) outputType: / --ot: output only XML or HTML;
-IV) output / --o: output file name;
-V) projectDir / --p: location of the file to be analyzed by Jaguar;
-VI) testsListFile / --tf: file containing the test list;
-VII) includes / --i: all project packages that will be instrumented in the controlflow and dataflow analysis;
-VIII) loglevel/ --l: log level for analysis ( ERROR, INFO, DEBUG, TRACE);
-IX) classpath/ --cp: project classpath;
-X) heuristic / -h : By default use Tarantula.;
-XI) classDir/ --c : Path of compiled classes;
+I) help : find out more information about Jaguar.
+
+II) dataflow / –df: run dataflow analysis/collection.
+
+III) outputType: / --ot: output only XML or HTML.
+
+IV) output / --o: output file name.
+
+V) projectDir / --p: location of the file to be analyzed by Jaguar.
+
+VI) testsListFile / --tf: file containing the test list.
+
+VII) includes / --i: all project packages that will be instrumented in the controlflow and dataflow analysis.
+
+VIII) loglevel/ --l: log level for analysis ( ERROR, INFO, DEBUG, TRACE).
+
+IX) classpath/ --cp: project classpath.
+
+X) heuristic / -h : By default use Tarantula.
+
+XI) classDir/ --c : Path of compiled classes.
+
 XII) testDir/ --t: Path of compiled tests.
+
 
 D.	To change the parameters simplified:
 
-cat Makefile;
-Look for “Run a simple example use of Jaguar Core”;
-Copy the displayed link -> Script Shell that runs Jaguar;
-$vim link
-Add, for example, the new heuristic to be used: -- heuristic "Op"
+I) cat Makefile.
+
+II) Look for “Run a simple example use of Jaguar Core”.
+
+III) Copy the displayed link -> Script Shell that runs Jaguar.
+IV) $vim link.
+
+V) Add, for example, the new heuristic to be used: -- heuristic "Op".
+
 This can be done for dataflow and controlflow.
 
 E.	Bellow, we have other heuristics
